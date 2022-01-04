@@ -16,6 +16,14 @@ users = db.users
 stats = db.stats
 
 
+def menu():
+    print('menu')
+
+
+def welcome():
+    print('doodledy doo doo')
+
+
 def create_password():
     """
     * Creates a randomly generated password using the xkcdpass library.
@@ -50,3 +58,25 @@ def register():
 
     db.users.insert_one(newUser)
     print('You have successfully registered!')
+
+
+def login():
+    user = input('Username: ')
+    pwd = getpass.getpass()
+
+    enc_pwd = pwd.encode()
+    hash_pwd = hashlib.md5(enc_pwd).hexdigest()
+
+    if db.users.count_documents({"username": user}, limit=1):
+        result = db.users.find_one({"username": user})
+
+        if result["password"] == hash_pwd:
+            print('Successfully logged in!')
+            welcome()
+        else:
+            print('That\'s not the right password, try again.')
+    else:
+        print('That username isn\'t registered')
+
+
+login()
