@@ -61,6 +61,12 @@ def register():
 
 
 def login():
+    """
+    * Captures the user's input username and password, and checks if they exist in the database. 
+    * If they're already registered, and the input details match, allows login.
+    * @return(bool) True -- if login successful, and loads welcome().
+    * @return(bool) False -- if login fails (either username doesn't exist, or password wrong).
+    """
     user = input('Username: ')
     pwd = getpass.getpass()
 
@@ -73,10 +79,13 @@ def login():
         if result["password"] == hash_pwd:
             print('Successfully logged in!')
             welcome()
+            return True
         else:
             print('That\'s not the right password, try again.')
+            return False
     else:
         print('That username isn\'t registered')
+        return False
 
 
 login()
