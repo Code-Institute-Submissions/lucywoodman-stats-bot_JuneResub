@@ -16,12 +16,10 @@ users = db.users
 stats = db.stats
 
 
-def menu():
-    print('menu')
-
-
 def welcome():
-    print('doodledy doo doo')
+    while True:
+        print('doodledy doo doo')
+        break
 
 
 def create_password():
@@ -58,6 +56,8 @@ def register():
 
     db.users.insert_one(newUser)
     print('You have successfully registered!')
+    print('Go ahead and login:')
+    login()
 
 
 def login():
@@ -67,25 +67,21 @@ def login():
     * @return(bool) True -- if login successful, and loads welcome().
     * @return(bool) False -- if login fails (either username doesn't exist, or password wrong).
     """
-    user = input('Username: ')
-    pwd = getpass.getpass()
+    while True:
+        user = input('Username: ')
+        pwd = getpass.getpass()
 
-    enc_pwd = pwd.encode()
-    hash_pwd = hashlib.md5(enc_pwd).hexdigest()
+        enc_pwd = pwd.encode()
+        hash_pwd = hashlib.md5(enc_pwd).hexdigest()
 
-    if db.users.count_documents({"username": user}, limit=1):
-        result = db.users.find_one({"username": user})
+        if db.users.count_documents({"username": user}, limit=1):
+            result = db.users.find_one({"username": user})
 
-        if result["password"] == hash_pwd:
-            print('Successfully logged in!')
-            welcome()
-            return True
+            if result["password"] == hash_pwd:
+                print('Successfully logged in!')
+                welcome()
+                break
+            else:
+                print('The password is incorrect. Try again.')
         else:
-            print('That\'s not the right password, try again.')
-            return False
-    else:
-        print('That username isn\'t registered')
-        return False
-
-
-login()
+            print('That username isn\'t registered.')
