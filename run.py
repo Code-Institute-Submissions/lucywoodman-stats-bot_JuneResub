@@ -85,3 +85,25 @@ def login():
                 print('The password is incorrect. Try again.')
         else:
             print('That username isn\'t registered.')
+
+
+class Menu:
+    """
+    A class to power the menu.
+    """
+
+    @staticmethod
+    def run():
+        user_input = 0
+        while(user_input != 9):
+            user_input = int(input())
+            print('do something...')
+        print('do something else...')
+
+
+def main():
+    Menu.run()
+
+
+if __name__ == '__main__':
+    main()
