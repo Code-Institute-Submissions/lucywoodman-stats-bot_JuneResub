@@ -111,7 +111,6 @@ class Menu:
         while(user_input != 9):
             try:
                 user_input = int(input())
-                print('do something...')
                 Menu.process(user_input)
             except ValueError:
                 print('Please enter a number.')
@@ -121,7 +120,10 @@ class Menu:
     def generate_menu():
         print('=' * 80)
         options = [i for i in dir(Menu) if i.startswith('opt_')]
-        print(options)
+        menu_str = '\n'.join(f'{option[-1]}. ' for option in options)
+        print(menu_str)
+        print('=' * 80)
+        print('Insert a number: ')
 
 
 def main():
