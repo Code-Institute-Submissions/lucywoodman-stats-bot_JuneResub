@@ -117,8 +117,15 @@ class Menu:
                 print('Please enter a number.')
         print('Goodbye!')
 
+    @staticmethod
+    def generate_menu():
+        print('=' * 80)
+        options = [i for i in dir(Menu) if i.startswith('opt_')]
+        print(options)
+
 
 def main():
+    Menu.generate_menu()
     Menu.run()
 
 
