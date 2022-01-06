@@ -91,6 +91,19 @@ class Menu:
     """
     A class to power the menu.
     """
+    @staticmethod
+    def opt_9():
+        print('Exiting...')
+
+    @staticmethod
+    def process(user_input):
+        option_name = f'opt_{user_input}'
+        try:
+            option = getattr(Menu, option_name)
+        except AttributeError:
+            print('Option not found.')
+        else:
+            option()
 
     @staticmethod
     def run():
@@ -99,8 +112,9 @@ class Menu:
             try:
                 user_input = int(input())
                 print('do something...')
+                Menu.process(user_input)
             except ValueError:
-                print("Please enter a number.")
+                print('Please enter a number.')
         print('Goodbye!')
 
 
