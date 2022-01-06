@@ -93,6 +93,7 @@ class Menu:
     """
     @staticmethod
     def opt_9():
+        """Exit"""
         print('Exiting...')
 
     @staticmethod
@@ -120,7 +121,8 @@ class Menu:
     def generate_menu():
         print('=' * 80)
         options = [i for i in dir(Menu) if i.startswith('opt_')]
-        menu_str = '\n'.join(f'{option[-1]}. ' for option in options)
+        menu_str = '\n'.join(
+            f'{option[-1]}. {getattr(Menu, option).__doc__}' for option in options)
         print(menu_str)
         print('=' * 80)
         print('Insert a number: ')
