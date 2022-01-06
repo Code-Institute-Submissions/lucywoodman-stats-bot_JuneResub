@@ -96,9 +96,12 @@ class Menu:
     def run():
         user_input = 0
         while(user_input != 9):
-            user_input = int(input())
-            print('do something...')
-        print('do something else...')
+            try:
+                user_input = int(input())
+                print('do something...')
+            except ValueError:
+                print("Please enter a number.")
+        print('Goodbye!')
 
 
 def main():
