@@ -8,6 +8,7 @@ from pymongo import MongoClient
 # Local application imports
 if os.path.exists('settings.py'):
     from settings import mongodb_string
+from stats import stats
 
 # Connect to MongoDB and set the database variables
 client = MongoClient(mongodb_string)
@@ -72,7 +73,7 @@ def login():
 
             if result["password"] == hash_pwd:
                 print('Successfully logged in!')
-                return True
+                return
             else:
                 print('The password is incorrect. Try again.')
         else:

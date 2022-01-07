@@ -24,6 +24,7 @@ class MenuHelper:
             try:
                 user_input = int(input())
                 MenuHelper.process(menu, user_input)
+                return
             except ValueError:
                 print('Please insert a number:')
         print('Goodbye!')

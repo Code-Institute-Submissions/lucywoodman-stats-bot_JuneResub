@@ -24,6 +24,8 @@ def welcome():
 def main():
     MenuHelper.generate_menu(MainMenu)
     MenuHelper.run(MainMenu)
+    MenuHelper.generate_menu(SubMenu)
+    MenuHelper.run(SubMenu)
 
 
 if __name__ == '__main__':
