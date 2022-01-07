@@ -64,13 +64,13 @@ def login():
     """
     * Captures the user's input username and password, and checks if they exist in the database. 
     * If they're already registered, and the input details match, allows login.
-    * @return(bool) True -- if login successful, and loads welcome().
-    * @return(bool) False -- if login fails (either username doesn't exist, or password wrong).
     """
     while True:
+        # Capture the user input for username and password.
         user = input('Username: ')
         pwd = getpass.getpass()
 
+        # Encode and hash the password to match how the database stores passwords.
         enc_pwd = pwd.encode()
         hash_pwd = hashlib.md5(enc_pwd).hexdigest()
 
@@ -89,8 +89,24 @@ def login():
 
 class Menu:
     """
-    A class to power the menu.
+    * A class to power the menu.
+    * @staticmethods:
+    * opt_1() through to opt_9() -- options for the menu.
+    * process() -- matches the user input with the menu option.
+    * run() -- ensures user input is int, runs process().
+    * generate_menu() -- creates a str from the menu options and prints it.
     """
+    @staticmethod
+    def opt_1():
+        """Login"""
+        print('Enter your username and password:')
+        login()
+
+    @staticmethod
+    def opt_2():
+        """Register"""
+        register()
+
     @staticmethod
     def opt_9():
         """Exit"""
@@ -114,7 +130,7 @@ class Menu:
                 user_input = int(input())
                 Menu.process(user_input)
             except ValueError:
-                print('Please enter a number.')
+                print('Please insert a number:')
         print('Goodbye!')
 
     @staticmethod
