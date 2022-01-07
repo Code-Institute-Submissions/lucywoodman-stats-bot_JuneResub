@@ -15,7 +15,8 @@ class MenuHelper:
         except AttributeError:
             print('Option not found.')
         else:
-            option()
+            if option():
+                return True
 
     @staticmethod
     def run(menu):
@@ -23,8 +24,11 @@ class MenuHelper:
         while(user_input != 9):
             try:
                 user_input = int(input())
-                MenuHelper.process(menu, user_input)
-                return
+                boolean = MenuHelper.process(menu, user_input)
+                if boolean:
+                    return True
+                else:
+                    return False
             except ValueError:
                 print('Please insert a number:')
         print('Goodbye!')

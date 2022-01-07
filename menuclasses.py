@@ -11,12 +11,14 @@ class MainMenu:
     def opt_1():
         """Login"""
         print('Enter your username and password:')
-        login()
+        if login():
+            return True
 
     @staticmethod
     def opt_2():
         """Register"""
-        register()
+        if register():
+            return True
 
     @staticmethod
     def opt_9():

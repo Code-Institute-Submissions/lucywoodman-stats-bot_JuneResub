@@ -51,7 +51,8 @@ def register():
     db.users.insert_one(newUser)
     print('You have successfully registered!')
     print('Go ahead and login:')
-    login()
+    if login():
+        return True
 
 
 def login():
@@ -59,7 +60,8 @@ def login():
     * Captures the user's input username and password, and checks if they exist in the database. 
     * If they're already registered, and the input details match, allows login.
     """
-    while True:
+    attempts = 3
+    while attempts > 0:
         # Capture the user input for username and password.
         user = input('Username: ')
         pwd = getpass.getpass()
@@ -73,8 +75,13 @@ def login():
 
             if result["password"] == hash_pwd:
                 print('Successfully logged in!')
-                return
+                return True
             else:
-                print('The password is incorrect. Try again.')
+                print(
+                    f'The password is incorrect. You have {attempts - 1} tries left.')
+                attempts -= 1
+                if attempts == 0:
+                    print('Exiting...')
         else:
             print('That username isn\'t registered.')
+    print('Goodbye!')
