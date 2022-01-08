@@ -54,36 +54,48 @@ def capture_stats(date):
     return statDocument
 
 
-def overwrite_stats(date, date_str):
-    try:
-        db.stats.count_documents({"date": date}, limit=1)
-    except:
-        print('Can\'t find the date in the database.')
-    else:
-        new_stats = capture_stats(date)
+def update_stats(date):
+    exist = db.stats.count_documents({"date": date}, limit=1)
+    new_stats = capture_stats(date)
+    if exist:
         db.stats.update_one({"date": date}, {"$set": new_stats})
         print('The stats have been successfully updated!')
+    elif not exist:
+        db.stats.insert_one(new_stats)
+        print('The new stats have been successfully added to the database!')
+        user_proceed = input('Would you like to input more stats (y/n)? ')
+        if proceed(user_proceed):
+            return True
+        else:
+            return False
+    else:
+        print('Something went wrong!')
+
+
+def proceed(user_input):
+    if user_input == 'y':
+        return True
+    elif user_input == 'n':
+        return False
+    elif user_input != 'y' and proceed != 'n':
+        print('Incorrect input. Please type "y" or "n".')
 
 
 def check_date():
+
     while True:
         date_tpl = choose_date()
         date, date_str = date_tpl
 
         if db.stats.count_documents({"date": date}, limit=1):
-            loop = True
             print('This date already exists in the database.')
-            while loop:
-                proceed = input('Would you like to overwrite it (y/n)? ')
-                if proceed == 'y':
-                    print(
-                        f'\nOkay, let\'s overwrite the stats for {date_str}.')
-                    overwrite_stats(date, date_str)
-                    loop = False
-                elif proceed == 'n':
-                    loop = False
-                elif proceed != 'y' and proceed != 'n':
-                    print('Incorrect input. Please type "y" or "n".')
+            user_proceed = input('Would you like to overwrite it (y/n)? ')
+            if proceed(user_proceed):
+                print(
+                    f'\nOkay, let\'s overwrite the stats for {date_str}.')
+                update_stats(date)
+            else:
+                return False
         else:
-            print('The date does not exist.')
-            # input_new_stats()
+            print(f'Please enter the stats for {date_str} below.')
+            update_stats(date)
