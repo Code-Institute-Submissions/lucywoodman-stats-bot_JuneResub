@@ -20,10 +20,20 @@ def choose_date():
     return date_obj
 
 
-def stat_input():
-    date = choose_date()
+def stat_overwrite():
+    while True:
+        date = choose_date()
 
-    if db.stats.count_documents({"date": date}, limit=1):
-        print('The date exists.')
-    else:
-        print('The date does not exist.')
+        if db.stats.count_documents({"date": date}, limit=1):
+            loop = True
+            print('This date already exists in the database.')
+            while loop:
+                proceed = input('Would you like to overwrite it (y/n)? ')
+                if proceed == 'y':
+                    print('Okay, let\'s overwrite it.')
+                elif proceed == 'n':
+                    loop = False
+                elif proceed != 'y' and proceed != 'n':
+                    print('Incorrect input. Please type "y" or "n".')
+        else:
+            print('The date does not exist.')
