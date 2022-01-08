@@ -1,4 +1,5 @@
 from userauth import login, register
+from stats import *
 
 
 class MainMenu:
@@ -34,8 +35,9 @@ class SubMenu:
     """
     @staticmethod
     def opt_1():
-        """Stats"""
-        print('Something here...')
+        """View yesterday's Support stats"""
+        print('Loading...')
+        yesterday_stats()
 
     @staticmethod
     def opt_2():
