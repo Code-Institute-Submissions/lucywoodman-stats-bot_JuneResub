@@ -35,14 +35,14 @@ class SubMenu:
     """
     @staticmethod
     def opt_1():
-        """View yesterday's Support stats"""
-        print('Loading...')
-        yesterday_stats()
+        """Input stats"""
+        print('Something else here...')
 
     @staticmethod
     def opt_2():
-        """Update or whatever"""
-        print('Something else here...')
+        """View yesterday's Support stats"""
+        print('Loading...')
+        yesterday_stats()
 
     @staticmethod
     def opt_9():
