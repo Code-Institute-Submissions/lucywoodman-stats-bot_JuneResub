@@ -106,3 +106,19 @@ def check_date():
 
         if not continue_input():
             return
+
+
+def generate_raw_stats(date):
+    title = f'Stats for {date}'
+    print('-' * len(title))
+    print(title)
+    print('-' * len(title))
+    print('Tickets advanced: ')
+    print('Tickets solved: ')
+    print('\n')
+    print('Incoming queue: ')
+    print('Handoff queue: ')
+    print('\n')
+    print('Total chats: ')
+    print('Wait time: ')
+    print('Chat CSAT: ')
