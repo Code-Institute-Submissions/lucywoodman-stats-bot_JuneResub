@@ -12,11 +12,16 @@ db = client.supportStats
 stats = db.stats
 
 
+def human_date(date):
+    human_date = date.strftime('%A, %m %B %Y')
+    return human_date
+
+
 def choose_date():
     print('\nWhich date would you like to input stats for?')
     date_str = input('Date (format: YYYY-MM-DD): ')
     date_obj = dt.datetime.strptime(date_str, '%Y-%m-%d')
-    date_readable = date_obj.strftime('%A, %m %B %Y')
+    date_readable = human_date(date_obj)
     return date_obj, date_readable
 
 
