@@ -63,11 +63,6 @@ def update_stats(date):
     elif not exist:
         db.stats.insert_one(new_stats)
         print('The new stats have been successfully added to the database!')
-        user_proceed = input('Would you like to input more stats (y/n)? ')
-        if proceed(user_proceed):
-            return True
-        else:
-            return False
     else:
         print('Something went wrong!')
 
@@ -81,21 +76,28 @@ def proceed(user_input):
         print('Incorrect input. Please type "y" or "n".')
 
 
-def check_date():
+def continue_input():
+    user_input = input('Would you like to input more stats (y/n)? ')
+    proceed_yes_no = proceed(user_input)
+    return proceed_yes_no
 
+
+def check_date():
     while True:
         date_tpl = choose_date()
         date, date_str = date_tpl
 
         if db.stats.count_documents({"date": date}, limit=1):
             print('This date already exists in the database.')
-            user_proceed = input('Would you like to overwrite it (y/n)? ')
-            if proceed(user_proceed):
+            user_input = input('Would you like to overwrite it (y/n)? ')
+            proceed_yes_no = proceed(user_input)
+            if proceed_yes_no:
                 print(
                     f'\nOkay, let\'s overwrite the stats for {date_str}.')
                 update_stats(date)
-            else:
-                return False
         else:
             print(f'Please enter the stats for {date_str} below.')
             update_stats(date)
+
+        if not continue_input():
+            return
