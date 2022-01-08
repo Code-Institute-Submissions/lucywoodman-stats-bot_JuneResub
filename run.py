@@ -5,12 +5,11 @@ from stats import *
 
 
 def welcome():
-    while True:
-        print('doodledy doo doo')
-        break
+    print('doodledy doo doo')
 
 
 def main():
+    welcome()
     MenuHelper.generate_menu(MainMenu)
     loggedin = MenuHelper.run(MainMenu)
     if loggedin:
@@ -19,5 +18,4 @@ def main():
 
 
 if __name__ == '__main__':
-    # main()
-    yesterday_stats()
+    main()
