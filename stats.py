@@ -29,7 +29,7 @@ def choose_date():
     * Asks the user which date to input/view stats for.
     * Converts input to a date object and runs human_date().
     * @return(obj) date_obj -- the date object.
-    * @return(str) date_readable -- pretty date string returned from human_date(). 
+    * @return(str) date_readable -- pretty date string returned from human_date().
     """
     print('\nWhich date would you like to input stats for?')
     date_str = input('Date (format: YYYY-MM-DD): ')
@@ -43,7 +43,7 @@ def choose_week():
     * Asks the user which week to view stats for.
     * Converts input to a date object and runs human_date().
     * @return(obj) date_obj -- the date object.
-    * @return(str) date_readable -- pretty date string returned from human_date(). 
+    * @return(str) date_readable -- pretty date string returned from human_date().
     """
     print('\nWhich week would you like to view stats for?')
     date_str = input('Date (format: YYYY-MM-DD): ')
@@ -194,6 +194,28 @@ def generate_raw_stats(date, stats_dict):
     print(tabulate(table_list, tablefmt="fancy_grid"))
 
 
+def generate_sum_stats(date, stats_list):
+    """
+    * Create a table of stats for the given week.
+    * @arg(obj) date -- the date object passed from stats_weekly().
+    * @arg(list) stats_list -- the list of stats from the database, passed from stats_weekly().
+    """
+    key_list = ['No. of tickets advanced: ', 'No. of ticket public comments: ', 'No. of tickets solved: ',
+                'Incoming ticket queue: ', 'Handoff ticket queue: ', 'Total chats: ', 'Chat wait time: ', 'Chat CSAT: ']
+
+    # Merge the key_list and stats_list to a list of lists to be compatible with tabulate.
+    table_list = [list(x) for x in zip(key_list, stats_list)]
+
+    # Generate header to include the date.
+    title = f'Stats for week commencing {date}'
+    print('-' * len(title))
+    print(title)
+    print('-' * len(title))
+
+    # Print the list as a table.
+    print(tabulate(table_list, tablefmt="fancy_grid"))
+
+
 def stats_daily():
     """
     * Asks the user to choose a date, finds the matching document in the database,
@@ -218,7 +240,15 @@ def stats_weekly():
 
     # Find the matching documents from MongoDB for the chosen week.
     wk_stats = db.stats.aggregate([{"$match": {"date": {"$gte": wk_start, "$lte": wk_end}}}, {
-                                  "$group": {"_id": "date", "t_advanced": {"$sum": "$t_advanced"}}}])
+        "$group": {"_id": "null", "t_advanced": {"$sum": "$t_advanced"}, "t_pub_comments": {"$sum": "$t_pub_comments"}, "t_solved": {"$sum": "$t_solved"}}}])
 
-    for doc in wk_stats:
-        print(f'No. of tickets advanced: {doc["t_advanced"]}')
+    temp_list = list(wk_stats)
+
+    stats_list = []
+    for i in temp_list:
+        for v in i.values():
+            if v != "null":
+                stats_list.append(v)
+    print(stats_list)
+
+    generate_sum_stats(date_str, stats_list)
