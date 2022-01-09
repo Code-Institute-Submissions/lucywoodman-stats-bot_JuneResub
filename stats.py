@@ -49,8 +49,9 @@ def choose_week():
     date_str = input('Date (format: YYYY-MM-DD): ')
     date_obj = dt.datetime.strptime(date_str, '%Y-%m-%d')
     wk_start = date_obj - dt.timedelta(days=date_obj.weekday())
+    wk_end = wk_start + dt.timedelta(days=6)
     date_readable = human_date(wk_start)
-    return wk_start, date_readable
+    return wk_start, wk_end, date_readable
 
 
 def capture_stats(date):
@@ -212,5 +213,12 @@ def stats_daily():
 def stats_weekly():
     # Run choose_date() to capture date input,
     # and return date object and string.
-    date_tpl = choose_week()
-    date, date_str = date_tpl
+    dates_tpl = choose_week()
+    wk_start, wk_end, date_str = dates_tpl
+
+    # Find the matching documents from MongoDB for the chosen week.
+    wk_stats = db.stats.aggregate([{"$match": {"date": {"$gte": wk_start, "$lte": wk_end}}}, {
+                                  "$group": {"_id": "date", "t_advanced": {"$sum": "$t_advanced"}}}])
+
+    for doc in wk_stats:
+        print(f'No. of tickets advanced: {doc["t_advanced"]}')
