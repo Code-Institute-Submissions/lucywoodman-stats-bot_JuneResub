@@ -2,6 +2,7 @@
 import os
 from pymongo import MongoClient
 import datetime as dt
+from tabulate import tabulate
 
 # Local application imports
 if os.path.exists('settings.py'):
@@ -152,17 +153,37 @@ def stats_main():
             return
 
 
-def generate_raw_stats(date):
+def generate_raw_stats(date, stats_dict):
+    """
+    * Create a table of stats for the given date.
+    * @arg(obj) date -- the date object passed from stats_daily().
+    * @arg(dict) stats_dict -- the dict of stats from the database, passed from stats_daily().
+    """
+    key_list = ['No. of tickets advanced: ', 'No. of ticket public comments: ', 'No. of tickets solved: ',
+                'Incoming ticket queue: ', 'Handoff ticket queue: ', 'Total chats: ', 'Chat wait time: ', 'Chat CSAT: ']
+    # Convert the stats_dict values to a list.
+    stats_list = list(stats_dict.values())
+    # Remove the MongoDB ID and date from the list.
+    stats_list = stats_list[2:]
+    # Merge the key_list and stats_list to a list of lists to be compatible with tabulate.
+    table_list = [list(x) for x in zip(key_list, stats_list)]
+
+    # Generate header to include the date.
     title = f'Stats for {date}'
     print('-' * len(title))
     print(title)
     print('-' * len(title))
-    print('Tickets advanced: ')
-    print('Tickets solved: ')
-    print('\n')
-    print('Incoming queue: ')
-    print('Handoff queue: ')
-    print('\n')
-    print('Total chats: ')
-    print('Wait time: ')
-    print('Chat CSAT: ')
+
+    # Print the list as a table.
+    print(tabulate(table_list, tablefmt="fancy_grid"))
+
+
+def stats_daily():
+    # Run choose_date() to capture date input,
+    # and return date object and string.
+    date_tpl = choose_date()
+    date, date_str = date_tpl
+
+    stats_dict = db.stats.find_one({"date": date})
+
+    generate_raw_stats(date_str, stats_dict)
