@@ -41,12 +41,12 @@ class SubMenu:
     @staticmethod
     def opt_2():
         """View daily Support stats"""
-        print('Loading...')
+        stats_daily()
 
     @staticmethod
     def opt_3():
         """View weekly Support stat summary"""
-        print('Loading...')
+        stats_weekly()
 
     @staticmethod
     def opt_9():
