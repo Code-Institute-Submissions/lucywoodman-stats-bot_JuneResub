@@ -179,11 +179,16 @@ def generate_raw_stats(date, stats_dict):
 
 
 def stats_daily():
+    """
+    * Asks the user to choose a date, finds the matching document in the database,
+    * then displays that date's stats in a table format.
+    """
     # Run choose_date() to capture date input,
     # and return date object and string.
     date_tpl = choose_date()
     date, date_str = date_tpl
 
+    # Fine the matching document from MongoDOB
     stats_dict = db.stats.find_one({"date": date})
 
     generate_raw_stats(date_str, stats_dict)
