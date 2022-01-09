@@ -20,7 +20,7 @@ def human_date(date):
     * @arg(obj) date -- the date object from choose_date().
     * @return(str) human_date -- pretty date string, e.g. "Wednesday, 05 May 2021"
     """
-    human_date = date.strftime('%A, %m %B %Y')
+    human_date = date.strftime('%A, %d %B %Y')
     return human_date
 
 
@@ -203,7 +203,7 @@ def stats_daily():
     date_tpl = choose_date()
     date, date_str = date_tpl
 
-    # Fine the matching document from MongoDOB
+    # Find the matching document from MongoDOB
     stats_dict = db.stats.find_one({"date": date})
 
     generate_raw_stats(date_str, stats_dict)
@@ -212,5 +212,5 @@ def stats_daily():
 def stats_weekly():
     # Run choose_date() to capture date input,
     # and return date object and string.
-    date_tpl = choose_date()
+    date_tpl = choose_week()
     date, date_str = date_tpl
