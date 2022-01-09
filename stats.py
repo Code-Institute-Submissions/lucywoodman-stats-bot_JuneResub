@@ -26,7 +26,7 @@ def human_date(date):
 
 def choose_date():
     """
-    * Asks the user which date to input stats for.
+    * Asks the user which date to input/view stats for.
     * Converts input to a date object and runs human_date().
     * @return(obj) date_obj -- the date object.
     * @return(str) date_readable -- pretty date string returned from human_date(). 
@@ -36,6 +36,21 @@ def choose_date():
     date_obj = dt.datetime.strptime(date_str, '%Y-%m-%d')
     date_readable = human_date(date_obj)
     return date_obj, date_readable
+
+
+def choose_week():
+    """
+    * Asks the user which week to view stats for.
+    * Converts input to a date object and runs human_date().
+    * @return(obj) date_obj -- the date object.
+    * @return(str) date_readable -- pretty date string returned from human_date(). 
+    """
+    print('\nWhich week would you like to view stats for?')
+    date_str = input('Date (format: YYYY-MM-DD): ')
+    date_obj = dt.datetime.strptime(date_str, '%Y-%m-%d')
+    wk_start = date_obj - dt.timedelta(days=date_obj.weekday())
+    date_readable = human_date(wk_start)
+    return wk_start, date_readable
 
 
 def capture_stats(date):
@@ -192,3 +207,10 @@ def stats_daily():
     stats_dict = db.stats.find_one({"date": date})
 
     generate_raw_stats(date_str, stats_dict)
+
+
+def stats_weekly():
+    # Run choose_date() to capture date input,
+    # and return date object and string.
+    date_tpl = choose_date()
+    date, date_str = date_tpl
