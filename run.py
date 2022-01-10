@@ -12,7 +12,7 @@ def main():
     welcome()
     MenuHelper.generate_menu(MainMenu)
     loggedin = MenuHelper.run(MainMenu)
-    if loggedin:
+    while loggedin:
         MenuHelper.generate_menu(SubMenu)
         MenuHelper.run(SubMenu)
 

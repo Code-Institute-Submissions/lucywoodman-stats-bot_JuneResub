@@ -36,7 +36,7 @@ class SubMenu:
     @staticmethod
     def opt_1():
         """Input stats"""
-        stats_main()
+        stats_input()
 
     @staticmethod
     def opt_2():
