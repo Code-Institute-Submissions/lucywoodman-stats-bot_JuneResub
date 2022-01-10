@@ -3,17 +3,10 @@ import os
 import getpass
 import hashlib
 from xkcdpass import xkcd_password as xp
-from pymongo import MongoClient
 import time
 
 # Local application imports
-if os.path.exists('settings.py'):
-    from settings import mongodb_string
-
-# Connect to MongoDB and set the database variables
-client = MongoClient(mongodb_string)
-db = client.supportStats
-users = db.users
+from helper import test_database, users
 
 
 def create_password():
@@ -44,7 +37,7 @@ def register():
 
         # Check if the username already exists in the db.
         # If it does, tell the user and go back to beginning of the loop.
-        if db.users.count_documents({"username": username}, limit=1):
+        if users.count_documents({"username": username}, limit=1):
             print('That username is already registered. Try another.')
             continue
         # If the username doesn't exist in the db, generate a password.
@@ -65,7 +58,7 @@ def register():
                 "password": hash_pwd
             }
 
-            db.users.insert_one(newUser)
+            users.insert_one(newUser)
             print('-' * 80)
             print('You have successfully registered!')
             print('Go ahead and login:')
@@ -92,33 +85,27 @@ def login():
         hash_pwd = hashlib.md5(enc_pwd).hexdigest()
 
         print('Authenticating user...')
+        test_database()
 
         # If the username exists in the database, fetch the info for that user.
-        try:
-            client.server_info()
-        except:
-            print('I\'m having troubles connecting to the database. Try again later.')
-            exit()
-        else: 
-            if db.users.count_documents({"username": user}, limit=1):
-                result = db.users.find_one({"username": user})
+        if users.count_documents({"username": user}, limit=1):
+            result = users.find_one({"username": user})
 
-                # If the hashed password matches the hashed password in the db, let the user login.
-                if result["password"] == hash_pwd:
-                    print('Successfully logged in!')
-                    return True
-                # If the hashed password doesn't match, then reduce attempts by 1.
-                else:
-                    attempts -= 1
-                    print(
-                        f'The password is incorrect. You have {attempts} tries left.')
-            # If the username doesn't match any in the db, then reduce attempts by 1.
+            # If the hashed password matches the hashed password in the db, let the user login.
+            if result["password"] == hash_pwd:
+                print('You have successfully logged in!')
+                return True
+            # If the hashed password doesn't match, then reduce attempts by 1.
             else:
                 attempts -= 1
                 print(
-                    f'That username isn\'t registered. You have {attempts} tries left.')
-            # When the attempts run out (reduce to 0), break the login loop and exit.
-            if attempts == 0:
-                print('Exiting...')
-
+                    f'The password is incorrect. You have {attempts} tries left.')
+        # If the username doesn't match any in the db, then reduce attempts by 1.
+        else:
+            attempts -= 1
+            print(
+                f'That username isn\'t registered. You have {attempts} tries left.')
+        # When the attempts run out (reduce to 0), break the login loop and exit.
+        if attempts == 0:
+            print('Exiting...')
     print('Goodbye!')
