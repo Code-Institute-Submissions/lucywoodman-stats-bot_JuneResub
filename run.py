@@ -1,7 +1,5 @@
 # Local application imports
-from menus import Menu, Main, Sub
-# from menuclasses import MainMenu, SubMenu
-from stats import *
+from menus import *
 
 
 def welcome():
