@@ -292,7 +292,7 @@ def stats_weekly():
                 'Average chats per day': 1,
                 'Average chat wait time': 1,
                 'Average chat CSAT for the week': 1,
-                'Average public comments per ticket solve': {
+                'Average public comments per ticket solved': {
                     '$divide': [
                         '$Average ticket public comments per day', '$Average tickets solved per day'
                     ]
@@ -310,7 +310,7 @@ def stats_weekly():
             if v != "null":
                 stats_list.append(v)
         for k in i.keys():
-            if k != "_id" and k != "ratio_calc":
+            if k != "_id":
                 key_list.append(k)
 
     generate_weekly_stats(date_str, key_list, stats_list)
