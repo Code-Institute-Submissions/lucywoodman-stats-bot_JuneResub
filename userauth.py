@@ -4,6 +4,7 @@ import getpass
 import hashlib
 from xkcdpass import xkcd_password as xp
 from pymongo import MongoClient
+import time
 
 # Local application imports
 if os.path.exists('settings.py'):
@@ -21,9 +22,11 @@ def create_password():
     * @return(str) gen_password -- the password.
     """
     word_file = xp.locate_wordfile()
+    # Choose words between 5 and 10 characters long.
     words = xp.generate_wordlist(
         wordfile=word_file, min_length=5, max_length=10)
 
+    # Create a random password made up of 3 words separated with a hyphen.
     gen_password = xp.generate_xkcdpassword(words, numwords=3, delimiter="-")
     return gen_password
 
@@ -34,24 +37,41 @@ def register():
     * generated password from create_password().
     * Hashes the password and saves to the connected database.
     """
-    username = input('Enter a username: ')
-    pwd = create_password()
-    print('Please save the password somewhere safe.')
-    print(f'Your password is: {pwd}')
+    # Create a register while loop.
+    while True:
+        # Ask for a username from the user.
+        username = input('Enter a username: ')
 
-    enc_pwd = pwd.encode()
-    hash_pwd = hashlib.md5(enc_pwd).hexdigest()
+        # Check if the username already exists in the db.
+        # If it does, tell the user and go back to beginning of the loop.
+        if db.users.count_documents({"username": username}, limit=1):
+            print('That username is already registered. Try another.')
+            continue
+        # If the username doesn't exist in the db, generate a password.
+        # Then display the password and let them login.
+        else:
+            print('Generating password...')
+            time.sleep(1)
+            pwd = create_password()
+            print('-' * 80)
+            print(f'Your password is: {pwd}')
+            print('Please save the password somewhere safe.')
 
-    newUser = {
-        "username": username,
-        "password": hash_pwd
-    }
+            enc_pwd = pwd.encode()
+            hash_pwd = hashlib.md5(enc_pwd).hexdigest()
 
-    db.users.insert_one(newUser)
-    print('You have successfully registered!')
-    print('Go ahead and login:')
-    if login():
-        return True
+            newUser = {
+                "username": username,
+                "password": hash_pwd
+            }
+
+            db.users.insert_one(newUser)
+            print('-' * 80)
+            print('You have successfully registered!')
+            print('Go ahead and login:')
+            if login():
+                return True
+        return
 
 
 def login():
@@ -59,7 +79,9 @@ def login():
     * Captures the user's input username and password, and checks if they exist in the database. 
     * If they're already registered, and the input details match, allows login.
     """
+    # Set the number of tries the user is allowed.
     attempts = 3
+    # Create a login loop while the attempts are greater than 0.
     while attempts > 0:
         # Capture the user input for username and password.
         user = input('Username: ')
@@ -69,18 +91,26 @@ def login():
         enc_pwd = pwd.encode()
         hash_pwd = hashlib.md5(enc_pwd).hexdigest()
 
+        # If the username exists in the database, fetch the info for that user.
         if db.users.count_documents({"username": user}, limit=1):
             result = db.users.find_one({"username": user})
 
+            # If the hashed password matches the hashed password in the db, let the user login.
             if result["password"] == hash_pwd:
                 print('Successfully logged in!')
                 return True
+            # If the hashed password doesn't match, then reduce attempts by 1.
             else:
-                print(
-                    f'The password is incorrect. You have {attempts - 1} tries left.')
                 attempts -= 1
-                if attempts == 0:
-                    print('Exiting...')
+                print(
+                    f'The password is incorrect. You have {attempts} tries left.')
+        # If the username doesn't match any in the db, then reduce attempts by 1.
         else:
-            print('That username isn\'t registered.')
+            attempts -= 1
+            print(
+                f'That username isn\'t registered. You have {attempts} tries left.')
+        # When the attempts run out (reduce to 0), break the login loop and exit.
+        if attempts == 0:
+            print('Exiting...')
+
     print('Goodbye!')
