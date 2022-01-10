@@ -200,8 +200,8 @@ def generate_sum_stats(date, stats_list):
     * @arg(obj) date -- the date object passed from stats_weekly().
     * @arg(list) stats_list -- the list of stats from the database, passed from stats_weekly().
     """
-    key_list = ['No. of tickets advanced: ', 'No. of ticket public comments: ', 'No. of tickets solved: ',
-                'Incoming ticket queue: ', 'Handoff ticket queue: ', 'Total chats: ', 'Chat wait time: ', 'Chat CSAT: ']
+    key_list = ['Total tickets advanced: ', 'Total ticket public comments: ', 'Total tickets solved: ', 'Total chats: ', 'Average ticket public comments per day',
+                'Average tickets solved per day', 'Average no. of comments per ticket solve', 'Average chats per day', 'Average chat wait time: ', 'Chat CSAT for the week: ']
 
     # Merge the key_list and stats_list to a list of lists to be compatible with tabulate.
     table_list = [list(x) for x in zip(key_list, stats_list)]
