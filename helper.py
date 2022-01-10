@@ -37,6 +37,35 @@ def choose_date():
     return date_obj, date_readable
 
 
+def choose_week():
+    """
+    * Asks the user which week to view stats for.
+    * Converts input to a date object, checks if it exists in the db, and runs human_date().
+    * @return(obj) wk_start -- the date object for the week start.
+    * @return(obj) wk_end -- the date object for the week end.
+    * @return(str) date_readable -- pretty date string returned from human_date().
+    """
+    while True:
+        print('\nWhich week would you like to view stats for?')
+        # Capture the user input date.
+        date_str = input('Date (format: YYYY-MM-DD): ')
+        # Create a datetime object from the user's input.
+        date_obj = dt.datetime.strptime(date_str, '%Y-%m-%d')
+        # Calculate the start of the week for the user's chosen date.
+        wk_start = date_obj - dt.timedelta(days=date_obj.weekday())
+        # Calculate the end of the week for the user's chosen date.
+        wk_end = wk_start + dt.timedelta(days=6)
+        # If the chosen date range doesn't exist in the database, tell the user.
+        if not db.stats.count_documents({"date": {'$gte': wk_start, '$lte': wk_end}}, limit=7):
+            print(
+                f'I don\'t have stats to show you for week commencing {wk_start}. Choose another date.')
+            continue
+        # If it does exist, create a readable week start date and return.
+        else:
+            date_readable = human_date(wk_start)
+            return wk_start, wk_end, date_readable
+
+
 def proceed(user_input):
     """
     * Handles the user input from a yes/no question.
