@@ -31,7 +31,6 @@ def choose_date():
     * @return(obj) date_obj -- the date object.
     * @return(str) date_readable -- pretty date string returned from human_date().
     """
-    print('\nWhich date would you like to input stats for?')
     date_str = input('Date (format: YYYY-MM-DD): ')
     date_obj = dt.datetime.strptime(date_str, '%Y-%m-%d')
     date_readable = human_date(date_obj)
@@ -129,12 +128,12 @@ def proceed(user_input):
         print('Incorrect input. Please type "y" or "n".')
 
 
-def continue_input():
+def user_continue(arg):
     """
-    * Asks the user if they'd like input more stats.
+    * Asks the user if they'd like view or input more stats.
     * @return(bool) proceed_yes_no -- True for yes, False for no.
     """
-    user_input = input('Would you like to input more stats (y/n)? ')
+    user_input = input(f'Would you like to {arg} more stats (y/n)? ')
     proceed_yes_no = proceed(user_input)
     return proceed_yes_no
 
@@ -146,6 +145,7 @@ def stats_main():
     while True:
         # Run choose_date() to capture date input,
         # and return date object and string.
+        print('\nWhich date would you like to input stats for?')
         date_tpl = choose_date()
         date, date_str = date_tpl
 
@@ -165,7 +165,7 @@ def stats_main():
 
         # Ask the user if they'd like to input more stats.
         # If no, break out of the while loop.
-        if not continue_input():
+        if not user_continue('input'):
             return
 
 
@@ -224,6 +224,7 @@ def stats_daily():
     """
     # Run choose_date() to capture date input,
     # and return date object and string.
+    print('\nWhich date would you like to view stats for?')
     date_tpl = choose_date()
     date, date_str = date_tpl
 
@@ -232,10 +233,16 @@ def stats_daily():
 
     generate_daily_stats(date_str, stats_dict)
 
+    # Ask the user if they'd like to view more stats.
+    # If no, break out of the while loop.
+    if not user_continue('view'):
+        return
+
 
 def stats_weekly():
     # Run choose_date() to capture date input,
     # and return date object and string.
+    print('\nWhich date would you like to view the weekly stats for?')
     dates_tpl = choose_week()
     wk_start, wk_end, date_str = dates_tpl
 
@@ -314,3 +321,8 @@ def stats_weekly():
                 key_list.append(k)
 
     generate_weekly_stats(date_str, key_list, stats_list)
+
+    # Ask the user if they'd like to view more stats.
+    # If no, break out of the while loop.
+    if not user_continue('view'):
+        return
