@@ -91,26 +91,34 @@ def login():
         enc_pwd = pwd.encode()
         hash_pwd = hashlib.md5(enc_pwd).hexdigest()
 
-        # If the username exists in the database, fetch the info for that user.
-        if db.users.count_documents({"username": user}, limit=1):
-            result = db.users.find_one({"username": user})
+        print('Authenticating user...')
 
-            # If the hashed password matches the hashed password in the db, let the user login.
-            if result["password"] == hash_pwd:
-                print('Successfully logged in!')
-                return True
-            # If the hashed password doesn't match, then reduce attempts by 1.
+        # If the username exists in the database, fetch the info for that user.
+        try:
+            client.server_info()
+        except:
+            print('I\'m having troubles connecting to the database. Try again later.')
+            exit()
+        else: 
+            if db.users.count_documents({"username": user}, limit=1):
+                result = db.users.find_one({"username": user})
+
+                # If the hashed password matches the hashed password in the db, let the user login.
+                if result["password"] == hash_pwd:
+                    print('Successfully logged in!')
+                    return True
+                # If the hashed password doesn't match, then reduce attempts by 1.
+                else:
+                    attempts -= 1
+                    print(
+                        f'The password is incorrect. You have {attempts} tries left.')
+            # If the username doesn't match any in the db, then reduce attempts by 1.
             else:
                 attempts -= 1
                 print(
-                    f'The password is incorrect. You have {attempts} tries left.')
-        # If the username doesn't match any in the db, then reduce attempts by 1.
-        else:
-            attempts -= 1
-            print(
-                f'That username isn\'t registered. You have {attempts} tries left.')
-        # When the attempts run out (reduce to 0), break the login loop and exit.
-        if attempts == 0:
-            print('Exiting...')
+                    f'That username isn\'t registered. You have {attempts} tries left.')
+            # When the attempts run out (reduce to 0), break the login loop and exit.
+            if attempts == 0:
+                print('Exiting...')
 
     print('Goodbye!')
