@@ -17,10 +17,9 @@ class Menu:
         try:
             option = getattr(menu, option_name)
         except AttributeError:
-            print('Option not found.')
+            print('Option not found. Try another number:')
         else:
-            if option():
-                return True
+            option()
 
     @staticmethod
     def run(menu):
@@ -28,11 +27,7 @@ class Menu:
         while(user_input != 9):
             try:
                 user_input = int(input())
-                boolean = Menu.process(menu, user_input)
-                if boolean:
-                    return True
-                else:
-                    return False
+                Menu.process(menu, user_input)
             except ValueError:
                 print('Please insert a number:')
         print('Goodbye!')
