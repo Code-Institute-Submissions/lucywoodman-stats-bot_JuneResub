@@ -1,6 +1,6 @@
 # Local application imports
-from menuhelper import MenuHelper
-from menuclasses import MainMenu, SubMenu
+from menus import Menu, Main, Sub
+# from menuclasses import MainMenu, SubMenu
 from stats import *
 
 
@@ -10,11 +10,11 @@ def welcome():
 
 def main():
     welcome()
-    MenuHelper.generate_menu(MainMenu)
-    loggedin = MenuHelper.run(MainMenu)
+    Menu.generate_menu(Main)
+    loggedin = Menu.run(Main)
     while loggedin:
-        MenuHelper.generate_menu(SubMenu)
-        MenuHelper.run(SubMenu)
+        Menu.generate_menu(Sub)
+        Menu.run(Sub)
 
 
 if __name__ == '__main__':
