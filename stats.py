@@ -1,7 +1,6 @@
 # Third party imports
 import os
 from pymongo import MongoClient
-import datetime as dt
 
 # Local application imports
 if os.path.exists('settings.py'):
@@ -12,22 +11,6 @@ import helper
 client = MongoClient(mongodb_string)
 db = client.supportStats
 stats = db.stats
-
-
-def choose_week():
-    """
-    * Asks the user which week to view stats for.
-    * Converts input to a date object and runs human_date().
-    * @return(obj) date_obj -- the date object.
-    * @return(str) date_readable -- pretty date string returned from human_date().
-    """
-    print('\nWhich week would you like to view stats for?')
-    date_str = input('Date (format: YYYY-MM-DD): ')
-    date_obj = dt.datetime.strptime(date_str, '%Y-%m-%d')
-    wk_start = date_obj - dt.timedelta(days=date_obj.weekday())
-    wk_end = wk_start + dt.timedelta(days=6)
-    date_readable = helper.human_date(wk_start)
-    return wk_start, wk_end, date_readable
 
 
 def capture_stats(date):
@@ -136,16 +119,22 @@ def stats_daily():
         date_tpl = helper.choose_date()
         date, date_str = date_tpl
 
-        # Find the matching document from MongoDOB
-        stats_dict = db.stats.find_one({"date": date})
+        # If the chosen date doesn't exist in the database, tell the user.
+        if not db.stats.count_documents({"date": date}, limit=1):
+            print(
+                f'I don\'t have stats to show you for {date_str}. Choose another date.')
+            continue
+        else:
+            # Fetch the matching document in MongoDB.
+            stats_dict = db.stats.find_one({"date": date})
+            # Generate the table and print.
+            helper.generate_daily_stats(date_str, stats_dict)
 
-        helper.generate_daily_stats(date_str, stats_dict)
-
-        # Ask the user if they'd like to view more stats.
-        # If no, break out of the while loop.
-        if not helper.user_continue('view'):
-            print('Let\'s return to the menu')
-            return
+            # Ask the user if they'd like to view more stats.
+            # If no, break out of the while loop and return to the submenu.
+            if not helper.user_continue('view'):
+                print('Let\'s return to the menu')
+                return
 
 
 def stats_weekly():
@@ -153,7 +142,7 @@ def stats_weekly():
     # and return date object and string.
     while True:
         print('\nWhich date would you like to view the weekly stats for?')
-        dates_tpl = choose_week()
+        dates_tpl = helper.choose_week()
         wk_start, wk_end, date_str = dates_tpl
 
         wk_stats = helper.stats_aggregator(wk_start, wk_end)
