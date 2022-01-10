@@ -26,8 +26,6 @@ def test_database():
     except:
         print('I\'m having troubles connecting to the database. Try again later.')
         exit()
-    else:
-        pass
 
 
 def human_date(date):
