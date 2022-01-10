@@ -3,15 +3,31 @@ import os
 from pymongo import MongoClient
 import datetime as dt
 from tabulate import tabulate
+import certifi
 
 # Local application imports
 if os.path.exists('settings.py'):
     from settings import mongodb_string
 
 # Connect to MongoDB and set the database variables
-client = MongoClient(mongodb_string)
+client = MongoClient(host=mongodb_string,
+                     tlsCAFile=certifi.where(), serverSelectionTimeoutMS=5000)
 db = client.supportStats
+users = db.users
 stats = db.stats
+
+
+def test_database():
+    """
+    * Tests the database connection and returns an exception and exits if there are issues.
+    """
+    try:
+        users.find_one()
+    except:
+        print('I\'m having troubles connecting to the database. Try again later.')
+        exit()
+    else:
+        pass
 
 
 def human_date(date):
