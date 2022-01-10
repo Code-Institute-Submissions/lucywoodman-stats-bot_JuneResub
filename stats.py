@@ -1,16 +1,5 @@
-# Third party imports
-import os
-from pymongo import MongoClient
-
 # Local application imports
-if os.path.exists('settings.py'):
-    from settings import mongodb_string
-import helper
-
-# Connect to MongoDB and set the database variables
-client = MongoClient(mongodb_string)
-db = client.supportStats
-stats = db.stats
+from helper import *
 
 
 def capture_stats(date):
@@ -83,7 +72,7 @@ def stats_input():
         # Run choose_date() to capture date input,
         # and return date object and string.
         print('\nWhich date would you like to input stats for?')
-        date_tpl = helper.choose_date()
+        date_tpl = choose_date()
         date, date_str = date_tpl
 
         # If the date exists in the database already, offer to overwrite it.
@@ -91,7 +80,7 @@ def stats_input():
         if db.stats.count_documents({"date": date}, limit=1):
             print('This date already exists in the database.')
             user_input = input('Would you like to overwrite it (y/n)? ')
-            proceed_yes_no = helper.proceed(user_input)
+            proceed_yes_no = proceed(user_input)
             if proceed_yes_no:
                 print(
                     f'\nOkay, let\'s overwrite the stats for {date_str}.')
@@ -102,7 +91,7 @@ def stats_input():
 
         # Ask the user if they'd like to input more stats.
         # If no, break out of the while loop.
-        if not helper.user_continue('input'):
+        if not user_continue('input'):
             print('Let\'s return to the menu')
             return
 
@@ -116,7 +105,7 @@ def stats_daily():
     # and return date object and string.
     while True:
         print('\nWhich date would you like to view stats for?')
-        date_tpl = helper.choose_date()
+        date_tpl = choose_date()
         date, date_str = date_tpl
 
         # If the chosen date doesn't exist in the database, tell the user.
@@ -128,11 +117,11 @@ def stats_daily():
             # Fetch the matching document in MongoDB.
             stats_dict = db.stats.find_one({"date": date})
             # Generate the table and print.
-            helper.generate_daily_stats(date_str, stats_dict)
+            generate_daily_stats(date_str, stats_dict)
 
             # Ask the user if they'd like to view more stats.
             # If no, break out of the while loop and return to the submenu.
-            if not helper.user_continue('view'):
+            if not user_continue('view'):
                 print('Let\'s return to the menu')
                 return
 
@@ -142,10 +131,10 @@ def stats_weekly():
     # and return date object and string.
     while True:
         print('\nWhich date would you like to view the weekly stats for?')
-        dates_tpl = helper.choose_week()
+        dates_tpl = choose_week()
         wk_start, wk_end, date_str = dates_tpl
 
-        wk_stats = helper.stats_aggregator(wk_start, wk_end)
+        wk_stats = stats_aggregator(wk_start, wk_end)
 
         temp_list = list(wk_stats)
 
@@ -159,10 +148,10 @@ def stats_weekly():
                 if k != "_id":
                     key_list.append(k)
 
-        helper.generate_weekly_stats(date_str, key_list, stats_list)
+        generate_weekly_stats(date_str, key_list, stats_list)
 
         # Ask the user if they'd like to view more stats.
         # If no, break out of the while loop.
-        if not helper.user_continue('view'):
+        if not user_continue('view'):
             print('Let\'s return to the menu')
             return
