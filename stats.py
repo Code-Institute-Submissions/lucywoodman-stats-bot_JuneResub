@@ -194,15 +194,16 @@ def generate_daily_stats(date, stats_dict):
     print(tabulate(table_list, tablefmt="fancy_grid"))
 
 
-def generate_weekly_stats(date, stats_list):
+def generate_weekly_stats(date, key_list, stats_list):
     """
     * Create a table of stats for the given week.
     * @arg(obj) date -- the date object passed from stats_weekly().
+    * @arg(list) key_list -- the list of keys from the aggregator, passed from stats_weekly().
     * @arg(list) stats_list -- the list of stats from the database, passed from stats_weekly().
     """
-    key_list = ['Total tickets advanced: ', 'Total ticket public comments: ', 'Total tickets solved: ', 'Total chats: ', 'Average ticket public comments per day',
-                'Average tickets solved per day', 'Average no. of comments per ticket solve', 'Average chats per day', 'Average chat wait time: ', 'Chat CSAT for the week: ']
-
+    # Convert the stats values to floats to help table alignment and round ratio value.
+    stats_list = [float(x) for x in stats_list]
+    stats_list = [round(x, 1) for x in stats_list]
     # Merge the key_list and stats_list to a list of lists to be compatible with tabulate.
     table_list = [list(x) for x in zip(key_list, stats_list)]
 
@@ -213,7 +214,7 @@ def generate_weekly_stats(date, stats_list):
     print('-' * len(title))
 
     # Print the list as a table.
-    print(tabulate(table_list, tablefmt="fancy_grid"))
+    print(tabulate(table_list, tablefmt="fancy_grid", numalign="decimal"))
 
 
 def stats_daily():
@@ -238,17 +239,78 @@ def stats_weekly():
     dates_tpl = choose_week()
     wk_start, wk_end, date_str = dates_tpl
 
-    # Find the matching documents from MongoDB for the chosen week.
-    wk_stats = db.stats.aggregate([{"$match": {"date": {"$gte": wk_start, "$lte": wk_end}}}, {
-        "$group": {"_id": "null", "t_advanced": {"$sum": "$t_advanced"}, "t_pub_comments": {"$sum": "$t_pub_comments"}, "t_solved": {"$sum": "$t_solved"}}}])
+    wk_stats = db.stats.aggregate([
+        {
+            # Fetch the documents between the week starting and ending dates.
+            '$match': {
+                'date': {
+                    '$gte': wk_start,
+                    '$lte': wk_end
+                }
+            }
+        }, {
+            # Group the data and calculate the column totals.
+            '$group': {
+                '_id': 'null',
+                'Total tickets advanced': {
+                    '$sum': '$t_advanced'
+                },
+                'Total ticket public comments': {
+                    '$sum': '$t_pub_comments'
+                },
+                'Total tickets solved': {
+                    '$sum': '$t_solved'
+                },
+                'Total chats': {
+                    '$sum': '$c_total'
+                },
+                'Average ticket public comments per day': {
+                    '$avg': '$t_pub_comments'
+                },
+                'Average tickets solved per day': {
+                    '$avg': '$t_solved'
+                },
+                'Average chats per day': {
+                    '$avg': '$c_total'
+                },
+                'Average chat wait time': {
+                    '$avg': '$c_wait'
+                },
+                'Average chat CSAT for the week': {
+                    '$avg': '$c_csat'
+                }
+            }
+        }, {
+            # Forward the totals through the pipeline and include the comments per solve ratio.
+            '$project': {
+                'Total tickets advanced': 1,
+                'Total ticket public comments': 1,
+                'Total tickets solved': 1,
+                'Total chats': 1,
+                'Average ticket public comments per day': 1,
+                'Average tickets solved per day': 1,
+                'Average chats per day': 1,
+                'Average chat wait time': 1,
+                'Average chat CSAT for the week': 1,
+                'Average public comments per ticket solve': {
+                    '$divide': [
+                        '$Average ticket public comments per day', '$Average tickets solved per day'
+                    ]
+                }
+            }
+        }
+    ])
 
     temp_list = list(wk_stats)
 
     stats_list = []
+    key_list = []
     for i in temp_list:
         for v in i.values():
             if v != "null":
                 stats_list.append(v)
-    print(stats_list)
+        for k in i.keys():
+            if k != "_id" and k != "ratio_calc":
+                key_list.append(k)
 
-    generate_weekly_stats(date_str, stats_list)
+    generate_weekly_stats(date_str, key_list, stats_list)
