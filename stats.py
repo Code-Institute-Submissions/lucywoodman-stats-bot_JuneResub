@@ -169,7 +169,7 @@ def stats_main():
             return
 
 
-def generate_raw_stats(date, stats_dict):
+def generate_daily_stats(date, stats_dict):
     """
     * Create a table of stats for the given date.
     * @arg(obj) date -- the date object passed from stats_daily().
@@ -194,7 +194,7 @@ def generate_raw_stats(date, stats_dict):
     print(tabulate(table_list, tablefmt="fancy_grid"))
 
 
-def generate_sum_stats(date, stats_list):
+def generate_weekly_stats(date, stats_list):
     """
     * Create a table of stats for the given week.
     * @arg(obj) date -- the date object passed from stats_weekly().
@@ -229,7 +229,7 @@ def stats_daily():
     # Find the matching document from MongoDOB
     stats_dict = db.stats.find_one({"date": date})
 
-    generate_raw_stats(date_str, stats_dict)
+    generate_daily_stats(date_str, stats_dict)
 
 
 def stats_weekly():
@@ -251,4 +251,4 @@ def stats_weekly():
                 stats_list.append(v)
     print(stats_list)
 
-    generate_sum_stats(date_str, stats_list)
+    generate_weekly_stats(date_str, stats_list)
