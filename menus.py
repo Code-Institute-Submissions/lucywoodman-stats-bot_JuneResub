@@ -19,7 +19,7 @@ class Menu:
         except AttributeError:
             print('Option not found. Try another number:')
         else:
-            option()
+            return True if option() else False
 
     @staticmethod
     def run(menu):
@@ -27,7 +27,7 @@ class Menu:
         while(user_input != 9):
             try:
                 user_input = int(input())
-                Menu.process(menu, user_input)
+                return True if Menu.process(menu, user_input) else False
             except ValueError:
                 print('Please insert a number:')
         print('Goodbye!')
@@ -48,14 +48,12 @@ class Main(Menu):
     def opt_1():
         """Login"""
         print('Enter your username and password:')
-        if login():
-            return True
+        return True if login() else False
 
     @staticmethod
     def opt_2():
         """Register"""
-        if register():
-            return True
+        return True if register() else False
 
     @staticmethod
     def opt_9():
