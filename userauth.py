@@ -76,7 +76,6 @@ def login():
     while attempts > 0:
         # Capture the user input for the username.
         user = input('Username: ')
-        print('Searching for registered user...')
         test_database()
 
         # Check if the username exists in the database.
@@ -85,12 +84,10 @@ def login():
             attempts -= 1
             print(
                 f'That username isn\'t registered. You have {attempts} tries left.')
+            print('-' * 80)
             continue
-        else:
-            print('Registered user found.')
 
         # Capture the user input for the password.
-        print('-' * 80)
         pwd = getpass.getpass()
 
         # Encode and hash the password to match how the database stores passwords.
@@ -105,6 +102,7 @@ def login():
             attempts -= 1
             print(
                 f'The password is incorrect. You have {attempts} tries left.')
+            print('-' * 80)
             continue
         else:
             print('-' * 80)
