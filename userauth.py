@@ -1,5 +1,4 @@
 # Third party imports
-import os
 import getpass
 import hashlib
 from xkcdpass import xkcd_password as xp
@@ -62,8 +61,7 @@ def register():
             print('-' * 80)
             print('You have successfully registered!')
             print('Go ahead and login:')
-            if login():
-                return True
+            login()
         return
 
 
@@ -76,36 +74,42 @@ def login():
     attempts = 3
     # Create a login loop while the attempts are greater than 0.
     while attempts > 0:
-        # Capture the user input for username and password.
+        # Capture the user input for the username.
         user = input('Username: ')
+        print('Searching for registered user...')
+        test_database()
+
+        # Check if the username exists in the database.
+        if not users.count_documents({"username": user}, limit=1):
+            # If the username doesn't match any in the db, then reduce attempts by 1.
+            attempts -= 1
+            print(
+                f'That username isn\'t registered. You have {attempts} tries left.')
+            continue
+        else:
+            print('Registered user found.')
+
+        # Capture the user input for the password.
+        print('-' * 80)
         pwd = getpass.getpass()
 
         # Encode and hash the password to match how the database stores passwords.
         enc_pwd = pwd.encode()
         hash_pwd = hashlib.md5(enc_pwd).hexdigest()
+        # Fetch the user's info from the database.
+        result = users.find_one({"username": user})
 
-        print('Authenticating user...')
-        test_database()
-
-        # If the username exists in the database, fetch the info for that user.
-        if users.count_documents({"username": user}, limit=1):
-            result = users.find_one({"username": user})
-
-            # If the hashed password matches the hashed password in the db, let the user login.
-            if result["password"] == hash_pwd:
-                print('You have successfully logged in!')
-                return True
+        # If the hashed password matches the hashed password in the db, let the user login.
+        if result["password"] != hash_pwd:
             # If the hashed password doesn't match, then reduce attempts by 1.
-            else:
-                attempts -= 1
-                print(
-                    f'The password is incorrect. You have {attempts} tries left.')
-        # If the username doesn't match any in the db, then reduce attempts by 1.
-        else:
             attempts -= 1
             print(
-                f'That username isn\'t registered. You have {attempts} tries left.')
-        # When the attempts run out (reduce to 0), break the login loop and exit.
-        if attempts == 0:
-            print('Exiting...')
+                f'The password is incorrect. You have {attempts} tries left.')
+            continue
+        else:
+            print('-' * 80)
+            print('You have successfully logged in!')
+            return True
+
+    print('Exiting...')
     print('Goodbye!')
