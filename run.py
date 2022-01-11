@@ -19,7 +19,6 @@ def welcome():
     print('=' * 80)
     print('WELCOME TO:')
     print(ascii_banner + bot)
-    # print(bot)
 
 
 def main():
