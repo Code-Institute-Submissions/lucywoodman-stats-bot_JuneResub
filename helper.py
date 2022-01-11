@@ -7,8 +7,10 @@ import certifi
 import re
 
 # Local application imports
-if os.path.exists('settings.py'):
-    from settings import MONGODB_URI
+if os.path.exists('env.py'):
+  import env 
+
+MONGODB_URI = os.environ.get('MONGODB_URI')
 
 # Connect to MongoDB and set the database variables
 client = MongoClient(host=MONGODB_URI,
