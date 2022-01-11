@@ -50,7 +50,7 @@ def choose_date():
         date_str = input('Date (format: YYYY-MM-DD): ')
         match = re.match('^[0-9]{4}-[0-9]{2}-[0-9]{2}$', date_str)
         if match is None:
-            print('Enter a date with the correct format.')
+            print('Enter a date with the correct format:')
         else:
             date_obj = dt.datetime.strptime(date_str, '%Y-%m-%d')
             date_readable = human_date(date_obj)
