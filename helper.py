@@ -4,6 +4,7 @@ from pymongo import MongoClient
 import datetime as dt
 from tabulate import tabulate
 import certifi
+import re
 
 # Local application imports
 if os.path.exists('settings.py'):
@@ -45,10 +46,15 @@ def choose_date():
     * @return(obj) date_obj -- the date object.
     * @return(str) date_readable -- pretty date string returned from human_date().
     """
-    date_str = input('Date (format: YYYY-MM-DD): ')
-    date_obj = dt.datetime.strptime(date_str, '%Y-%m-%d')
-    date_readable = human_date(date_obj)
-    return date_obj, date_readable
+    while True:
+        date_str = input('Date (format: YYYY-MM-DD): ')
+        match = re.match('^[0-9]{4}-[0-9]{2}-[0-9]{2}$', date_str)
+        if match is None:
+            print('Enter a date with the correct format.')
+        else:
+            date_obj = dt.datetime.strptime(date_str, '%Y-%m-%d')
+            date_readable = human_date(date_obj)
+            return date_obj, date_readable
 
 
 def choose_week():
