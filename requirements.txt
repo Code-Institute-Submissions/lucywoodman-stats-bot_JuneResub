@@ -1,1 +1,13 @@
-# Your requirements go here
+astroid==2.9.3
+certifi==2021.10.8
+isort==5.10.1
+lazy-object-proxy==1.7.1
+mccabe==0.6.1
+platformdirs==2.4.1
+pyfiglet==0.8.post1
+pylint==2.12.2
+pymongo==4.0.1
+tabulate==0.8.9
+toml==0.10.2
+wrapt==1.13.3
+xkcdpass==1.19.3
