@@ -8,10 +8,10 @@ import re
 
 # Local application imports
 if os.path.exists('settings.py'):
-    from settings import mongodb_string
+    from settings import MONGODB_URI
 
 # Connect to MongoDB and set the database variables
-client = MongoClient(host=mongodb_string,
+client = MongoClient(host=MONGODB_URI,
                      tlsCAFile=certifi.where(), serverSelectionTimeoutMS=5000)
 db = client.supportStats
 users = db.users
