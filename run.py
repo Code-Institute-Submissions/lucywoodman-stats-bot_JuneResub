@@ -1,9 +1,25 @@
+# Third party imports
+import pyfiglet
+
 # Local application imports
 from menus import *
 
 
 def welcome():
-    print('doodledy doo doo')
+    ascii_banner = pyfiglet.figlet_format("Stats Bot!!")
+    bot = """
+         ___T_     
+        | O O |    
+        |__u__|    
+      (m9\:::/\    
+         /___\ 6    
+          |_|      
+         (ooo)
+    """
+    print('=' * 80)
+    print('WELCOME TO:')
+    print(ascii_banner + bot)
+    # print(bot)
 
 
 def main():
