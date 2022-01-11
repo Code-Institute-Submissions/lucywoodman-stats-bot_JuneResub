@@ -75,7 +75,7 @@ class Sub(Menu):
 
     @staticmethod
     def opt_2():
-        """View daily Support stats"""
+        """View daily Support stat summary"""
         stats_daily()
 
     @staticmethod
