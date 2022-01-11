@@ -61,8 +61,7 @@ def register():
             print('-' * 80)
             print('You have successfully registered!')
             print('Go ahead and login:')
-            login()
-        return
+            return True if login() else False
 
 
 def login():
