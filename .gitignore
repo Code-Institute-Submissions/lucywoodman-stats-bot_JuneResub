@@ -6,6 +6,7 @@ __pycache__/
 *.py[cod]
 node_modules/
 .github/
+.vscode/
 .venv
-settings.py
+env.py
 NOTES.md
