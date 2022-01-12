@@ -109,8 +109,14 @@ def generate_daily_stats(date, stats_dict):
     * @arg(obj) date -- the date object passed from stats_daily().
     * @arg(dict) stats_dict -- the dict of stats from the database, passed from stats_daily().
     """
-    key_list = ['No. of tickets advanced: ', 'No. of ticket public comments: ', 'No. of tickets solved: ',
-                'Incoming ticket queue: ', 'Handoff ticket queue: ', 'Total chats: ', 'Chat wait time: ', 'Chat CSAT: ']
+    key_list = ['No. of tickets advanced: ',
+                'No. of ticket public comments: ',
+                'No. of tickets solved: ',
+                'Incoming ticket queue: ',
+                'Handoff ticket queue: ',
+                'Total chats: ',
+                'Chat wait time: ',
+                'Chat CSAT: ']
     # Convert the stats_dict values to a list.
     stats_list = list(stats_dict.values())
     # Remove the MongoDB ID and date from the list.

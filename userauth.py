@@ -1,8 +1,9 @@
 # Third party imports
 import getpass
 import hashlib
-from xkcdpass import xkcd_password as xp
 import time
+from xkcdpass import xkcd_password as xp
+
 
 # Local application imports
 from helper import test_database, users
@@ -52,12 +53,12 @@ def register():
             enc_pwd = pwd.encode()
             hash_pwd = hashlib.md5(enc_pwd).hexdigest()
 
-            newUser = {
+            new_user = {
                 "username": username,
                 "password": hash_pwd
             }
 
-            users.insert_one(newUser)
+            users.insert_one(new_user)
             print('-' * 80)
             print('You have successfully registered!')
             print('Go ahead and login:')
@@ -66,7 +67,7 @@ def register():
 
 def login():
     """
-    * Captures the user's input username and password, and checks if they exist in the database. 
+    * Captures the user's input username and password, and checks if they exist in the database.
     * If they're already registered, and the input details match, allows login.
     """
     # Set the number of tries the user is allowed.

@@ -2,17 +2,17 @@
 import pyfiglet
 
 # Local application imports
-from menus import *
+from menus import Menu, Main, Sub
 
 
 def welcome():
     ascii_banner = pyfiglet.figlet_format("Stats Bot!!")
-    bot = """
+    bot = r"""
          ___T_     
         | O O |    
         |__u__|    
       (m9\:::/\    
-         /___\ 6    
+         /___\6    
           |_|      
          (ooo)
     """

@@ -24,7 +24,7 @@ class Menu:
     @staticmethod
     def run(menu):
         user_input = 0
-        while(user_input != 9):
+        while user_input != 9:
             try:
                 user_input = int(input())
                 return True if Menu.process(menu, user_input) else False
