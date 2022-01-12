@@ -67,7 +67,8 @@ def register():
 
 def login():
     """
-    * Captures the user's input username and password, and checks if they exist in the database.
+    * Captures the user's input username and password,
+    * and checks if they exist in the database.
     * If they're already registered, and the input details match, allows login.
     """
     # Set the number of tries the user is allowed.
@@ -80,23 +81,24 @@ def login():
 
         # Check if the username exists in the database.
         if not users.count_documents({"username": user}, limit=1):
-            # If the username doesn't match any in the db, then reduce attempts by 1.
+            # If the username doesn't match any in the db,
+            # then reduce attempts by 1.
             attempts -= 1
-            print(
-                f'That username isn\'t registered. You have {attempts} tries left.')
+            print(f'I can\'t find that user. You have {attempts} tries left.')
             print('-' * 80)
             continue
 
         # Capture the user input for the password.
         pwd = getpass.getpass()
 
-        # Encode and hash the password to match how the database stores passwords.
+        # Encode and hash the password to match how the db stores passwords.
         enc_pwd = pwd.encode()
         hash_pwd = hashlib.md5(enc_pwd).hexdigest()
         # Fetch the user's info from the database.
         result = users.find_one({"username": user})
 
-        # If the hashed password matches the hashed password in the db, let the user login.
+        # If the hashed password matches the hashed password in the db,
+        # let the user login.
         if result["password"] != hash_pwd:
             # If the hashed password doesn't match, then reduce attempts by 1.
             attempts -= 1

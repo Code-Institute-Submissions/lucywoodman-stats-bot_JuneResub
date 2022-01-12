@@ -8,12 +8,12 @@ from menus import Menu, Main, Sub
 def welcome():
     ascii_banner = pyfiglet.figlet_format("Stats Bot!!")
     bot = r"""
-         ___T_     
-        | O O |    
-        |__u__|    
-      (m9\:::/\    
-         /___\6    
-          |_|      
+         ___T_
+        | O O |
+        |__u__|
+      (m9\:::/\
+         /___\6
+          |_|
          (ooo)
     """
     print('=' * 80)

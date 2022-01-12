@@ -21,12 +21,13 @@ stats = db.stats
 
 def test_database():
     """
-    * Tests the database connection and returns an exception and exits if there are issues.
+    * Tests the db connection
+    * Raises an exception and exits if there are issues.
     """
     try:
         users.find_one()
     except errors.ConnectionFailure:
-        print('I\'m having troubles connecting to the database. Try again later.')
+        print('The database says no. Try again later.')
         exit()
 
 
@@ -51,8 +52,8 @@ def user_continue(question):
 def human_date(date):
     """
     * Converts the date to a prettier, more readable date.
-    * @arg(obj) date -- the date object from choose_date().
-    * @return(str) human_date -- pretty date string, e.g. "Wednesday, 05 May 2021"
+    * @arg(obj) date -- the date object.
+    * @return(str) human_date -- pretty date string.
     """
     date = date.strftime('%A, %d %B %Y')
     return date
@@ -63,7 +64,7 @@ def choose_date():
     * Asks the user which date to input/view stats for.
     * Converts input to a date object and runs human_date().
     * @return(obj) date_obj -- the date object.
-    * @return(str) date_readable -- pretty date string returned from human_date().
+    * @return(str) date_readable -- pretty date string.
     """
     while True:
         date_str = input('Date (format: YYYY-MM-DD): ')
@@ -79,24 +80,27 @@ def choose_date():
 def choose_week():
     """
     * Asks the user which week to view stats for.
-    * Converts input to a date object, runs human_date(), and checks if it exists in the db.
+    * Converts input to a date object.
+    * Checks if it exists in the db.
     * @return(obj) wk_start -- the date object for the week start.
     * @return(obj) wk_end -- the date object for the week end.
-    * @return(str) date_readable -- pretty date string returned from human_date().
+    * @return(str) date_readable -- pretty date string.
     """
     while True:
         # Capture the user input date.
         date = choose_date()
         date_obj = date[0]
-        # Calculate the start of the week for the user's chosen date and create a pretty date.
+        # Calculate the start of the week.
         wk_start = date_obj - dt.timedelta(days=date_obj.weekday())
         date_readable = human_date(wk_start)
-        # Calculate the end of the week for the user's chosen date.
+        # Calculate the end of the week.
         wk_end = wk_start + dt.timedelta(days=6)
-        # If the chosen date range doesn't exist in the database, tell the user.
-        if not db.stats.count_documents({"date": {'$gte': wk_start, '$lte': wk_end}}, limit=7):
+        # If the range is not in the db, tell the user.
+        if not db.stats.count_documents({
+            "date": {'$gte': wk_start, '$lte': wk_end}
+        }, limit=7):
             print(
-                f'I don\'t have stats to show you for week commencing {date_readable}.')
+                f'I don\'t have stats for week commencing {date_readable}.')
             continue
         # If it does exist, return week start, end and pretty dates.
         else:
@@ -106,8 +110,8 @@ def choose_week():
 def generate_daily_stats(date, stats_dict):
     """
     * Create a table of stats for the given date.
-    * @arg(obj) date -- the date object passed from stats_daily().
-    * @arg(dict) stats_dict -- the dict of stats from the database, passed from stats_daily().
+    * @arg(obj) date -- the date object.
+    * @arg(dict) stats_dict -- the dict of stats from the database.
     """
     key_list = ['No. of tickets advanced: ',
                 'No. of ticket public comments: ',
@@ -121,7 +125,7 @@ def generate_daily_stats(date, stats_dict):
     stats_list = list(stats_dict.values())
     # Remove the MongoDB ID and date from the list.
     stats_list = stats_list[2:]
-    # Merge the key_list and stats_list to a list of lists to be compatible with tabulate.
+    # Merge the lists for tabulate.
     table_list = [list(x) for x in zip(key_list, stats_list)]
 
     # Generate header to include the date.
@@ -138,13 +142,13 @@ def generate_weekly_stats(date, key_list, stats_list):
     """
     * Create a table of stats for the given week.
     * @arg(obj) date -- the date object passed from stats_weekly().
-    * @arg(list) key_list -- the list of keys from the aggregator, passed from stats_weekly().
-    * @arg(list) stats_list -- the list of stats from the database, passed from stats_weekly().
+    * @arg(list) key_list -- the list of keys from the aggregator.
+    * @arg(list) stats_list -- the list of stats from the database.
     """
-    # Convert the stats values to floats to help table alignment and round ratio value.
+    # Convert the stats values to rounded floats to help table alignment.
     stats_list = [float(x) for x in stats_list]
     stats_list = [round(x, 1) for x in stats_list]
-    # Merge the key_list and stats_list to a list of lists to be compatible with tabulate.
+    # Merge the lists for tabulate.
     table_list = [list(x) for x in zip(key_list, stats_list)]
 
     # Generate header to include the date.
@@ -160,7 +164,7 @@ def generate_weekly_stats(date, key_list, stats_list):
 def stats_aggregator(start_date, end_date):
     agg_stats = db.stats.aggregate([
         {
-            # Fetch the documents between the week starting and ending dates.
+            # Fetch the data between the week starting and ending dates.
             '$match': {
                 'date': {
                     '$gte': start_date,
@@ -200,7 +204,7 @@ def stats_aggregator(start_date, end_date):
                 }
             }
         }, {
-            # Forward the totals through the pipeline and include the comments per solve ratio.
+            # Add comments per solve ratio.
             '$project': {
                 'Total tickets advanced': 1,
                 'Total ticket public comments': 1,
@@ -213,7 +217,8 @@ def stats_aggregator(start_date, end_date):
                 'Average chat CSAT for the week': 1,
                 'Average public comments per ticket solved': {
                     '$divide': [
-                        '$Average ticket public comments per day', '$Average tickets solved per day'
+                        '$Average ticket public comments per day',
+                        '$Average tickets solved per day'
                     ]
                 }
             }

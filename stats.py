@@ -6,7 +6,7 @@ def capture_stats(date):
     """
     * Capture stats from the user.
     * @arg(obj) date -- the date object passed from update_stats().
-    * @return(dict) statDocument -- MongoDB compatible data structure for the captured stats.
+    * @return(dict) statDocument -- MongoDB data structure for the stats.
     """
     # Generate a title for ticket section.
     t_title = '** Ticket Stats **'
@@ -48,7 +48,7 @@ def capture_stats(date):
 
 def update_stats(date):
     """
-    * Checks the database to see if the date already exists, and proceeds accordingly.
+    * Checks the database to see if the date already exists.
     * @arg(obj) date -- the date object passed from stats_main().
     """
     exist = helper.db.stats.count_documents({"date": date}, limit=1)
@@ -89,14 +89,15 @@ def stats_input():
 
         # Ask the user if they'd like to input more stats.
         # If no, break out of the while loop.
-        if not helper.user_continue('Would you like to input more stats (y/n)? '):
+        if not helper.user_continue('Give me more stats (y/n)? '):
             print('Let\'s return to the menu')
             return
 
 
 def stats_daily():
     """
-    * Asks the user to choose a date, finds the matching document in the database,
+    * Asks the user to choose a date,
+    * finds the matching document in the db,
     * then displays that date's stats in a table format.
     """
     # Run choose_date() to capture date input,
@@ -109,7 +110,7 @@ def stats_daily():
         # If the chosen date doesn't exist in the database, tell the user.
         if not helper.db.stats.count_documents({"date": date}, limit=1):
             print(
-                f'I don\'t have stats to show you for {date_str}. Choose another date.')
+                f'I don\'t have stats for {date_str}. Choose another date.')
             continue
         else:
             # Fetch the matching document in MongoDB.
@@ -119,7 +120,7 @@ def stats_daily():
 
             # Ask the user if they'd like to view more stats.
             # If no, break out of the while loop and return to the submenu.
-            if not helper.user_continue('Would you like to view more stats (y/n)? '):
+            if not helper.user_continue('View more stats (y/n)? '):
                 print('Let\'s return to the menu')
                 return
 
@@ -150,6 +151,6 @@ def stats_weekly():
 
         # Ask the user if they'd like to view more stats.
         # If no, break out of the while loop.
-        if not helper.user_continue('Would you like to view more stats (y/n)? '):
+        if not helper.user_continue('View more stats (y/n)? '):
             print('Let\'s return to the menu')
             return

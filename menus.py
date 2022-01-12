@@ -35,9 +35,9 @@ class Menu:
     @staticmethod
     def generate_menu(menu):
         print('=' * 80)
-        options = [i for i in dir(menu) if i.startswith('opt_')]
+        opts = [i for i in dir(menu) if i.startswith('opt_')]
         menu_str = '\n'.join(
-            f'{option[-1]}. {getattr(menu, option).__doc__}' for option in options)
+            f'{opt[-1]}. {getattr(menu, opt).__doc__}' for opt in opts)
         print(menu_str)
         print('=' * 80)
         print('Insert a number: ')
