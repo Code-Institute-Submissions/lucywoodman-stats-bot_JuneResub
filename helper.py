@@ -4,7 +4,6 @@ from pymongo import MongoClient
 import datetime as dt
 from tabulate import tabulate
 import certifi
-import re
 
 # Local application imports
 if os.path.exists('env.py'):
