@@ -1,6 +1,6 @@
 # Third party imports
 import os
-from pymongo import MongoClient
+from pymongo import MongoClient, errors
 import datetime as dt
 from tabulate import tabulate
 import certifi
@@ -25,7 +25,7 @@ def test_database():
     """
     try:
         users.find_one()
-    except:
+    except errors.ConnectionFailure:
         print('I\'m having troubles connecting to the database. Try again later.')
         exit()
 
