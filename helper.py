@@ -36,8 +36,8 @@ def human_date(date):
     * @arg(obj) date -- the date object from choose_date().
     * @return(str) human_date -- pretty date string, e.g. "Wednesday, 05 May 2021"
     """
-    human_date = date.strftime('%A, %d %B %Y')
-    return human_date
+    date = date.strftime('%A, %d %B %Y')
+    return date
 
 
 def choose_date():
