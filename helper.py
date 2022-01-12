@@ -8,7 +8,7 @@ import re
 
 # Local application imports
 if os.path.exists('env.py'):
-  import env 
+    import env
 
 MONGODB_URI = os.environ.get('MONGODB_URI')
 
@@ -50,11 +50,11 @@ def choose_date():
     """
     while True:
         date_str = input('Date (format: YYYY-MM-DD): ')
-        match = re.match('^[0-9]{4}-[0-9]{2}-[0-9]{2}$', date_str)
-        if match is None:
-            print('Enter a date with the correct format:')
-        else:
+        try:
             date_obj = dt.datetime.strptime(date_str, '%Y-%m-%d')
+        except ValueError:
+            print('The input did not match the date format.')
+        else:
             date_readable = human_date(date_obj)
             return date_obj, date_readable
 
