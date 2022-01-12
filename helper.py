@@ -30,6 +30,24 @@ def test_database():
         exit()
 
 
+def user_continue(question):
+    """
+    * Asks the user if they'd like view or input more stats.
+    * @raises(ValueError) -- If the input does not match y or n.
+    * @return(bool) -- True for y, False for n.
+    """
+    while True:
+        user_input = input(question)
+        try:
+            user_input.lower()
+            if user_input not in ('y', 'n'):
+                raise ValueError('The input did not match "y" or "n".')
+        except ValueError:
+            print('The input did not match "y" or "n".')
+        else:
+            return True if user_input == 'y' else False
+
+
 def human_date(date):
     """
     * Converts the date to a prettier, more readable date.
@@ -87,25 +105,6 @@ def choose_week():
             return wk_start, wk_end, date_readable
 
 
-def user_continue(arg):
-    """
-    * Asks the user if they'd like view or input more stats.
-    * @raises(ValueError) -- If the input does not match y or n.
-    * @return(bool) -- True for y, False for n.
-    """
-    while True:
-        user_input = input(
-            f'Would you like to {arg} more stats (y/n)? ')
-        try:
-            user_input.lower()
-            if user_input not in ('y', 'n'):
-                raise ValueError('The input did not match "y" or "n".')
-        except ValueError:
-            print('The input did not match "y" or "n".')
-        else:
-            return True if user_input == 'y' else False
-
-
 def generate_daily_stats(date, stats_dict):
     """
     * Create a table of stats for the given date.
@@ -155,7 +154,7 @@ def generate_weekly_stats(date, key_list, stats_list):
 
 
 def stats_aggregator(start_date, end_date):
-    stats = db.stats.aggregate([
+    agg_stats = db.stats.aggregate([
         {
             # Fetch the documents between the week starting and ending dates.
             '$match': {
@@ -217,4 +216,4 @@ def stats_aggregator(start_date, end_date):
         }
     ])
 
-    return stats
+    return agg_stats

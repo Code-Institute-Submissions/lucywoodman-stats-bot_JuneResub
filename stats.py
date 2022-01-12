@@ -79,9 +79,7 @@ def stats_input():
         # If overwriting or adding new stats, run update_stats().
         if db.stats.count_documents({"date": date}, limit=1):
             print('This date already exists in the database.')
-            user_input = input('Would you like to overwrite it (y/n)? ')
-            proceed_yes_no = proceed(user_input)
-            if proceed_yes_no:
+            if user_continue('Would you like to overwrite it (y/n)? '):
                 print(
                     f'\nOkay, let\'s overwrite the stats for {date_str}.')
                 update_stats(date)
@@ -91,7 +89,7 @@ def stats_input():
 
         # Ask the user if they'd like to input more stats.
         # If no, break out of the while loop.
-        if not user_continue('input'):
+        if not user_continue('Would you like to input more stats (y/n)? '):
             print('Let\'s return to the menu')
             return
 
@@ -121,7 +119,7 @@ def stats_daily():
 
             # Ask the user if they'd like to view more stats.
             # If no, break out of the while loop and return to the submenu.
-            if not user_continue('view'):
+            if not user_continue('Would you like to view more stats (y/n)? '):
                 print('Let\'s return to the menu')
                 return
 
@@ -152,6 +150,6 @@ def stats_weekly():
 
         # Ask the user if they'd like to view more stats.
         # If no, break out of the while loop.
-        if not user_continue('view'):
+        if not user_continue('Would you like to view more stats (y/n)? '):
             print('Let\'s return to the menu')
             return
