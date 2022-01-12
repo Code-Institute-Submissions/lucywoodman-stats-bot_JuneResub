@@ -87,27 +87,23 @@ def choose_week():
             return wk_start, wk_end, date_readable
 
 
-def proceed(user_input):
-    """
-    * Handles the user input from a yes/no question.
-    * @return(bool) -- True for y, False for n.
-    """
-    if user_input == 'y':
-        return True
-    elif user_input == 'n':
-        return False
-    elif user_input != 'y' and proceed != 'n':
-        print('Incorrect input. Please type "y" or "n".')
-
-
 def user_continue(arg):
     """
     * Asks the user if they'd like view or input more stats.
-    * @return(bool) proceed_yes_no -- True for yes, False for no.
+    * @raises(ValueError) -- If the input does not match y or n.
+    * @return(bool) -- True for y, False for n.
     """
-    user_input = input(f'Would you like to {arg} more stats (y/n)? ')
-    proceed_yes_no = proceed(user_input)
-    return proceed_yes_no
+    while True:
+        user_input = input(
+            f'Would you like to {arg} more stats (y/n)? ')
+        try:
+            user_input.lower()
+            if user_input not in ('y', 'n'):
+                raise ValueError('The input did not match "y" or "n".')
+        except ValueError:
+            print('The input did not match "y" or "n".')
+        else:
+            return True if user_input == 'y' else False
 
 
 def generate_daily_stats(date, stats_dict):
