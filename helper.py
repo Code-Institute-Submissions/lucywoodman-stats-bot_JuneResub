@@ -7,7 +7,7 @@ import certifi
 
 # Local application imports
 if os.path.exists('env.py'):
-    import env
+    import env  # pylint: disable=unused-import
 
 MONGODB_URI = os.environ.get('MONGODB_URI')
 
