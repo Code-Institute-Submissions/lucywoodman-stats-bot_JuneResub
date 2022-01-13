@@ -83,9 +83,7 @@ def print_stats(title, data):
     table_list = [list(x) for x in zip(data[0], stats_list)]
 
     # Generate header.
-    print('-' * len(title))
-    print(title)
-    print('-' * len(title))
+    Title(title)
 
     # Print the list as a table.
     print(tabulate(table_list, tablefmt="fancy_grid", numalign="decimal"))
@@ -106,31 +104,31 @@ def aggregate_data(start, end):
             '$group': {
                 '_id': 'null',
                 'Total tickets advanced': {
-                    '$sum': '$t_advanced'
+                    '$sum': '$advanced'
                 },
                 'Total ticket public comments': {
-                    '$sum': '$t_pub_comments'
+                    '$sum': '$comments'
                 },
                 'Total tickets solved': {
-                    '$sum': '$t_solved'
+                    '$sum': '$solved'
                 },
                 'Total chats': {
-                    '$sum': '$c_total'
+                    '$sum': '$total'
                 },
                 'Average ticket public comments per day': {
-                    '$avg': '$t_pub_comments'
+                    '$avg': '$comments'
                 },
                 'Average tickets solved per day': {
-                    '$avg': '$t_solved'
+                    '$avg': '$solved'
                 },
                 'Average chats per day': {
-                    '$avg': '$c_total'
+                    '$avg': '$total'
                 },
                 'Average chat wait time': {
-                    '$avg': '$c_wait'
+                    '$avg': '$wait'
                 },
                 'Average chat CSAT for the week': {
-                    '$avg': '$c_csat'
+                    '$avg': '$csat'
                 }
             }
         }, {
@@ -154,5 +152,4 @@ def aggregate_data(start, end):
             }
         }
     ])
-
     return data
