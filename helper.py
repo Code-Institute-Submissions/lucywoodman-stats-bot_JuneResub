@@ -85,7 +85,7 @@ def print_stats(title, data):
 def aggregate_data(start, end):
     data = db.stats.aggregate([
         {
-            # Fetch the data between the week starting and ending dates.
+            # Fetch the data between the starting and ending dates.
             '$match': {
                 'date': {
                     '$gte': start,
