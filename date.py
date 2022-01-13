@@ -4,7 +4,7 @@ import datetime as dt
 # Local application imports
 from helper import db
 
-class Date():
+class Date:
     def __init__(self):
         self.__date = ''
 

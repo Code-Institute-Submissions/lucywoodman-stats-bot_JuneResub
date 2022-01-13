@@ -1,4 +1,4 @@
-class AddData():
+class AddData:
     def __set_name__(self, owner, name):
         self.name = name
 
@@ -8,7 +8,7 @@ class AddData():
     def __set__(self, obj, value) -> None:
         obj.__dict__[self.name] = value
 
-class Stats():
+class Stats:
     date = AddData()
     advanced = AddData()
     comments = AddData()
