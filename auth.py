@@ -52,6 +52,7 @@ class Login:
             if proceed:
                 db.users.insert_one(self.__dict__)
                 print('You are now registered!')
+                return True
 
         if 'login' in option:
             option = 'login'
@@ -61,6 +62,7 @@ class Login:
             proceed = self._check_user(option)
             if proceed:
                 print('You\'re now logged in!')
+                return True
 
 print('Exiting...')
 print('Goodbye!')
