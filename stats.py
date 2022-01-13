@@ -1,6 +1,26 @@
 # Local application imports
 import helper
 from date import Date
+from data import Stats
+
+def new_stats():
+    input_date = Date()
+    input_date.date = input('Insert a date: ')
+    helper.Title('** ZenDesk Stats **')
+    stats = Stats()
+    stats.date = input_date.date
+    stats.advanced = int(input('Number of tickets advanced: '))
+    stats.comments = int(input('Number of ticket public comments: '))
+    stats.solved = int(input('Number of tickets solved: '))
+    stats.q_start = int(input('Number of tickets in queue at shift start: '))
+    stats.q_end = int(input('Number of tickets in queue at shift end: '))
+    helper.Title('** Intercom Stats **')
+    stats.total = int(input('Number of chats handled: '))
+    stats.wait = int(input('Average chat wait time (in seconds): '))
+    stats.csat = int(input('Chat CSAT score: '))
+    return stats.__dict__
+
+new_stats()
 
 
 def capture_stats(date):
@@ -123,4 +143,3 @@ def fetch_stats(*args):
         if not helper.user_continue('View more stats (y/n)? '):
             print('Let\'s return to the menu')
             return
-            
