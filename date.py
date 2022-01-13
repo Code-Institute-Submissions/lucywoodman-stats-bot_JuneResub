@@ -45,9 +45,9 @@ class Date():
     def validate(self):
         if not db.stats.count_documents({
             "date": {'$gte': self.start, '$lte': self.end}}):
-            print(f'I don\'t have any stats for w/c {Date.pretty_date(range_start)}')
+            print(f'I don\'t have any data for w/c {Date.pretty_date(self.start)}')
         else:
-            print('stats found')
+            print('Data found...')
 
     @staticmethod
     def pretty_date(date):
@@ -56,9 +56,4 @@ class Date():
         * @return(str) -- pretty date string
         """
         return date.strftime('%A, %d %B %Y')
-
-
-# test_date = Date()
-# test_date.date = input('Insert a date: ')
-
-# print(test_date.date)
+        
