@@ -1,19 +1,8 @@
 # Third party imports
-import os
 import datetime as dt
-from pymongo import MongoClient
-import certifi
 
 # Local application imports
-if os.path.exists('env.py'):
-    import env  # pylint: disable=unused-import
-MONGODB_URI = os.environ.get('MONGODB_URI')
-# Connect to MongoDB and set the database variables
-client = MongoClient(host=MONGODB_URI,
-                     tlsCAFile=certifi.where(), serverSelectionTimeoutMS=5000)
-db = client.supportStats
-users = db.users
-stats = db.stats
+from helper import db
 
 class Date():
     def __init__(self):
