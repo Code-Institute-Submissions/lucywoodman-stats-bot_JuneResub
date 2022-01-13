@@ -61,7 +61,9 @@ def fetch_stats(*args):
             user_date.validate(user_date.start, user_date.end)
             header = f'Stats for w/c {Date.pretty_date(user_date.start)}'
         else:
-            user_date.validate(user_date.date, user_date.date)
+            user_date.start = user_date.date
+            user_date.end = user_date.date
+            user_date.validate(user_date.start, user_date.end)
             header = f'Stats for {Date.pretty_date(user_date.start)}'
         print('Fetching data...')
         data = helper.aggregate_data(user_date.start, user_date.end)
