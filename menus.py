@@ -47,14 +47,14 @@ class Main(Menu):
     @staticmethod
     def opt_1():
         """Login"""
-        new_user = Login()
-        new_user.handle_user('register')
+        current_user = Login()
+        current_user.handle_user('login')
 
     @staticmethod
     def opt_2():
         """Register"""
-        current_user = Login()
-        current_user.handle_user('login')
+        new_user = Login()
+        new_user.handle_user('register')
 
     @staticmethod
     def opt_9():
