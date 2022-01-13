@@ -1,5 +1,5 @@
-from userauth import login, register
-from stats import stats_input, stats_daily, stats_weekly, stats_export
+from auth import Login
+from stats import fetch_stats, update_stats
 
 
 class Menu:
@@ -19,7 +19,7 @@ class Menu:
         except AttributeError:
             print('Option not found. Try another number:')
         else:
-            return True if option() else False
+            option()
 
     @staticmethod
     def run(menu):
@@ -27,7 +27,7 @@ class Menu:
         while user_input != 9:
             try:
                 user_input = int(input())
-                return True if Menu.process(menu, user_input) else False
+                Menu.process(menu, user_input)
             except ValueError:
                 print('Please insert a number:')
         print('Goodbye!')
@@ -40,20 +40,21 @@ class Menu:
             f'{opt[-1]}. {getattr(menu, opt).__doc__}' for opt in opts)
         print(menu_str)
         print('=' * 80)
-        print('Insert a number: ')
+        print('Choose an option number: ')
 
 
 class Main(Menu):
     @staticmethod
     def opt_1():
         """Login"""
-        print('Enter your username and password:')
-        return True if login() else False
+        new_user = Login()
+        new_user.handle_user('register')
 
     @staticmethod
     def opt_2():
         """Register"""
-        return True if register() else False
+        current_user = Login()
+        current_user.handle_user('login')
 
     @staticmethod
     def opt_9():
@@ -70,23 +71,19 @@ class Sub(Menu):
     """
     @staticmethod
     def opt_1():
-        """Input stats"""
-        stats_input()
+        """Add/update stats data"""
+        print('Which date do you want to input data for?')
+        update_stats()
 
     @staticmethod
     def opt_2():
-        """View daily support stat summary"""
-        stats_daily()
+        """View support stat summary"""
+        fetch_stats()
 
     @staticmethod
     def opt_3():
-        """View weekly support stat summary"""
-        stats_weekly()
-
-    @staticmethod
-    def opt_4():
         """Export support stats to JSON"""
-        stats_export()
+        # stats_export()
 
     @staticmethod
     def opt_9():
