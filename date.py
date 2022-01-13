@@ -42,10 +42,10 @@ class Date():
         self.wk_end = self.wk_start + dt.timedelta(days=6)
         return self.wk_end
 
-    def validate(self):
+    def validate(self, *range):
         if not db.stats.count_documents({
-            "date": {'$gte': self.start, '$lte': self.end}}):
-            print(f'I don\'t have any data for w/c {Date.pretty_date(self.start)}')
+            "date": {'$gte': range[0], '$lte': range[1]}}):
+            print(f'I don\'t have any data for {Date.pretty_date(range[0])}')
         else:
             print('Data found...')
 
