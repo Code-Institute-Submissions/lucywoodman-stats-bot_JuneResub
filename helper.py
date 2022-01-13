@@ -47,38 +47,20 @@ def user_continue(question):
         else:
             return True if user_input == 'y' else False
 
-def generate_daily_stats(date, stats_dict):
-    """
-    * Create a table of stats for the given date.
-    * @arg(obj) date -- the date object.
-    * @arg(dict) stats_dict -- the dict of stats from the database.
-    """
-    key_list = ['No. of tickets advanced: ',
-                'No. of ticket public comments: ',
-                'No. of tickets solved: ',
-                'Incoming ticket queue: ',
-                'Handoff ticket queue: ',
-                'Total chats: ',
-                'Chat wait time: ',
-                'Chat CSAT: ']
-    # Convert the stats_dict values to a list.
-    stats_list = list(stats_dict.values())
-    # Remove the MongoDB ID and date from the list.
-    stats_list = stats_list[2:]
-    # Merge the lists for tabulate.
-    table_list = [list(x) for x in zip(key_list, stats_list)]
+def create_lists(data):
+    temp_list = list(data)
+    stats_list = []
+    key_list = []
+    for i in temp_list:
+        for value in i.values():
+            if value != "null":
+                stats_list.append(value)
+        for key in i.keys():
+            if key != "_id":
+                key_list.append(key)
+    return key_list, stats_list
 
-    # Generate header to include the date.
-    title = f'Stats for {date}'
-    print('-' * len(title))
-    print(title)
-    print('-' * len(title))
-
-    # Print the list as a table.
-    print(tabulate(table_list, tablefmt="fancy_grid"))
-
-
-def generate_weekly_stats(date, key_list, stats_list):
+def print_stats(title, data):
     """
     * Create a table of stats for the given week.
     * @arg(obj) date -- the date object passed from stats_weekly().
@@ -86,13 +68,12 @@ def generate_weekly_stats(date, key_list, stats_list):
     * @arg(list) stats_list -- the list of stats from the database.
     """
     # Convert the stats values to rounded floats to help table alignment.
-    stats_list = [float(x) for x in stats_list]
-    stats_list = [round(x, 1) for x in stats_list]
+    stats_list = [float(x) for x in data[1]]
+    stats_list = [round(x, 1) for x in data[1]]
     # Merge the lists for tabulate.
-    table_list = [list(x) for x in zip(key_list, stats_list)]
+    table_list = [list(x) for x in zip(data[0], stats_list)]
 
-    # Generate header to include the date.
-    title = f'Stats for week commencing {date}'
+    # Generate header.
     print('-' * len(title))
     print(title)
     print('-' * len(title))
@@ -101,14 +82,14 @@ def generate_weekly_stats(date, key_list, stats_list):
     print(tabulate(table_list, tablefmt="fancy_grid", numalign="decimal"))
 
 
-def stats_aggregator(start_date, end_date):
-    agg_stats = db.stats.aggregate([
+def aggregate_data(start, end):
+    data = db.stats.aggregate([
         {
             # Fetch the data between the week starting and ending dates.
             '$match': {
                 'date': {
-                    '$gte': start_date,
-                    '$lte': end_date
+                    '$gte': start,
+                    '$lte': end
                 }
             }
         }, {
@@ -165,4 +146,4 @@ def stats_aggregator(start_date, end_date):
         }
     ])
 
-    return agg_stats
+    return data

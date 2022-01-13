@@ -1,5 +1,6 @@
 # Local application imports
 import helper
+from date import Date
 
 
 def capture_stats(date):
@@ -93,64 +94,35 @@ def stats_input():
             print('Let\'s return to the menu')
             return
 
-
-def stats_daily():
-    """
-    * Asks the user to choose a date,
-    * finds the matching document in the db,
-    * then displays that date's stats in a table format.
-    """
-    # Run choose_date() to capture date input,
-    # and return date object and string.
+def fetch_stats(*args):
     while True:
-        print('\nWhich date would you like to view stats for?')
-        date_tpl = helper.choose_date()
-        date, date_str = date_tpl
-
-        # If the chosen date doesn't exist in the database, tell the user.
-        if not helper.db.stats.count_documents({"date": date}, limit=1):
-            print(
-                f'I don\'t have stats for {date_str}. Choose another date.')
-            continue
+        # Create a new Date() instance.
+        user_date = Date()
+        # Assign input to date obj var.
+        user_date.date = input('Insert a date: ')
+        # Add instance variable for range start and end.
+        if 'range' in args:
+            user_date.start = user_date.wk_start()
+            user_date.end = user_date.wk_end()
+            header = f'Stats for w/c {Date.pretty_date(user_date.start)}'
         else:
-            # Fetch the matching document in MongoDB.
-            stats_dict = helper.db.stats.find_one({"date": date})
-            # Generate the table and print.
-            helper.generate_daily_stats(date_str, stats_dict)
+            user_date.start = user_date.date
+            user_date.end = user_date.date
+            header = f'Stats for {Date.pretty_date(user_date.start)}'
+        # Check data exists for the above range.
+        print('Checking database for data...')
+        user_date.validate()
+        print('Fetching data...')
+        data = helper.aggregate_data(user_date.start, user_date.end)
+        # Another function for creating and merging lists??
+        data_lists = helper.create_lists(data)
+        helper.print_stats(header, data_lists)
 
-            # Ask the user if they'd like to view more stats.
-            # If no, break out of the while loop and return to the submenu.
-            if not helper.user_continue('View more stats (y/n)? '):
-                print('Let\'s return to the menu')
-                return
+fetch_stats()
 
 
-def stats_weekly():
-    # Run choose_date() to capture date input,
-    # and return date object and string.
-    while True:
-        print('\nWhich date would you like to view the weekly stats for?')
-        dates_tpl = helper.choose_week()
-        wk_start, wk_end, date_str = dates_tpl
-
-        wk_stats = helper.stats_aggregator(wk_start, wk_end)
-
-        temp_list = list(wk_stats)
-
-        stats_list = []
-        key_list = []
-        for i in temp_list:
-            for value in i.values():
-                if value != "null":
-                    stats_list.append(value)
-            for key in i.keys():
-                if key != "_id":
-                    key_list.append(key)
-
-        helper.generate_weekly_stats(date_str, key_list, stats_list)
-
-        # Ask the user if they'd like to view more stats.
-        # If no, break out of the while loop.
-        if not helper.user_continue('View more stats (y/n)? '):
-            print('Let\'s return to the menu')
-            return
+        # # Ask the user if they'd like to view more stats.
+        # # If no, break out of the while loop.
+        # if not helper.user_continue('View more stats (y/n)? '):
+        #     print('Let\'s return to the menu')
+        #     return
