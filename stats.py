@@ -23,50 +23,6 @@ def new_stats():
 new_stats()
 
 
-def capture_stats(date):
-    """
-    * Capture stats from the user.
-    * @arg(obj) date -- the date object passed from update_stats().
-    * @return(dict) statDocument -- MongoDB data structure for the stats.
-    """
-    # Generate a title for ticket section.
-    t_title = '** Ticket Stats **'
-    print('-' * len(t_title))
-    print(t_title)
-    print('-' * len(t_title))
-    # Capture ticket stats as integers.
-    t_advanced = int(input('Number of tickets advanced: '))
-    t_pub_comments = int(input('Number of ticket public comments: '))
-    t_solved = int(input('Number of tickets solved: '))
-    t_q_start = int(input('Number of tickets in queue at shift start: '))
-    t_q_end = int(input('Number of tickets in queue at shift end: '))
-    # Generate a title for chat section.
-    c_title = '** Chat Stats **'
-    print('-' * len(c_title))
-    print(c_title)
-    print('-' * len(c_title))
-    # Capture chat stats as integers.
-    c_total = int(input('Number of chats handled: '))
-    c_wait = int(input('Average chat wait time (in seconds): '))
-    c_csat = int(input('Chat CSAT score: '))
-    print('=' * 80)
-
-    # Create a dictionary ready for MongoDB.
-    stats_document = {
-        "date": date,
-        "t_advanced": t_advanced,
-        "t_pub_comments": t_pub_comments,
-        "t_solved": t_solved,
-        "t_q_start": t_q_start,
-        "t_q_end": t_q_end,
-        "c_total": c_total,
-        "c_wait": c_wait,
-        "c_csat": c_csat
-    }
-
-    return stats_document
-
-
 def update_stats(date):
     """
     * Checks the database to see if the date already exists.
