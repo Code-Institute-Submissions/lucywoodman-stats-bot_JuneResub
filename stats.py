@@ -3,12 +3,10 @@ import helper
 from date import Date
 from data import Stats
 
-def new_stats():
-    input_date = Date()
-    input_date.date = input('Insert a date: ')
+def new_stats(user_date, *args):
     helper.Title('** ZenDesk Stats **')
     stats = Stats()
-    stats.date = input_date.date
+    stats.date = user_date.date
     stats.advanced = int(input('Number of tickets advanced: '))
     stats.comments = int(input('Number of ticket public comments: '))
     stats.solved = int(input('Number of tickets solved: '))
@@ -18,51 +16,33 @@ def new_stats():
     stats.total = int(input('Number of chats handled: '))
     stats.wait = int(input('Average chat wait time (in seconds): '))
     stats.csat = int(input('Chat CSAT score: '))
-    return stats.__dict__
-
-new_stats()
-
-
-def update_stats(date):
-    """
-    * Checks the database to see if the date already exists.
-    * @arg(obj) date -- the date object passed from stats_main().
-    """
-    exist = helper.db.stats.count_documents({"date": date}, limit=1)
-    # Capture from the user.
-    new_stats = capture_stats(date)
-    # If the date exists in the database, updates the existing document.
-    if exist:
-        helper.db.stats.update_one({"date": date}, {"$set": new_stats})
+    if 'overwrite' in args:
+        helper.db.stats.update_one({"date": user_date.date}, {"$set": stats.__dict__})
         print('The stats have been successfully updated!')
-    # If the date does not exist in the database, inserts a new document.
-    elif not exist:
-        helper.db.stats.insert_one(new_stats)
+    elif 'new' in args:
+        helper.db.stats.insert_one(stats.__dict__)
         print('The new stats have been successfully added to the database!')
 
-
-def stats_input():
-    """
-    * Main function for inputting/updating stats in the database.
-    """
+def update_stats():
     while True:
-        # Run choose_date() to capture date input,
-        # and return date object and string.
-        print('\nWhich date would you like to input stats for?')
-        date_tpl = helper.choose_date()
-        date, date_str = date_tpl
-
-        # If the date exists in the database already, offer to overwrite it.
-        # If overwriting or adding new stats, run update_stats().
-        if helper.db.stats.count_documents({"date": date}, limit=1):
+        # Create a new Date() instance.
+        user_date = Date()
+        # Assign input to date obj var.
+        user_date.date = input('Insert a date: ')
+        user_date.start = user_date.date
+        user_date.end = user_date.date
+        # Check if data exists already for input date.
+        print('Checking database for data...')
+        helper.test_database()
+        if user_date.validate():
             print('This date already exists in the database.')
             if helper.user_continue('Would you like to overwrite it (y/n)? '):
                 print(
-                    f'\nOkay, let\'s overwrite the stats for {date_str}.')
-                update_stats(date)
+                    f'\nOkay, let\'s overwrite the stats for {Date.pretty_date(user_date.date)}.')
+                new_stats(user_date, 'overwrite')
         else:
-            print(f'Please enter the stats for {date_str} below.')
-            update_stats(date)
+            print(f'Please enter the stats for {Date.pretty_date(user_date.date)} below.')
+            new_stats(user_date, 'new')
 
         # Ask the user if they'd like to input more stats.
         # If no, break out of the while loop.
