@@ -17,7 +17,8 @@ class Menu:
         try:
             option = getattr(menu, option_name)
         except AttributeError:
-            print('Option not found. Try another number:')
+            print('Option not found.')
+            raise ValueError
         else:
             return bool(option())
 
