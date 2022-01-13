@@ -17,6 +17,15 @@ db = client.supportStats
 users = db.users
 stats = db.stats
 
+class Title():
+    def __init__(self, title):
+        self.title = title
+
+    def display(self):
+        print('-' * len(self.title))
+        print(self.title)
+        print('-' * len(self.title))
+
 
 def test_database():
     """
