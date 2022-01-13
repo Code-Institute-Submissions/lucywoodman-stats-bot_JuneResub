@@ -83,7 +83,8 @@ def print_stats(title, data):
     table_list = [list(x) for x in zip(data[0], stats_list)]
 
     # Generate header.
-    Title(title)
+    header = Title(title)
+    header.display()
 
     # Print the list as a table.
     print(tabulate(table_list, tablefmt="fancy_grid", numalign="decimal"))
