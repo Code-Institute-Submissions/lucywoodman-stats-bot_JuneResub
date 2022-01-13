@@ -6,63 +6,18 @@ from xkcdpass import xkcd_password as xp
 
 
 # Local application imports
-from helper import test_database, users
-
-
-def create_password():
-    """
-    * Creates a randomly generated password using the xkcdpass library.
-    * @return(str) gen_password -- the password.
-    """
-    word_file = xp.locate_wordfile()
-    # Choose words between 5 and 10 characters long.
-    words = xp.generate_wordlist(
-        wordfile=word_file, min_length=5, max_length=10)
-
-    # Create a random password made up of 3 words separated with a hyphen.
-    gen_password = xp.generate_xkcdpassword(words, numwords=3, delimiter="-")
-    return gen_password
+from helper import db, test_database
+from user import User
 
 
 def register():
-    """
-    * Allows new users to register using a chosen username and
-    * generated password from create_password().
-    * Hashes the password and saves to the connected database.
-    """
-    # Create a register while loop.
-    while True:
-        # Ask for a username from the user.
-        username = input('Enter a username: ')
-
-        # Check if the username already exists in the db.
-        # If it does, tell the user and go back to beginning of the loop.
-        if users.count_documents({"username": username}, limit=1):
-            print('That username is already registered. Try another.')
-            continue
-        # If the username doesn't exist in the db, generate a password.
-        # Then display the password and let them login.
-        else:
-            print('Generating password...')
-            time.sleep(1)
-            pwd = create_password()
-            print('-' * 80)
-            print(f'Your password is: {pwd}')
-            print('Please save the password somewhere safe.')
-
-            enc_pwd = pwd.encode()
-            hash_pwd = hashlib.md5(enc_pwd).hexdigest()
-
-            new_user = {
-                "username": username,
-                "password": hash_pwd
-            }
-
-            users.insert_one(new_user)
-            print('-' * 80)
-            print('You have successfully registered!')
-            print('Go ahead and login:')
-            return True if login() else False
+    print('Let\'s get you registered!')
+    test_database()
+    new_user = User()
+    new_user.username = input('Enter a username: ')
+    new_user.password = input('Enter a password: ')
+    db.users.insert_one(new_user.__dict__)
+    print('You have successfully registered!')
 
 
 def login():
