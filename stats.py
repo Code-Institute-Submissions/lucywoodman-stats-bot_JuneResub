@@ -111,18 +111,16 @@ def fetch_stats(*args):
             header = f'Stats for {Date.pretty_date(user_date.start)}'
         # Check data exists for the above range.
         print('Checking database for data...')
+        helper.test_database()
         user_date.validate()
         print('Fetching data...')
         data = helper.aggregate_data(user_date.start, user_date.end)
         # Another function for creating and merging lists??
         data_lists = helper.create_lists(data)
         helper.print_stats(header, data_lists)
-
-fetch_stats()
-
-
-        # # Ask the user if they'd like to view more stats.
-        # # If no, break out of the while loop.
-        # if not helper.user_continue('View more stats (y/n)? '):
-        #     print('Let\'s return to the menu')
-        #     return
+        # Ask the user if they'd like to view more stats.
+        # If no, break out of the while loop.
+        if not helper.user_continue('View more stats (y/n)? '):
+            print('Let\'s return to the menu')
+            return
+            
