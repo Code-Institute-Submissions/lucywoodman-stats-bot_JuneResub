@@ -19,7 +19,7 @@ class Menu:
         except AttributeError:
             print('Option not found. Try another number:')
         else:
-            option()
+            return bool(option())
 
     @staticmethod
     def run(menu):
@@ -27,7 +27,7 @@ class Menu:
         while user_input != 9:
             try:
                 user_input = int(input())
-                Menu.process(menu, user_input)
+                return bool(Menu.process(menu, user_input))
             except ValueError:
                 print('Please insert a number:')
         print('Goodbye!')
@@ -48,13 +48,13 @@ class Main(Menu):
     def opt_1():
         """Login"""
         current_user = Login()
-        current_user.handle_user('login')
+        return bool(current_user.handle_user('login'))
 
     @staticmethod
     def opt_2():
         """Register"""
         new_user = Login()
-        new_user.handle_user('register')
+        return bool(new_user.handle_user('register'))
 
     @staticmethod
     def opt_9():
@@ -77,11 +77,16 @@ class Sub(Menu):
 
     @staticmethod
     def opt_2():
-        """View support stat summary"""
+        """See support stat data per day"""
         fetch_stats()
 
     @staticmethod
     def opt_3():
+        """See support stat data per range"""
+        fetch_stats('range')
+
+    @staticmethod
+    def opt_4():
         """Export support stats to JSON"""
         # stats_export()
 
