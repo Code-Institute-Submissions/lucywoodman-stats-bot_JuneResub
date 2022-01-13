@@ -1,5 +1,5 @@
 from userauth import login, register
-from stats import stats_input, stats_daily, stats_weekly
+from stats import stats_input, stats_daily, stats_weekly, stats_export
 
 
 class Menu:
@@ -75,13 +75,18 @@ class Sub(Menu):
 
     @staticmethod
     def opt_2():
-        """View daily Support stat summary"""
+        """View daily support stat summary"""
         stats_daily()
 
     @staticmethod
     def opt_3():
-        """View weekly Support stat summary"""
+        """View weekly support stat summary"""
         stats_weekly()
+
+    @staticmethod
+    def opt_4():
+        """Export support stats to JSON"""
+        stats_export()
 
     @staticmethod
     def opt_9():
