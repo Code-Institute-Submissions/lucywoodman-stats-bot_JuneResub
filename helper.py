@@ -1,6 +1,5 @@
 # Third party imports
 import os
-import datetime as dt
 from pymongo import MongoClient, errors
 from tabulate import tabulate
 import certifi
@@ -47,65 +46,6 @@ def user_continue(question):
             print('The input did not match "y" or "n".')
         else:
             return True if user_input == 'y' else False
-
-
-def human_date(date):
-    """
-    * Converts the date to a prettier, more readable date.
-    * @arg(obj) date -- the date object.
-    * @return(str) human_date -- pretty date string.
-    """
-    date = date.strftime('%A, %d %B %Y')
-    return date
-
-
-def choose_date():
-    """
-    * Asks the user which date to input/view stats for.
-    * Converts input to a date object and runs human_date().
-    * @return(obj) date_obj -- the date object.
-    * @return(str) date_readable -- pretty date string.
-    """
-    while True:
-        date_str = input('Date (format: YYYY-MM-DD): ')
-        try:
-            date_obj = dt.datetime.strptime(date_str, '%Y-%m-%d')
-        except ValueError:
-            print('The input did not match the date format.')
-        else:
-            date_readable = human_date(date_obj)
-            return date_obj, date_readable
-
-
-def choose_week():
-    """
-    * Asks the user which week to view stats for.
-    * Converts input to a date object.
-    * Checks if it exists in the db.
-    * @return(obj) wk_start -- the date object for the week start.
-    * @return(obj) wk_end -- the date object for the week end.
-    * @return(str) date_readable -- pretty date string.
-    """
-    while True:
-        # Capture the user input date.
-        date = choose_date()
-        date_obj = date[0]
-        # Calculate the start of the week.
-        wk_start = date_obj - dt.timedelta(days=date_obj.weekday())
-        date_readable = human_date(wk_start)
-        # Calculate the end of the week.
-        wk_end = wk_start + dt.timedelta(days=6)
-        # If the range is not in the db, tell the user.
-        if not db.stats.count_documents({
-            "date": {'$gte': wk_start, '$lte': wk_end}
-        }, limit=7):
-            print(
-                f'I don\'t have stats for week commencing {date_readable}.')
-            continue
-        # If it does exist, return week start, end and pretty dates.
-        else:
-            return wk_start, wk_end, date_readable
-
 
 def generate_daily_stats(date, stats_dict):
     """
