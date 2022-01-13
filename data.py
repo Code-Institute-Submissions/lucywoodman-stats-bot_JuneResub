@@ -13,8 +13,6 @@ class Stats():
     advanced = AddData()
     comments = AddData()
     solved = AddData()
-    q_start = AddData()
-    q_end = AddData()
     total = AddData()
     wait = AddData()
     csat = AddData()

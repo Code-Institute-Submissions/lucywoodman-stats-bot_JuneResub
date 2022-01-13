@@ -10,8 +10,6 @@ def new_stats(user_date, *action):
     stats.advanced = int(input('Number of tickets advanced: '))
     stats.comments = int(input('Number of ticket public comments: '))
     stats.solved = int(input('Number of tickets solved: '))
-    stats.q_start = int(input('Number of tickets in queue at shift start: '))
-    stats.q_end = int(input('Number of tickets in queue at shift end: '))
     helper.Title('** Intercom Stats **')
     stats.total = int(input('Number of chats handled: '))
     stats.wait = int(input('Average chat wait time (in seconds): '))
@@ -66,7 +64,7 @@ def fetch_stats(*args):
             header = f'Stats for {Date.pretty_date(user_date.start)}'
         print('Fetching data...')
         data = helper.aggregate_data(user_date.start, user_date.end)
-        # Another function for creating and merging lists??
+        # Another function for creating and merging lists
         data_lists = helper.create_lists(data)
         helper.print_stats(header, data_lists)
         # Ask the user if they'd like to view more stats.
