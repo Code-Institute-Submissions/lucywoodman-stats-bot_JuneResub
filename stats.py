@@ -26,7 +26,7 @@ def update_stats():
         # Create a new Date() instance.
         user_date = Date()
         # Assign input to date obj var.
-        user_date.date = input('Insert a date: ')
+        user_date.date = input('Date (format YYYY-MM-DD): ')
         # Check if data exists already for input date.
         print('Checking database for data...')
         helper.test_database()
@@ -42,14 +42,15 @@ def update_stats():
         # Ask the user if they'd like to input more stats.
         # If no, break out of the while loop.
         if not helper.user_continue('Give me more stats (y/n)? '):
-            print('Let\'s return to the menu')
+            print('Let\'s return to the menu...')
+            return
 
 def fetch_stats(*args):
     while True:
         # Create a new Date() instance.
         user_date = Date()
         # Assign input to date obj var.
-        user_date.date = input('Insert a date: ')
+        user_date.date = input('Date (format YYYY-MM-DD): ')
         # Check data exists for the above range.
         print('Checking database for data...')
         helper.test_database()
@@ -70,4 +71,5 @@ def fetch_stats(*args):
         # Ask the user if they'd like to view more stats.
         # If no, break out of the while loop.
         if not helper.user_continue('View more stats (y/n)? '):
-            print('Let\'s return to the menu')
+            print('Let\'s return to the menu...')
+            return
