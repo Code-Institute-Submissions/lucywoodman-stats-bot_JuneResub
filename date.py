@@ -4,7 +4,14 @@ import datetime as dt
 # Local application imports
 from helper import db
 
+
 class Date:
+    """
+    * Class for creating date instances.
+    * Methods: wk_start, wk_end, validate.
+    * Static Methods: pretty_date.
+    """
+
     def __init__(self):
         self.__date = ''
 
@@ -33,7 +40,7 @@ class Date:
 
     def validate(self, *range):
         if not db.stats.count_documents({
-            "date": {'$gte': range[0], '$lte': range[1]}}):
+                "date": {'$gte': range[0], '$lte': range[1]}}):
             print(f'I don\'t have any data for {Date.pretty_date(range[0])}')
         else:
             print('Data found...')
@@ -45,4 +52,3 @@ class Date:
         * @return(str) -- pretty date string
         """
         return date.strftime('%A, %d %B %Y')
-        

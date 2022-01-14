@@ -3,6 +3,10 @@ import hashlib
 
 
 class User:
+    """
+    * Class for creating user instances.
+    * To assist with logging in and registering.
+    """
     @property
     def username(self):
         return self.__username
