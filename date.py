@@ -38,12 +38,17 @@ class Date:
         self.wk_end = self.wk_start + dt.timedelta(days=6)
         return self.wk_end
 
+    def range_end(self, user_input):
+        self.rng_end = self.__date + dt.timedelta(days=user_input)
+        return self.rng_end
+
     def validate(self, *range):
         if not db.stats.count_documents({
                 "date": {'$gte': range[0], '$lte': range[1]}}):
             print(f'I don\'t have any data for {Date.pretty_date(range[0])}')
         else:
             print('Data found...')
+            return True
 
     @staticmethod
     def pretty_date(date):
@@ -52,3 +57,11 @@ class Date:
         * @return(str) -- pretty date string
         """
         return date.strftime('%A, %d %B %Y')
+
+    @staticmethod
+    def simple_date(date):
+        """
+        * Converts the date to be simpler for file names.
+        * @return(str) -- simple date string
+        """
+        return date.strftime('%Y-%m-%d')

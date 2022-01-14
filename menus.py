@@ -1,5 +1,6 @@
+# Local application imports
 from login import register, login
-from stats import fetch_stats, update_stats
+from stats import fetch_stats, update_stats, export_stats
 
 
 class Menu:
@@ -77,18 +78,19 @@ class Sub(Menu):
 
     @staticmethod
     def opt_2():
-        """See support stat data per day"""
+        """See support stat data for a day"""
         fetch_stats()
 
     @staticmethod
     def opt_3():
-        """See support stat data per range"""
+        """See support stat data for a week"""
         fetch_stats('range')
 
     @staticmethod
     def opt_4():
-        """Export support stats to JSON"""
-        # stats_export()
+        """Export support stat data to JSON"""
+        print('Which dates do you want to export data for?')
+        export_stats()
 
     @staticmethod
     def opt_9():

@@ -17,6 +17,7 @@ db = client.supportStats
 users = db.users
 stats = db.stats
 
+
 class Title():
     def __init__(self, title):
         self.title = title
@@ -56,6 +57,7 @@ def user_continue(question):
         else:
             return True if user_input == 'y' else False
 
+
 def create_lists(data):
     temp_list = list(data)
     stats_list = []
@@ -68,6 +70,7 @@ def create_lists(data):
             if key != "_id":
                 key_list.append(key)
     return key_list, stats_list
+
 
 def print_stats(title, data):
     """
@@ -88,6 +91,21 @@ def print_stats(title, data):
 
     # Print the list as a table.
     print(tabulate(table_list, tablefmt="fancy_grid", numalign="decimal"))
+
+
+def fetch_data_range(start, end):
+    data = db.stats.aggregate([
+        {
+            # Fetch the data between the starting and ending dates.
+            '$match': {
+                'date': {
+                    '$gte': start,
+                    '$lte': end
+                }
+            }
+        }
+    ])
+    return data
 
 
 def aggregate_data(start, end):
