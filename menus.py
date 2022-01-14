@@ -1,4 +1,4 @@
-from auth import Login
+from login import register, login
 from stats import fetch_stats, update_stats
 
 
@@ -48,19 +48,18 @@ class Main(Menu):
     @staticmethod
     def opt_1():
         """Login"""
-        current_user = Login()
-        return bool(current_user.handle_user('login'))
+        return bool(login())
 
     @staticmethod
     def opt_2():
         """Register"""
-        new_user = Login()
-        return bool(new_user.handle_user('register'))
+        return bool(register())
 
     @staticmethod
     def opt_9():
         """Exit"""
         print('Exiting...')
+        print('Goodbye!')
         exit()
 
 
@@ -95,4 +94,5 @@ class Sub(Menu):
     def opt_9():
         """Exit"""
         print('Exiting...')
+        print('Goodbye!')
         exit()
