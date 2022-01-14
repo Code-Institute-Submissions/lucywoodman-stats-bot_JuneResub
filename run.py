@@ -6,6 +6,10 @@ from menus import Menu, Main, Sub
 
 
 def welcome():
+    """
+    * Welcome banner for the program.
+    * Displays ascii robot and title.
+    """
     ascii_banner = pyfiglet.figlet_format("Stats Bot!!")
     bot = r"""
          ___T_
@@ -22,6 +26,9 @@ def welcome():
 
 
 def main():
+    """
+    * Main program function where it all begins.
+    """
     welcome()
     Menu.generate_menu(Main)
     loggedin = Menu.run(Main)
