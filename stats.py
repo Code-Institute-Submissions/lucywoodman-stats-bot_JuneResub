@@ -32,25 +32,28 @@ def update_stats():
         # Create a new Date() instance.
         user_date = Date()
         # Assign input to date obj var.
-        user_date.date = input('Date (format YYYY-MM-DD): ')
-        # Check if data exists already for input date.
-        print('Checking database for data...')
-        helper.test_database()
-        if user_date.validate(user_date.date, user_date.date):
-            print('This date already exists in the database.')
-            if helper.user_continue('Would you like to overwrite it (y/n)? '):
+        try:
+            user_date.date = input('Date (format YYYY-MM-DD): ')
+            # Check if data exists already for input date.
+            print('Checking database for data...')
+            helper.test_database()
+            if user_date.validate(user_date.date, user_date.date):
+                print('This date already exists in the database.')
+                if helper.user_continue('Would you like to overwrite it (y/n)? '):
+                    print(
+                        f'\nOkay, let\'s overwrite the stats for {Date.pretty_date(user_date.date)}.')
+                    new_stats(user_date, 'overwrite')
+            else:
                 print(
-                    f'\nOkay, let\'s overwrite the stats for {Date.pretty_date(user_date.date)}.')
-                new_stats(user_date, 'overwrite')
-        else:
-            print(
-                f'Please enter the stats for {Date.pretty_date(user_date.date)} below.')
-            new_stats(user_date, 'new')
-        # Ask the user if they'd like to input more stats.
-        # If no, break out of the while loop.
-        if not helper.user_continue('Give me more stats (y/n)? '):
-            print('Let\'s return to the menu...')
-            return
+                    f'Please enter the stats for {Date.pretty_date(user_date.date)} below.')
+                new_stats(user_date, 'new')
+            # Ask the user if they'd like to input more stats.
+            # If no, break out of the while loop.
+            if not helper.user_continue('Give me more stats (y/n)? '):
+                print('Let\'s return to the menu...')
+                return
+        except AttributeError:
+            print('Something\'s not right. Please try again.')
 
 
 def fetch_stats(*args):
