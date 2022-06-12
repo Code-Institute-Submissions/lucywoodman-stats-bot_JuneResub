@@ -1,28 +1,8 @@
 import os
 
 # Local application imports
-from welcome import welcome
+from welcome import welcome, stats_bot
 from login import login, register
-
-
-# def welcome():
-#     """
-#     * Welcome banner for the program.
-#     * Displays ascii robot and title.
-#     """
-#     ascii_banner = pyfiglet.figlet_format("Stats Bot!!")
-#     bot = r"""
-#          ___T_
-#         | O O |
-#         |__u__|
-#       (m9\:::/\
-#          /___\6
-#           |_|
-#          (ooo)
-#     """
-#     print('=' * 80)
-#     print('WELCOME TO:')
-#     print(ascii_banner + bot)
 
 
 def main():
@@ -31,8 +11,12 @@ def main():
     """
     while True:
         os.system('clear')
-        print(welcome('Stats bot'))
-        print('\nChoose an option : ')
+        print(welcome('Statbotic'))
+        print(stats_bot())
+        print('''    Hello friend! I am Statbotic!  ''')
+        print('I\'m here to help you with your Support team\'s statistics.')
+        print('~' * 70)
+        print('\nPlease choose an option below : ')
         print('''
             1 : LOGIN
             2 : REGISTER
@@ -45,7 +29,7 @@ def main():
         elif choice == '2':
             register()
         elif choice == '0':
-            print('\nStay awesome!\n')
+            print('\nYou chose to exit - See you soon and stay awesome! :D\n')
             exit()
         os.system('clear')
 
