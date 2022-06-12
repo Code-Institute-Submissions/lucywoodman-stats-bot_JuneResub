@@ -1,6 +1,4 @@
 import os
-
-# Local application imports
 from welcome import welcome, stats_bot
 from login import login, register
 
@@ -8,6 +6,7 @@ from login import login, register
 def main():
     """
     * Main program function where it all begins.
+    * Sets up welcome and initial menu.
     """
     while True:
         os.system('clear')
