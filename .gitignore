@@ -1,12 +1,21 @@
-core.Microsoft*
-core.mongo*
-core.python*
-env.py
+### macOS ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+### Python ###
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-node_modules/
-.github/
-.vscode/
+*$py.class
+
+# Environments
+.env
 .venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
 env.py
-NOTES.md
