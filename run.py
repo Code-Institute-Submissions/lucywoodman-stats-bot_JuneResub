@@ -3,7 +3,6 @@ import pyfiglet
 
 # Local application imports
 from menus import Menu, Main, Sub
-from stats import export_stats
 
 
 def welcome():
