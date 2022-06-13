@@ -1,4 +1,3 @@
-from ast import Pass
 from exceptions import PasswordError, UsernameError
 from helper import db, test_database
 from auth import User
