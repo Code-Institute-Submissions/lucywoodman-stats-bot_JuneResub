@@ -1,6 +1,6 @@
 import os
 from welcome import welcome, stats_bot
-from login import login, register
+from authorise import login, register
 
 
 def main():
@@ -15,11 +15,11 @@ def main():
         print('''    Hello friend! I am Statbotic!  ''')
         print('I\'m here to help you with your Support team\'s statistics.')
         print('~' * 70)
-        print('\nPlease choose an option below : ')
+        print('\nChoose an option below : ')
         print('''
-            1 : LOGIN
-            2 : REGISTER
-            0 : EXIT'''
+        1 : LOGIN
+        2 : REGISTER
+        0 : EXIT'''
               )
         choice = input('\nEnter your choice : ')
 
@@ -28,7 +28,7 @@ def main():
         elif choice == '2':
             register()
         elif choice == '0':
-            print('\nYou chose to exit - See you soon and stay awesome! :D\n')
+            print('\n>> You chose to exit - See you soon and stay awesome! :D\n')
             exit()
         os.system('clear')
 
