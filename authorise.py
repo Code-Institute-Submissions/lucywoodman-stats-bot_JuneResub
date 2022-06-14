@@ -50,6 +50,14 @@ def login():
 
 
 def register():
+    """
+    Allows a new user to register for a login
+    Checks if the user already exists before saving
+
+    Exceptions:
+    * ValueError if the username is blank
+    * ValueError if the user already exists in the database
+    """
     print('\nLet\'s get you registered!')
     while True:
         test_database()
