@@ -1,4 +1,5 @@
 import os
+import time
 from welcome import welcome, stats_bot
 from authorise import login, register
 
@@ -30,6 +31,8 @@ def main():
         elif choice == '0':
             print('\n>> You chose to exit - See you soon and stay awesome! :D\n')
             exit()
+        print('\n** Please enter the correct number for a menu option. **')
+        time.sleep(2)
         os.system('clear')
 
 
