@@ -7,45 +7,45 @@ from statbotic.stats import Stats
 
 
 def new_stats(user_date, *action):
-    Title('** ZenDesk Stats **')
+    Title('** ZenDesk Stats **').display()
     stats = Stats()
     stats.date = user_date.date
     stats.comments = int(input('Number of ticket responses: '))
     stats.solves = int(input('Number of ticket solves: '))
-    Title('** Intercom Stats **')
+    Title('** Intercom Stats **').display()
     stats.total = int(input('Total number of chats: '))
     stats.wait = int(input('Average chat wait time (in seconds): '))
     stats.csat = int(input('Chat CSAT score: '))
     if 'overwrite' in action:
         data.stats.update_one({"date": user_date.date}, {
             "$set": stats.__dict__})
-        print('The stats have been successfully updated!')
+        print('** The stats have been successfully updated! **')
     elif 'new' in action:
         data.stats.insert_one(stats.__dict__)
-        print('The new stats have been successfully added to the database!')
+        print('** The new stats have been successfully added to the database! **')
 
 
 def update_stats():
     while True:
+        print('')
         # Create a new Date() instance.
         user_date = Date()
         # Assign input to date obj var.
         user_date.date = input('Date (format YYYY-MM-DD): ')
-        print(user_date.date)
         if user_date.date:
             try:
                 # Check if data exists already for input date.
-                print('\n>> Checking database...')
+                print('\nChecking database...')
                 test_database()
                 if user_date.validate(user_date.date, user_date.date):
-                    print('This date already exists in the database.')
+                    print('** This date already exists in the database. **')
                     if user_continue('Would you like to overwrite it (y/n)? '):
                         print(
-                            f'\nOkay, let\'s overwrite the stats for {Date.pretty_date(user_date.date)}.')
+                            f'\nOkay, let\'s overwrite the stats for {Date.pretty_date(user_date.date)}...')
                         new_stats(user_date, 'overwrite')
                 else:
                     print(
-                        f'Please enter the stats for {Date.pretty_date(user_date.date)} below.')
+                        f'Please enter the new stats below : \n')
                     new_stats(user_date, 'new')
                 # Ask the user if they'd like to input more stats.
                 # If no, break out of the while loop.
@@ -53,7 +53,7 @@ def update_stats():
                     print('Let\'s return to the menu...')
                     return
             except:
-                print('Something\'s not right. Please try again.')
+                print('** Something\'s not right. Please try again. **')
 
 
 def fetch_stats(*args):

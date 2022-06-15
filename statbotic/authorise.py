@@ -13,7 +13,7 @@ def login():
     * LookupError if username isn't found in the database
     * ValueError if the password is incorrect
     """
-    print('\nEnter your username and password : ')
+    print('\nEnter your username and password : \n')
     tries = 3
     current_user = User()
     while tries > 0:
@@ -29,7 +29,7 @@ def login():
                     f'\n** Username: "{current_user.username}" cannot be found in the database. **\n')
 
             # Ask for a password
-            current_user.password = input('\nPassword : ')
+            current_user.password = input('Password : ')
             try:
                 # Fetch the user's details from the database
                 db_user = data.users.find_one(
@@ -39,8 +39,8 @@ def login():
                     raise ValueError(f'\n** The password is incorrect. **\n')
 
                 print(
-                    f'\n>> You have successfully logged in as "{current_user.username}".')
-                print('>> Taking you to the statistics menu...')
+                    f'\nYou have successfully logged in as "{current_user.username}".')
+                print('Taking you to the statistics menu...')
                 time.sleep(2)
                 # Go to main app
                 app()
@@ -48,12 +48,12 @@ def login():
             except ValueError as e:
                 print(e)
                 tries -= 1
-                print(f'>> You have {tries} tries left.')
+                print(f'** You have {tries} tries left. **')
 
         except LookupError as e:
             print(e)
             tries -= 1
-            print(f'>> You have {tries} tries left.')
+            print(f'** You have {tries} tries left. **')
 
 
 def register():
@@ -65,7 +65,7 @@ def register():
     * ValueError if the username is blank
     * ValueError if the user already exists in the database
     """
-    print('\nLet\'s get you registered!')
+    print('\nLet\'s get you registered!\n')
     while True:
         test_database()
         new_user = User()
@@ -90,8 +90,8 @@ def register():
                 new_user.password = input('Enter a password : ')
                 data.users.insert_one(new_user.__dict__)
                 print(
-                    f'\n>> Great! "{new_user.username}" has been registered. You can now login.')
-                print('>> Taking you back to the main menu...')
+                    f'\nGreat! "{new_user.username}" has been registered. You can now login.')
+                print('Taking you back to the main menu...')
                 time.sleep(3)
                 # Return to the main menu (run.py)
                 break

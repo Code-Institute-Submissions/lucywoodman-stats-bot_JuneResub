@@ -29,7 +29,7 @@ def main():
         elif choice == '2':
             register()
         elif choice == '0':
-            print('\n>> You chose to exit - See you soon and stay awesome! :D\n')
+            print('\nYou chose to exit - See you soon and stay awesome! :D\n')
             exit()
         print('\n** Please enter the correct number for a menu option. **')
         time.sleep(2)
