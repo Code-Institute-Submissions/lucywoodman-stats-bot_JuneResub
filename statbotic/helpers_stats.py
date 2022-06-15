@@ -1,4 +1,5 @@
 import os
+import traceback
 from bson.json_util import dumps
 from statbotic.title import Title
 from statbotic.database import data, test_database, aggregate_data, fetch_data_range
@@ -31,62 +32,79 @@ def update_stats():
         print('')
         # Create a new Date() instance.
         user_date = Date()
-        # Assign input to date obj var.
-        user_date.date = input('Date (format YYYY-MM-DD): ')
+        # Assign input to date instance variable.
+        user_date.date = input('Date (format YYYY-MM-DD) : ')
+        # If date variable value successfully added, continue.
         if user_date.date:
             try:
-                # Check if data exists already for input date.
                 print('\nChecking database...')
+                # Test the database connection.
                 test_database()
+                # Check if data already exists for the date.
                 if user_date.validate(user_date.date, user_date.date):
                     print('\n** This date already exists in the database. **\n')
                     if user_continue('Would you like to overwrite it (y/n)? '):
                         os.system('clear')
                         print(
                             f'\nOkay, let\'s overwrite the stats for {Date.pretty_date(user_date.date)}...')
+                        # Overwrite data
                         new_stats(user_date, 'overwrite')
                 else:
                     print(
                         f'Please enter the new stats below : \n')
+                    # Enter new data
                     new_stats(user_date, 'new')
                 # Ask the user if they'd like to input more stats.
                 # If no, break out of the while loop.
                 if not user_continue('\nGive me more stats (y/n)? '):
                     print('Let\'s return to the menu...')
                     return
-            except:
+            except Exception:
+                # Catch-all exception
                 print('** Something\'s not right. Please try again. **')
 
 
-def fetch_stats(*args):
+def fetch_stats():
     while True:
+        print('')
         # Create a new Date() instance.
         user_date = Date()
-        # Assign input to date obj var.
-        user_date.date = input('Date (format YYYY-MM-DD): ')
-        # Check data exists for the above range.
-        print('Checking database for data...')
-        test_database()
-        # Add instance variable for range start and end.
-        if 'range' in args:
-            user_date.start = user_date.wk_start()
-            user_date.end = user_date.wk_end()
-            header = f'Stats for w/c {Date.pretty_date(user_date.start)}'
-        else:
-            user_date.start = user_date.date
-            user_date.end = user_date.date
-            header = f'Stats for {Date.pretty_date(user_date.start)}'
-        if user_date.validate(user_date.start, user_date.end):
-            print('Fetching data...')
-            data = aggregate_data(user_date.start, user_date.end)
-            # Create two lists from data dict key and values, then merge.
-            data_lists = create_lists(data)
-            print_stats(header, data_lists)
-        # Ask the user if they'd like to view more stats.
-        # If no, break out of the while loop.
-        if not user_continue('View more stats (y/n)? '):
-            print('Let\'s return to the menu...')
-            return
+        # Assign input to date instance variable.
+        user_date.date = input('Date (format YYYY-MM-DD) : ')
+        # If date variable value successfully added, continue.
+        if user_date.date:
+            try:
+                days_to_view = int(input('Number of days to view : '))
+                user_date.range_end(days_to_view)
+
+                try:
+                    print('Checking database for data...')
+                    # Test the database connection.
+                    test_database()
+                    # Check if data exists for the date range.
+                    if user_date.validate(user_date.date, user_date.rng_end):
+                        print('Fetching data...')
+                        # Fetch the data from MongoDB.
+                        fetched_data = aggregate_data(
+                            user_date.date, user_date.rng_end)
+                        # Create two lists from the data dict key and values, then merge.
+                        data_lists = create_lists(fetched_data)
+                        # Create a header.
+                        header = f'Stats for {Date.pretty_date(user_date.date)} to {Date.pretty_date(user_date.rng_end)}'
+                        # Display stats.
+                        print_stats(header, data_lists)
+
+                    # Ask the user if they'd like to view more stats.
+                    # If no, break out of the while loop.
+                    if not user_continue('View more stats (y/n)? '):
+                        print('Let\'s return to the menu...')
+                        return
+                except Exception:
+                    # Catch all exception
+                    print('** Something\'s not right. Please try again. **')
+            except ValueError:
+                print(
+                    '\n** Oops! Make sure to enter a number for the number of days. **')
 
 
 def export_stats():
