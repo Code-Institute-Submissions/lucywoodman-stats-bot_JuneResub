@@ -4,16 +4,16 @@ from statbotic.welcome import welcome
 from statbotic.helpers_stats import fetch_stats, update_stats, export_stats
 
 
-def app():
+def app(user):
     """
     * Function for running the statistics app.
     * Sets up logged-in menu.
     """
     while True:
         os.system('clear')
-        print(welcome('Inner sanctum'))
+        print(welcome('Statbotic'))
         print('~' * 70)
-        print('Welcome to hell')
+        print(f'Welcome {user.username}!')
         print('~' * 70)
         print('\nChoose an option below : ')
         print('''
