@@ -1,3 +1,4 @@
+import os
 from bson.json_util import dumps
 from statbotic.title import Title
 from statbotic.database import data, test_database, aggregate_data, fetch_data_range
@@ -19,10 +20,10 @@ def new_stats(user_date, *action):
     if 'overwrite' in action:
         data.stats.update_one({"date": user_date.date}, {
             "$set": stats.__dict__})
-        print('** The stats have been successfully updated! **')
+        print('\n** The stats have been successfully updated! **\n')
     elif 'new' in action:
         data.stats.insert_one(stats.__dict__)
-        print('** The new stats have been successfully added to the database! **')
+        print('\n** The new stats have been successfully added to the database! **\n')
 
 
 def update_stats():
@@ -38,8 +39,9 @@ def update_stats():
                 print('\nChecking database...')
                 test_database()
                 if user_date.validate(user_date.date, user_date.date):
-                    print('** This date already exists in the database. **')
+                    print('\n** This date already exists in the database. **\n')
                     if user_continue('Would you like to overwrite it (y/n)? '):
+                        os.system('clear')
                         print(
                             f'\nOkay, let\'s overwrite the stats for {Date.pretty_date(user_date.date)}...')
                         new_stats(user_date, 'overwrite')
@@ -49,7 +51,7 @@ def update_stats():
                     new_stats(user_date, 'new')
                 # Ask the user if they'd like to input more stats.
                 # If no, break out of the while loop.
-                if not user_continue('Give me more stats (y/n)? '):
+                if not user_continue('\nGive me more stats (y/n)? '):
                     print('Let\'s return to the menu...')
                     return
             except:
