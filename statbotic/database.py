@@ -35,7 +35,7 @@ def fetch_data_range(start, end):
     * start (date)
     * end (date)
     """
-    data = data.stats.aggregate([
+    data_range = data.stats.aggregate([
         {
             '$match': {
                 'date': {
@@ -45,11 +45,11 @@ def fetch_data_range(start, end):
             }
         }
     ])
-    return data
+    return data_range
 
 
 def aggregate_data(start, end):
-    data = data.stats.aggregate([
+    data_range = data.stats.aggregate([
         {
             # Fetch the data between the starting and ending dates.
             '$match': {
@@ -107,4 +107,4 @@ def aggregate_data(start, end):
             }
         }
     ])
-    return data
+    return data_range
