@@ -18,6 +18,8 @@ def app():
         print('\nChoose an option below : ')
         print('''
         1 : Add or update statistics
+        2 : View historic statistics
+        3 : Export statistic to JSON file
         0 : EXIT'''
               )
         choice = input('\nEnter your choice : ')
@@ -25,13 +27,11 @@ def app():
         if choice == '1':
             update_stats()
         elif choice == '2':
-            fetch_stats()
+            fetch_stats('range')
         elif choice == '3':
-            fetch_stats()
-        elif choice == '4':
             export_stats()
         elif choice == '0':
-            print('\n>> You chose to exit - See you soon and stay awesome! :D\n')
+            print('\nYou chose to exit - See you soon and stay awesome! :D\n')
             exit()
         print('\n** Please enter the correct number for a menu option. **')
         time.sleep(2)
