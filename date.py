@@ -1,8 +1,5 @@
-# Third party imports
 import datetime as dt
-
-# Local application imports
-from helper import db
+from database import data
 
 
 class Date:
@@ -26,7 +23,7 @@ class Date:
         try:
             date_obj = dt.datetime.strptime(input_date, '%Y-%m-%d')
         except ValueError:
-            print('The input did not match the date format.')
+            print('** The input did not match the date format. **')
         else:
             self.__date = date_obj
 
@@ -43,7 +40,7 @@ class Date:
         return self.rng_end
 
     def validate(self, *range):
-        if not db.stats.count_documents({
+        if not data.stats.count_documents({
                 "date": {'$gte': range[0], '$lte': range[1]}}):
             print(f'I don\'t have any data for {Date.pretty_date(range[0])}')
         else:
