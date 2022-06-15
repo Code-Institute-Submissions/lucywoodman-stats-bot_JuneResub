@@ -1,7 +1,7 @@
 import time
-from database import data, test_database
-from user import User
-from app import app
+from statbotic.database import data, test_database
+from statbotic.user import User
+from statbotic.app import app
 
 
 def login():

@@ -1,9 +1,9 @@
 from bson.json_util import dumps
-from title import Title
-from database import data, test_database, aggregate_data, fetch_data_range
-from helper import user_continue, create_lists, print_stats
-from date import Date
-from data import Stats
+from statbotic.title import Title
+from statbotic.database import data, test_database, aggregate_data, fetch_data_range
+from statbotic.helpers import user_continue, create_lists, print_stats
+from statbotic.date import Date
+from statbotic.stats import Stats
 
 
 def new_stats(user_date, *action):

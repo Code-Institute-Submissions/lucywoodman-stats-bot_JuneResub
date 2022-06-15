@@ -1,5 +1,5 @@
 from tabulate import tabulate
-from title import Title
+from statbotic.title import Title
 
 
 def user_continue(question):

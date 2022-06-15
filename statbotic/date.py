@@ -1,5 +1,5 @@
 import datetime as dt
-from database import data
+from statbotic.database import data
 
 
 class Date:
