@@ -33,6 +33,8 @@ def app():
         elif choice == '0':
             print('\nYou chose to exit - See you soon and stay awesome! :D\n')
             exit()
-        print('\n** Please enter the correct number for a menu option. **')
+        else:
+            print('\n** Please enter the correct number for a menu option. **')
+            print('Returning to menu...')
         time.sleep(2)
         os.system('clear')
