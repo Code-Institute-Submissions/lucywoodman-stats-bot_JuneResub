@@ -1,6 +1,7 @@
 import time
 from helper import db, test_database
 from auth import User
+from app import app
 
 
 def login():
@@ -40,8 +41,9 @@ def login():
                 print(
                     f'\n>> You have successfully logged in as "{current_user.username}".')
                 print('>> Taking you to the statistics menu...')
-                time.sleep(3)
-                # Go to logged in area
+                time.sleep(2)
+                # Go to main app
+                app()
 
             except ValueError as e:
                 print(e)
