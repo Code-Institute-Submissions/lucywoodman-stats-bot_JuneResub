@@ -43,7 +43,7 @@ def login():
                 print('Taking you to the statistics menu...')
                 time.sleep(2)
                 # Go to main app
-                app()
+                app(current_user)
 
             except ValueError as e:
                 print(e)
