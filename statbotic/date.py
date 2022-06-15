@@ -6,7 +6,7 @@ from statbotic.database import data
 class Date:
     """
     * Class for creating date instances.
-    * Methods: wk_start, wk_end, validate.
+    * Methods: range_end, validate.
     * Static Methods: pretty_date.
     """
 
@@ -28,22 +28,17 @@ class Date:
         else:
             self.__date = date_obj
 
-    def wk_start(self):
-        self.wk_start = self.__date - dt.timedelta(days=self.__date.weekday())
-        return self.wk_start
-
-    def wk_end(self):
-        self.wk_end = self.wk_start + dt.timedelta(days=6)
-        return self.wk_end
-
     def range_end(self, user_input):
         self.rng_end = self.__date + dt.timedelta(days=user_input)
         return self.rng_end
 
     def validate(self, *range):
-        if not data.stats.count_documents({
-                "date": {'$gte': range[0], '$lte': range[1]}}):
-            os.system('clear')
+        try:
+            if not data.stats.count_documents({
+                    "date": {'$gte': range[0], '$lte': range[1]}}):
+                raise LookupError
+        except LookupError:
+            # os.system('clear')
             print(f'I don\'t have any data for {Date.pretty_date(range[0])}')
         else:
             print('Data found...')
