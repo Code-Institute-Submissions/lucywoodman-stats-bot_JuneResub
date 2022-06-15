@@ -1,7 +1,7 @@
 import os
 import time
-from welcome import welcome, stats_bot
-from authorise import login, register
+from statbotic.welcome import welcome, stats_bot
+from statbotic.authorise import login, register
 
 
 def main():
