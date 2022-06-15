@@ -27,7 +27,7 @@ def app(user):
         if choice == '1':
             update_stats()
         elif choice == '2':
-            fetch_stats('range')
+            fetch_stats()
         elif choice == '3':
             export_stats()
         elif choice == '0':
