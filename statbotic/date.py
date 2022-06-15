@@ -1,3 +1,4 @@
+import os
 import datetime as dt
 from statbotic.database import data
 
@@ -42,6 +43,7 @@ class Date:
     def validate(self, *range):
         if not data.stats.count_documents({
                 "date": {'$gte': range[0], '$lte': range[1]}}):
+            os.system('clear')
             print(f'I don\'t have any data for {Date.pretty_date(range[0])}')
         else:
             print('Data found...')
