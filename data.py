@@ -21,9 +21,8 @@ class Stats:
     * and saves values to the properties.
     """
     date = AddData()
-    advanced = AddData()
     comments = AddData()
-    solved = AddData()
+    solves = AddData()
     total = AddData()
     wait = AddData()
     csat = AddData()
