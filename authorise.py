@@ -1,6 +1,6 @@
 import time
-from helper import db, test_database
-from auth import User
+from database import data, test_database
+from user import User
 from app import app
 
 
@@ -22,7 +22,7 @@ def login():
         current_user.username = input('Username : ')
         try:
             # Check the database for the username
-            user_count = db.users.count_documents(
+            user_count = data.users.count_documents(
                 {"_User__username": current_user.username})
             if user_count == 0:
                 raise LookupError(
@@ -32,7 +32,7 @@ def login():
             current_user.password = input('\nPassword : ')
             try:
                 # Fetch the user's details from the database
-                db_user = db.users.find_one(
+                db_user = data.users.find_one(
                     {"_User__username": current_user.username})
                 # Check if supplied password matches the password in the database
                 if db_user["_hashed_password"] != current_user._hashed_password:
@@ -80,7 +80,7 @@ def register():
         else:
             try:
                 # Check the database for the username
-                user_count = db.users.count_documents(
+                user_count = data.users.count_documents(
                     {"_User__username": new_user.username})
                 if user_count:
                     raise ValueError(
@@ -88,7 +88,7 @@ def register():
 
                 # Ask for a password and save the user to the database
                 new_user.password = input('Enter a password : ')
-                db.users.insert_one(new_user.__dict__)
+                data.users.insert_one(new_user.__dict__)
                 print(
                     f'\n>> Great! "{new_user.username}" has been registered. You can now login.')
                 print('>> Taking you back to the main menu...')
