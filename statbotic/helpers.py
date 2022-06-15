@@ -13,7 +13,7 @@ def user_continue(question):
         try:
             user_input.lower()
             if user_input not in ('y', 'n'):
-                raise ValueError('The input did not match "y" or "n".')
+                raise ValueError('** The input did not match "y" or "n" **')
         except ValueError as e:
             print(e)
         else:
