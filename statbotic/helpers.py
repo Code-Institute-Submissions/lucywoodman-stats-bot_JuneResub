@@ -70,4 +70,4 @@ def create_json(data, filename):
         json_string = dumps(data, indent=4)
         jsonf.write(json_string)
     print('\nFile successfully saved!')
-    print(path)
+    print(f'The data has been saved to: {path}')
