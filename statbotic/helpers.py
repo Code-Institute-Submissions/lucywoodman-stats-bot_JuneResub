@@ -1,3 +1,6 @@
+import os
+from pathlib import Path
+from bson.json_util import dumps
 from tabulate import tabulate
 from statbotic.title import Title
 
@@ -13,7 +16,8 @@ def user_continue(question):
         try:
             user_input.lower()
             if user_input not in ('y', 'n'):
-                raise ValueError('** The input did not match "y" or "n" **')
+                raise ValueError(
+                    '\n** The input did not match "y" or "n" **\n')
         except ValueError as e:
             print(e)
         else:
@@ -48,8 +52,21 @@ def print_stats(title, data):
     table_list = [list(x) for x in zip(data[0], stats_list)]
 
     # Generate header.
+    os.system('clear')
     header = Title(title)
     header.display()
 
     # Print the list as a table.
     print(tabulate(table_list, tablefmt="fancy_grid", numalign="decimal"))
+
+
+def create_json(data, filename):
+    os.system('clear')
+    full_path = os.path.dirname(os.path.abspath(__file__))
+    parent_directory = Path(full_path).parent.as_posix()
+    directory = f'{parent_directory}/exports/'
+    path = os.path.join(directory, filename)
+    with open(path, 'w', encoding='utf-8') as jsonf:
+        json_string = dumps(data, indent=4)
+        jsonf.write(json_string)
+    print('\nFile successfully saved!')
