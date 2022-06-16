@@ -1,9 +1,8 @@
 import os
-import traceback
-from bson.json_util import dumps
+import time
 from statbotic.title import Title
 from statbotic.database import data, test_database, aggregate_data, fetch_data_range
-from statbotic.helpers import user_continue, create_lists, print_stats
+from statbotic.helpers import user_continue, create_lists, print_stats, create_json
 from statbotic.date import Date
 from statbotic.stats import Stats
 
@@ -64,17 +63,18 @@ def update_stats():
                 print('** Something\'s not right. Please try again. **')
 
 
-def fetch_stats():
+def get_stats(*args):
     while True:
         print('')
         # Create a new Date() instance.
         user_date = Date()
         # Assign input to date instance variable.
-        user_date.date = input('Date (format YYYY-MM-DD) : ')
+        user_date.date = input('Start date (format YYYY-MM-DD) : ')
         # If date variable value successfully added, continue.
         if user_date.date:
             try:
-                days_to_view = int(input('Number of days to view : '))
+                print('\n(For a single day, use "0" for number of days)')
+                days_to_view = int(input('Number of days : '))
                 user_date.range_end(days_to_view)
 
                 try:
@@ -84,57 +84,49 @@ def fetch_stats():
                     # Check if data exists for the date range.
                     if user_date.validate(user_date.date, user_date.rng_end):
                         print('Fetching data...')
-                        # Fetch the data from MongoDB.
-                        fetched_data = aggregate_data(
-                            user_date.date, user_date.rng_end)
-                        # Create two lists from the data dict key and values, then merge.
-                        data_lists = create_lists(fetched_data)
-                        # Create a header.
-                        header = f'Stats for {Date.pretty_date(user_date.date)} to {Date.pretty_date(user_date.rng_end)}'
-                        # Display stats.
-                        print_stats(header, data_lists)
+
+                        if 'view' in args:
+                            view_stats(user_date)
+                        elif 'export' in args:
+                            export_stats(user_date)
 
                     # Ask the user if they'd like to view more stats.
                     # If no, break out of the while loop.
-                    if not user_continue('View more stats (y/n)? '):
+                    if not user_continue('Continue to view stats (y/n)? '):
                         print('Let\'s return to the menu...')
                         return
+
                 except Exception:
                     # Catch all exception
                     print('** Something\'s not right. Please try again. **')
+
             except ValueError:
                 print(
                     '\n** Oops! Make sure to enter a number for the number of days. **')
 
 
-def export_stats():
-    while True:
-        # Create a new Date() instance.
-        user_date = Date()
-        # Assign input to date obj var.
-        user_date.date = input('Start date (format YYYY-MM-DD): ')
-        user_date.start = user_date.date
-        try:
-            user_range = int(input('Number of days: '))
-        except TypeError:
-            print('Please enter a number.')
-        user_date.end = user_date.range_end(user_range)
-        simple_dates = [Date.simple_date(
-            user_date.start), Date.simple_date(user_date.end)]
-        # Check data exists for the above range.
-        print('Checking database for data...')
-        test_database()
-        if user_date.validate(user_date.start, user_date.end):
-            print('Fetching data...')
-            data = fetch_data_range(user_date.start, user_date.end)
-            data_list = list(data)
-            json_file = f'stats-{simple_dates[0]}-{simple_dates[1]}.json'
-            with open(json_file, 'w', encoding='utf-8') as jsonf:
-                json_string = dumps(data_list, indent=4)
-                jsonf.write(json_string)
-            print(f'Data saved to {json_file}')
-        # Ask the user if they'd like to export more stats.
-        # If no, break out of the while loop.
-        if not user_continue('Export more stats (y/n)? '):
-            print('Let\'s return to the menu...')
-            return
+def view_stats(user_date):
+    # Fetch the data from MongoDB.
+    fetched_data = aggregate_data(user_date.date, user_date.rng_end)
+    # Create two lists from the data dict key and values, then merge.
+    data_lists = create_lists(fetched_data)
+    # Create a header.
+    header = f'Stats for {Date.pretty_date(user_date.date)} to {Date.pretty_date(user_date.rng_end)}'
+    # Display stats.
+    print_stats(header, data_lists)
+
+
+def export_stats(user_date):
+    # Fetch the data from MongoDB.
+    fetched_data = fetch_data_range(user_date.date, user_date.rng_end)
+    # Create list from the data.
+    data_list = list(fetched_data)
+    # Generate simple dates for the JSON filename.
+    simple_dates = [Date.simple_date(
+        user_date.date), Date.simple_date(user_date.rng_end)]
+    # Create JSON filename.
+    json_filename = f'stats-{simple_dates[0]}-{simple_dates[1]}.json'
+    # Create the JSON file
+    print('Saving data to file...')
+    time.sleep(2)
+    create_json(data_list, json_filename)
