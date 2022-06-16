@@ -1,7 +1,7 @@
 import os
 import time
 from statbotic.welcome import welcome
-from statbotic.helpers_stats import update_stats, get_the_stats
+from statbotic.helpers_stats import update_stats, get_stats
 
 
 def app(user):
@@ -27,9 +27,9 @@ def app(user):
         if choice == '1':
             update_stats()
         elif choice == '2':
-            get_the_stats('view')
+            get_stats('view')
         elif choice == '3':
-            get_the_stats('export')
+            get_stats('export')
         elif choice == '0':
             print('\nYou chose to exit - See you soon and stay awesome! :D\n')
             exit()
