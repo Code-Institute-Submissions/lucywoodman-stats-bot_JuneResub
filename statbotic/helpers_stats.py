@@ -49,6 +49,7 @@ def update_stats():
                         # Overwrite data
                         new_stats(user_date, 'overwrite')
                 else:
+                    os.system('clear')
                     print(
                         f'Please enter the new stats below : \n')
                     # Enter new data
