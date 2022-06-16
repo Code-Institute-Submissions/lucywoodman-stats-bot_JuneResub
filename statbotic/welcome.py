@@ -13,7 +13,7 @@ def welcome(string):
 
 def stats_bot():
     """
-    * Displays an ascii robot.
+    Displays an ascii robot.
     """
     bot = r'''               ___T_
               | O O |

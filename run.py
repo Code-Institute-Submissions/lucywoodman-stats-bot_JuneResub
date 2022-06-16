@@ -7,15 +7,18 @@ from statbotic.authorise import login, register
 def main():
     """
     * Main program function where it all begins.
-    * Sets up welcome and initial menu.
+    * Set up welcome and login menu.
     """
     while True:
+        # Clear the terminal to create space.
         os.system('clear')
+        # Print welcome message.
         print(welcome('Statbotic'))
         print(stats_bot())
         print('''    Hello friend! I am Statbotic!  ''')
         print('I\'m here to help you with your Support team\'s statistics.')
         print('~' * 70)
+        # Print the login menu.
         print('\nChoose an option below : ')
         print('''
         1 : LOGIN
@@ -24,6 +27,7 @@ def main():
               )
         choice = input('\nEnter your choice : ')
 
+        # Menu controllers.
         if choice == '1':
             login()
         elif choice == '2':

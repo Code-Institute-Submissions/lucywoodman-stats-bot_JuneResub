@@ -6,12 +6,11 @@ from statbotic.app import app
 
 def login():
     """
-    Checks that the user exists in the database
-    Checks that the user's password matches
+    Check that the user exists in the database.
+    Check that the user's password matches.
 
-    Exceptions:
-    * LookupError if username isn't found in the database
-    * ValueError if the password is incorrect
+    * @raises(LookupError) -- when username isn't found.
+    * @raises(ValueError) -- when password is incorrect.
     """
     print('\nEnter your username and password : \n')
     tries = 3
@@ -34,7 +33,8 @@ def login():
                 # Fetch the user's details from the database
                 db_user = data.users.find_one(
                     {"_User__username": current_user.username})
-                # Check if supplied password matches the password in the database
+                # Check if supplied password matches the password in the
+                # database
                 if db_user["_hashed_password"] != current_user._hashed_password:
                     raise ValueError(f'\n** The password is incorrect. **\n')
 
@@ -58,12 +58,11 @@ def login():
 
 def register():
     """
-    Allows a new user to register for a login
-    Checks if the user already exists before saving
+    Allow a new user to register for a login.
+    Check if the user already exists before saving.
 
-    Exceptions:
-    * ValueError if the username is blank
-    * ValueError if the user already exists in the database
+    * @raises(ValueError) -- when username is blank.
+    * @raises(ValueError) -- when user already exists.
     """
     print('\nLet\'s get you registered!\n')
     while True:

@@ -17,8 +17,10 @@ stats = data.stats
 
 def test_database():
     """
-    Test the database connection
+    Test the database connection.
     Raise an exception and exit if there are issues.
+
+    * @raises(ConnectionFailure) -- pymongo error.
     """
     try:
         users.find_one()
@@ -31,9 +33,8 @@ def fetch_data_range(start, end):
     """
     Fetch data between two provided dates.
 
-    Args:
-    * start (date)
-    * end (date)
+    * @arg(date) start -- passed from export_stats().
+    * @arg(date) end -- passed from export_stats().
     """
     data_range = data.stats.aggregate([
         {
@@ -49,6 +50,12 @@ def fetch_data_range(start, end):
 
 
 def aggregate_data(start, end):
+    """
+    Fetch and aggregate data between two provided dates.
+
+    * @arg(date) start -- passed from view_stats().
+    * @arg(date) end -- passed from view_stats().
+    """
     data_range = data.stats.aggregate([
         {
             # Fetch the data between the starting and ending dates.

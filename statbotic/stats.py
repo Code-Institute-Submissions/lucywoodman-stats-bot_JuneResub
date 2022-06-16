@@ -1,7 +1,7 @@
 class AddData:
     """
-    * Class used by the Stats class.
-    * Creates properties from variables.
+    Class used by the Stats class.
+    Creates properties from variables.
     """
 
     def __set_name__(self, owner, name):
@@ -16,9 +16,9 @@ class AddData:
 
 class Stats:
     """
-    * Class for creating stats instances.
-    * Uses the AddData class to create properties,
-    * and saves values to the properties.
+    Class for creating stats instances.
+    Uses the AddData class to create properties,
+    saves values to the properties.
     """
     date = AddData()
     comments = AddData()
