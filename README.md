@@ -27,6 +27,7 @@ Statbotic is a command-line Python application for storing, viewing and exportin
     - [Register](#register)
     - [Exit](#exit)
     - [Main menu](#main-menu)
+    - [Add or update statistics](#add-or-update-statistics)
   - [Technologies used](#technologies-used)
     - [Languages](#languages)
     - [Frameworks and tools](#frameworks-and-tools)
@@ -142,13 +143,18 @@ If the username they've chosen does not already exist in the database, the user 
 
 If the user chooses option 0 from the login menu (or the main menu), the app exits. If this were running in an actual terminal, it would exit the app. But in the mock terminal, it exits, but doesn't appear to do anything, as there's nothing else for it to load.
 
-![Exit](docs/features/exit.png)
-
 ### Main menu
 
-Once a user is logged into the app, they're presented with the main menu where the main activity happens. They again have the option to exit by choosing 0. Or they can choose to add/update stats, view stats, or export stats.
+Once a user is logged into the app, they're presented with the main menu where the main activity happens. They again have the option to exit by choosing 0. Or they can choose to add/update stats, view stats, or export stats. There's also a little personalised welcome message showing the user's username. Here's what happens when you choose to exit:
 
+![Main menu and exit](docs/features/main-menu-exit.png)
 
+### Add or update statistics
+
+On choosing option 1 from the main menu, the user heads into the add/update stats workflow. The user is asked for a date, which is then checked in the database. If the date already exists, the user is asked if they'd like to overwrite the data. If it does not exist, they're taken to a "form" to collect the stats for that date.
+
+![Add or update stats](docs/features/add-update-stats.png)
+![Enter new stats](docs/features/enter-new-stats.png)
 
 
 
