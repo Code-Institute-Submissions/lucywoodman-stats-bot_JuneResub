@@ -24,7 +24,7 @@ def main():
         2 : REGISTER
         0 : EXIT'''
               )
-        choice = input('\nSelect an option be entering a number : ')
+        choice = input('\nSelect an option by entering a number : ')
 
         # Menu controllers.
         if choice == '1':
