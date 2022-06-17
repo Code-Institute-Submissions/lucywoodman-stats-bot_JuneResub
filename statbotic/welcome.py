@@ -15,12 +15,12 @@ def stats_bot():
     """
     Displays an ascii robot.
     """
-    bot = r'''               ___T_
-              | O O |
-              |__u__|
-            (m9\:::/\
-               /___\6
-                |_|
-               (ooo)
+    bot = r'''                 ___T_
+                | O O |
+                |__u__|
+              (m9\:::/\
+                 /___\6
+                  |_|
+                 (ooo)
     '''
     return bot

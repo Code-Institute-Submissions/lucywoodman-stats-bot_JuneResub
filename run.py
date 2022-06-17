@@ -15,17 +15,16 @@ def main():
         # Print welcome message.
         print(welcome('Statbotic'))
         print(stats_bot())
-        print('''    Hello friend! I am Statbotic!  ''')
-        print('I\'m here to help you with your Support team\'s statistics.')
-        print('~' * 70)
+        print('''Hello friend, I am Statbotic! I help with your 
+        Support team\'s statistics.''')
+        print('~' * 47)
         # Print the login menu.
-        print('\nChoose an option below : ')
         print('''
         1 : LOGIN
         2 : REGISTER
         0 : EXIT'''
               )
-        choice = input('\nEnter your choice : ')
+        choice = input('\nSelect an option be entering a number : ')
 
         # Menu controllers.
         if choice == '1':
