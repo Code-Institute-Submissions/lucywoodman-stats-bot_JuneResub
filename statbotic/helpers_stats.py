@@ -58,6 +58,7 @@ def update_stats():
         # Create a new Date() instance.
         user_date = Date()
         # Assign input to date instance variable.
+        print('Please enter the date of the stats to be added/updated.\n')
         user_date.date = input('Date (format YYYY-MM-DD) : ')
         # If date variable value successfully added, continue.
         if user_date.date:
@@ -107,14 +108,14 @@ def get_stats(*args):
         # Create a new Date() instance.
         user_date = Date()
         # Assign input to date instance variable.
-        print('Enter the date for the start of your range')
+        print('Enter the date for the start of your range.\n')
         user_date.date = input('Start date (format YYYY-MM-DD) : ')
         # If date variable value successfully added, continue.
         if user_date.date:
             try:
                 # Ask for number of days to create a date range.
-                print('\nEnter how many days to add to your range')
-                print('For a single day, enter 0')
+                print('\nEnter how many days to add to your range.')
+                print('For a single day, enter 0.\n')
                 days_to_view = int(input('Extra days : '))
                 user_date.range_end(days_to_view)
 
