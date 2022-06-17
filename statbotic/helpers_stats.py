@@ -101,8 +101,7 @@ def get_stats(*args):
         if user_date.date:
             try:
                 # Ask for number of days to create a date range.
-                print('\n(For a single day, use "0" for number of days)')
-                days_to_view = int(input('Number of days : '))
+                days_to_view = int(input('Extra days : '))
                 user_date.range_end(days_to_view)
 
                 try:
@@ -132,7 +131,7 @@ def get_stats(*args):
             except ValueError:
                 # Exception for an incorrect input.
                 print(
-                    '\n** Oops! Make sure to enter a number for the number of days. **')
+                    '\n** Oops! Make sure to enter a number for the extra days. **')
 
 
 def view_stats(user_date):
