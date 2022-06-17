@@ -1,3 +1,4 @@
+import os
 import time
 from statbotic.database import data, test_database
 from statbotic.user import User
@@ -12,7 +13,8 @@ def login():
     * @raises(LookupError) -- when username isn't found.
     * @raises(ValueError) -- when password is incorrect.
     """
-    print('\nEnter your username and password : \n')
+    os.system('clear')
+    print('\nPlease enter your username and password below\n')
     tries = 3
     current_user = User()
     while tries > 0:
@@ -46,14 +48,16 @@ def login():
                 app(current_user)
 
             except ValueError as e:
+                os.system('clear')
                 print(e)
                 tries -= 1
-                print(f'** You have {tries} tries left. **')
+                print(f'** You have {tries} tries left. **\n')
 
         except LookupError as e:
+            os.system('clear')
             print(e)
             tries -= 1
-            print(f'** You have {tries} tries left. **')
+            print(f'** You have {tries} tries left. **\n')
 
 
 def register():
@@ -64,6 +68,7 @@ def register():
     * @raises(ValueError) -- when username is blank.
     * @raises(ValueError) -- when user already exists.
     """
+    os.system('clear')
     print('\nLet\'s get you registered!\n')
     while True:
         test_database()
@@ -82,6 +87,7 @@ def register():
                 user_count = data.users.count_documents(
                     {"_User__username": new_user.username})
                 if user_count:
+                    os.system('clear')
                     raise ValueError(
                         f'\n** The username "{new_user.username}" is already registered. **\n')
 
@@ -90,7 +96,7 @@ def register():
                 data.users.insert_one(new_user.__dict__)
                 print(
                     f'\nGreat! "{new_user.username}" has been registered. You can now login.')
-                print('Taking you back to the main menu...')
+                print('\nTaking you back to the main menu...')
                 time.sleep(3)
                 # Return to the main menu (run.py)
                 break
