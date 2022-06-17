@@ -1,35 +1,32 @@
 # Statbotic
 
-A command line application to log stats for a customer support team, such as number of tickets solved, live chats handled and CSAT score.
+Statbotic is a command-line Python application for storing, viewing and exporting Support team statistics. To help Support Team Leads and Managers to keep track of how their team is performing.
 
-The app includes a login. The data is stored in MongoDB.
+[Live webpage](https://support-stats-bot.herokuapp.com/)
 
-[Live webpage](https://support-stats-bot.herokuapp.com/) (using a mock terminal)
-
-![Mockup](docs/mockup.png)
+![Mockup image](docs/mockup.png)
 
 ## Table of contents
 
 - [Statbotic](#statbotic)
   - [Table of contents](#table-of-contents)
-  - [Project Goals](#project-goals)
-  - [User experience](#user-experience)
+- [UX](#ux)
+  - [Strategy](#strategy)
+    - [The problem](#the-problem)
+    - [The solution](#the-solution)
     - [Target audience](#target-audience)
+    - [The project goals](#the-project-goals)
+  - [Scope](#scope)
     - [User stories](#user-stories)
-      - [Manager/Team lead](#managerteam-lead)
-      - [Individual contributor](#individual-contributor)
   - [Structure](#structure)
+  - [Skeleton + Surface](#skeleton--surface)
   - [Features](#features)
-    - [1. Welcome banner](#1-welcome-banner)
-    - [2. Main menu](#2-main-menu)
-    - [3. Login](#3-login)
-    - [4. Register](#4-register)
-    - [5. Exit](#5-exit)
-    - [6. Sub menu](#6-sub-menu)
-    - [7. Add/updates stats data](#7-addupdates-stats-data)
-    - [8. See support stats (day)](#8-see-support-stats-day)
-    - [9. See support stats (week)](#9-see-support-stats-week)
-    - [10. Export stats data](#10-export-stats-data)
+    - [Welcome banner](#welcome-banner)
+    - [Login menu](#login-menu)
+    - [Login](#login)
+    - [Register](#register)
+    - [Exit](#exit)
+    - [Main menu](#main-menu)
   - [Technologies used](#technologies-used)
     - [Languages](#languages)
     - [Frameworks and tools](#frameworks-and-tools)
@@ -47,120 +44,129 @@ The app includes a login. The data is stored in MongoDB.
     - [Code](#code)
     - [Reference material](#reference-material)
 
-## Project Goals
+# UX
 
-The user goals
+## Strategy
+
+### The problem
+
+Customer and technical support teams work hard to support their customers and their product. This means that, unless support statistics are being tracked, success or trends can go unnoticed. 
+
+### The solution
+
+Enter Statbotic! A simple, lightweight command-line application. Statistics, such as ticket solves and total live chats, can be stored for future reference. Historical date ranges can be viewed with averages over that range. And statistics can be exported to a JSON file to be used elsewhere - such as chart and graph software.
+
+### Target audience
+
+Anyone working on a customer or technical support team, where important statistics include solving tickets and handling live chats. Most likely in a managerial, supervisor or team lead role.
+
+### The project goals
 
 - To have a simple and lightweight way to record support team stats.
 - To be able to view historical stat summaries.
 - To be able to export the stats in other formats for use elsewhere.
+- To be easy to navigate.
 
-The app owner goals
+*Go back to the [top](#table-of-contents)*
 
-- Provide an easy system for the team to update support team stats.
-- Include the ability for managers to see support team stat summaries.
-- Make the app easy to navigate.
+---
 
-## User experience
-
-### Target audience
-
-- Managers of customer support teams.
-- Team leads of customer support teams.
-- Customer support team individual contributors.
+## Scope
 
 ### User stories
 
-#### Manager/Team lead
+As a manager/supervisor...
 
-1. As the manager, I want to be able to input stats for future reference.
-2. As the manager, I want to be able to view historical stats for a particular day.
-3. As the manager, I want to be able to view historical stats for a particular week.
-4. As the manager, I want the historical stats to show averages when viewing a date range.
-5. As the manager, I want to be able to export the data so I can use my charting software.
-6. As the manager, I want a login system to provide some security.
-
-#### Individual contributor
-
-7. As an IC, I don't want to be scared off by the command line.
-8. As an IC, I want to be able to find what I need easily.
-9. As an IC, I want feedback for when I do something wrong.
+1. I want to input stats to be saved for future reference.
+2. I want to view historical stats for a particular date/date range.
+3. I want to see averages when viewing saved stats.
+4. I want to export the data so I can use my charting software.
+5. I want a login to provide some security.
+6. I want a friendly application to help command-line be less scary.
+7. I want to be able to navigate the application easily.
+8. I want feedback on my actions.
 
 ## Structure
 
-As a command line app, there isn't a lot of visual design. The menus and information are separated with the help of hyphens and other text-based decoration.
+**App diagram**
 
-The app relies heavily on user input. There is a main menu and a sub menu once logged in, which require a number input to choose an option. There are also date inputs to choose the correct stat data from the database.
+The app consists of menus and "forms" (sequences of user input) for gathering information. The rest is "behind the scenes". The diagram below helps to understand how the app has been pieced together.
+
+![App diagram](docs/planning/app-diagram.png)
+
+**Database**
+
+The app uses MongoDB. It's a non-relational database, with data being stored in documents. Each document can store any type of data, regardless of what was saved before, making it very flexible. It also has the perk of storing data in a JSON-like format, making it work really nicely with Python and this project.
+
+## Skeleton + Surface
+
+As a command-line app, there isn't any visual design as such. Space is created by inserting empty lines or clearing the terminal screen. There are also dashed lines to help titles to stand out, and borders for tables. Therefore, no wireframes were used, and no branding/visual design needed.
+
+However, I will note the use of the cheeky robot (see the Features section). Being quite limited as to how to get any personality across with a mostly black and white text-based application, ascii art is an obvious choice. This allowed me to create a more interesting logo, and include a robot illustration.
+
+*Go back to the [top](#table-of-contents)*
+
+---
 
 ## Features
 
-### 1. Welcome banner
+### Welcome banner
 
-On starting the app, the welcome banner is shown. This displays the title and a robot using ascii art. A friendly introduction.
+When arriving on the webpage and the mock terminal first loads, users are welcomed with a coloured logo, a cheeky robot and a welcome message. This provides a friendly introduction to the app, hopefully helping command line to be a slightly less scary place for those that have never used it, and injects some personality into an otherwise text-based application.
 
-- User stories: 7
+### Login menu
 
-### 2. Main menu
+Beneath the welcome banner is the login menu. Users are given the options login, register or exit, followed by a prompt. Users are required to enter a number to choose a menu option.
 
-Below the welcome banner is the main menu. This provides the options to login with an existing registered user, register a new user, or exit the app. The user is given a prompt to enter a number to choose an option.
+![Welcome and login menu](docs/features/welcome-login-menu.png)
 
-- User stories: 6, 7, 8
+### Login
 
-### 3. Login
+On selecting option 1 from the login menu, users enter the login workflow. The app asks for a username and password. The user has 3 tries to get these credentials correct. 
 
-On selecting option 1 from the main menu, the login workflow is triggered. The app asks for a username and password, and provides feedback if anything is entered incorrectly.
+If the username is not found in the database, the app will let the user know and remove a try. If it is found, but the password doesn't match what's stored in the database, the app will again supply feedback to the user and remove a try. When all 3 tries have been used up, the app will return to the login menu.
 
-- User stories: 6, 9
+If the correct credentials are provided, the user is taken to the application's main menu.
 
-### 4. Register
+![Login](docs/features/login.png)
 
-On selecting option 2 from the main menu, the register workflow is triggered. The app asks for a username and password, and provides feedback if anything is entered incorrectly.
+### Register
 
-- User stories: 6, 9
+On selecting option 2 from the login menu, users enter the registration workflow to create a new login. The app asks for a username, and before continuing, will check if this username already exists in the database. If it does, the app will let the user know and prompt them for another username.
 
-### 5. Exit
+If the username they've chosen does not already exist in the database, the user is asked for a password, which is hashed and stored in the database. After this, they're returned to the login menu to login.
 
-On selecting option 9 from either the main menu or the sub menu, the app exits.
+![Register](docs/features/register.png)
 
-### 6. Sub menu
+### Exit
 
-Once registered and logged in, the sub menu appears. This provides the options to enter new stats, view stats for a particular day, view stats for a particular week, or export stats to JSON. The user is given a prompt to enter a number to choose an option.
+If the user chooses option 0 from the login menu (or the main menu), the app exits. If this were running in an actual terminal, it would exit the app. But in the mock terminal, it exits, but doesn't appear to do anything, as there's nothing else for it to load.
 
-- User stories: 1, 2, 3, 4, 5, 8
+![Exit](docs/features/exit.png)
 
-### 7. Add/updates stats data
+### Main menu
 
-On selecting option 1 from the sub menu, the user can select a date for entering new data to the database. The app will check to see if the data already exists for the input date, and ask the user if they'd like to overwrite it.
+Once a user is logged into the app, they're presented with the main menu where the main activity happens. They again have the option to exit by choosing 0. Or they can choose to add/update stats, view stats, or export stats.
 
-- User stories: 1, 8, 9
 
-### 8. See support stats (day)
 
-On selecting option 2 from the sub menu, the user can select a date to view data for. The app will check if the data exists and display the data in a table for easy reading.
 
-- User stories: 2, 7, 8, 9
 
-### 9. See support stats (week)
 
-On selecting option 3 from the sub menu, the user can select a date to view data for. The app will check if the data exists, automatically work out the week start and end dates, then display the data for that week in a table for easy reading.
 
-- User stories: 3, 4, 7, 8, 9
 
-### 10. Export stats data
 
-On selecting option 4 from the sub menu, the user can select a date range to export data. The app will check if the data exists and export the data to a JSON file.
-
-- User stories: 5, 7, 8, 9
 
 ## Technologies used
 
 ### Languages
 
 - Python
+- A little HTML/CSS
 
 ### Frameworks and tools
 
-<details><summary>Research, planning and wireframes</summary>
+<details><summary>Research and planning</summary>
 <ol>
    <li>VSCode (markdown)</li>
    <li>Code Institute lessons/notes</li>
