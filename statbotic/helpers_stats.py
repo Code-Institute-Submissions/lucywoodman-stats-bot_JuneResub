@@ -54,7 +54,7 @@ def update_stats():
     * @raises(Exception) -- fallback error.
     """
     while True:
-        print('')
+        os.system('clear')
         # Create a new Date() instance.
         user_date = Date()
         # Assign input to date instance variable.
@@ -63,11 +63,13 @@ def update_stats():
         if user_date.date:
             try:
                 print('\nChecking database...')
+                time.sleep(1)
                 # Test the database connection.
                 test_database()
                 # Check if data already exists for the date.
                 if user_date.validate(user_date.date, user_date.date):
-                    print('\n** This date already exists in the database. **\n')
+                    print(
+                        f'\n** {Date.pretty_date(user_date.date)} already exists in the database. **\n')
                     # If it does exist, ask if its to be overwritten.
                     if user_continue('Would you like to overwrite it (y/n)? '):
                         os.system('clear')
@@ -85,8 +87,8 @@ def update_stats():
 
                 # Ask the user if they'd like to input more stats.
                 # If no, break out of the while loop.
-                if not user_continue('\nGive me more stats (y/n)? '):
-                    print('Let\'s return to the menu...')
+                if not user_continue('Do you want to give me more stats to look after (y/n)? '):
+                    print('\nLet\'s return to the menu...')
                     return
 
             except Exception:
@@ -101,20 +103,24 @@ def get_stats(*args):
     * @arg(str) *args -- passed from main menu option in app.py.
     """
     while True:
-        print('')
+        os.system('clear')
         # Create a new Date() instance.
         user_date = Date()
         # Assign input to date instance variable.
+        print('Enter the date for the start of your range')
         user_date.date = input('Start date (format YYYY-MM-DD) : ')
         # If date variable value successfully added, continue.
         if user_date.date:
             try:
                 # Ask for number of days to create a date range.
+                print('\nEnter how many days to add to your range')
+                print('For a single day, enter 0')
                 days_to_view = int(input('Extra days : '))
                 user_date.range_end(days_to_view)
 
                 try:
                     print('Checking database for data...')
+                    time.sleep(1)
                     # Test the database connection.
                     test_database()
                     # Check if data exists for the date range.

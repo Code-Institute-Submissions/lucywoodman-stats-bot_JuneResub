@@ -1,4 +1,5 @@
 import os
+import time
 import datetime as dt
 from statbotic.database import data
 
@@ -33,6 +34,7 @@ class Date:
             date_obj = dt.datetime.strptime(input_date, '%Y-%m-%d')
         except ValueError:
             print('** The input did not match the date format. **')
+            time.sleep(2)
         else:
             self.__date = date_obj
 
