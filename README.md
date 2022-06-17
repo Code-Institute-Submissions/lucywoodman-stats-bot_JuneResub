@@ -29,6 +29,7 @@ Statbotic is a command-line Python application for storing, viewing and exportin
     - [Main menu](#main-menu)
     - [Add or update statistics](#add-or-update-statistics)
     - [View statistics](#view-statistics)
+    - [Export stats](#export-stats)
   - [Technologies used](#technologies-used)
     - [Languages](#languages)
     - [Frameworks and tools](#frameworks-and-tools)
@@ -163,7 +164,7 @@ If it does not exist, they're taken to a "form" to collect the stats for that da
 
 When the user selects 2 from the main menu, this triggers the workflow for viewing historical statistics (i.e. those that have already been saved in the database). The user is asked for a date again, but this time it represents the beginning of a date range.
 
-The user is then asked for the number of days to be included in the range. To see the statistics just for that date, they can enter 0. A table of statistics is then displayed. The table shows totals for the input data, some average calculations for each, and lastly a number of public comments to solved ticket ratio.
+The user is then asked for the number of days to be included in the range. To see the statistics just for that date, they can enter 0. The database is checked to see if the data exists. If it does, a table of statistics is then displayed. The table shows totals for the input data, some average calculations for each, and lastly a number of public comments to solved ticket ratio.
 
 It's quick to view the performance of a team using these statistics. The CSAT is the customer satisfaction rating, which is always good to look at over a range of time. The number of comments to solved ticket ratio is important for showing how efficient the team is with their explanations: the more accuracy in their responses, the more likely a ticket will be solved quickly (with less comments). 
 
@@ -172,10 +173,14 @@ In a perfect customer support world, the CSAT score would be 100%, and the comme
 ![View stats workflow](docs/features/view-stats.png)
 ![View stats table](docs/features/view-stats-table.png)
 
+### Export stats
 
+On selecting 3 from the main menu, the user is taken to the export workflow. This starts in the same way as the viewing workflow by asking for a date for the start of the range. This is then followed by an input for the number of extra days. The database is then checked to make sure the data exists. If it does, it's converted and exported to JSON behind the scenes, and the path to the file is provided to the user.
 
+When running this app locally, the JSON files save to the exports/ directory in the root of the folder (as shown below). Sadly, this doesn't work the same on Heroku. If you copy and paste the provided path into the address bar in the browser, Heroku returns a 404. To get this to work properly on Heroku is outside the scope of this project.
 
-
+![Export stats](docs/features/export.png)
+![Exported stats as JSON](docs/features/exports-directory.png)
 
 ## Technologies used
 
