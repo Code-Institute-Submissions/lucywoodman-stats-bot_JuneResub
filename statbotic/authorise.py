@@ -42,7 +42,7 @@ def login():
 
                 print(
                     f'\nYou have successfully logged in as "{current_user.username}".')
-                print('Taking you to the statistics menu...')
+                print('Taking you to the main menu...')
                 time.sleep(2)
                 # Go to main app
                 app(current_user)
@@ -96,9 +96,9 @@ def register():
                 data.users.insert_one(new_user.__dict__)
                 print(
                     f'\nGreat! "{new_user.username}" has been registered. You can now login.')
-                print('\nTaking you back to the main menu...')
+                print('\nTaking you back to the login menu...')
                 time.sleep(3)
-                # Return to the main menu (run.py)
+                # Return to the login menu (run.py)
                 break
 
             except ValueError as e:
