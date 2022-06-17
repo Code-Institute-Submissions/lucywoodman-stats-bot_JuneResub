@@ -13,29 +13,38 @@ def new_stats(user_date, *action):
 
     * @arg(date) user_date -- passed from update_stats().
     * @arg(str) *action -- passed from update_stats().
+    * @raises(ValueError) -- when an input is not an integer.
     """
-    Title('** ZenDesk Stats **').display()
-    # Create a new Stats() instance
-    stats = Stats()
-    # Assign the previously entered date.
-    stats.date = user_date.date
-    # Ask for ticket comments and solves.
-    stats.comments = int(input('Number of ticket responses: '))
-    stats.solves = int(input('Number of ticket solves: '))
-    Title('** Intercom Stats **').display()
-    # Ask for chat total, wait time and CSAT score.
-    stats.total = int(input('Total number of chats: '))
-    stats.wait = int(input('Average chat wait time (in seconds): '))
-    stats.csat = int(input('Chat CSAT score: '))
-    # If overwrite is in the args, overwrite existing data.
-    if 'overwrite' in action:
-        data.stats.update_one({"date": user_date.date}, {
-            "$set": stats.__dict__})
-        print('\n** The stats have been successfully updated! **\n')
-    # Else save the data as a new entry.
-    elif 'new' in action:
-        data.stats.insert_one(stats.__dict__)
-        print('\n** The new stats have been successfully added to the database! **\n')
+    while True:
+        Title('** ZenDesk Stats **').display()
+        # Create a new Stats() instance
+        stats = Stats()
+        # Assign the previously entered date.
+        stats.date = user_date.date
+        try:
+            # Ask for ticket comments and solves.
+            stats.comments = int(input('Number of ticket responses: '))
+            stats.solves = int(input('Number of ticket solves: '))
+            Title('** Intercom Stats **').display()
+            # Ask for chat total, wait time and CSAT score.
+            stats.total = int(input('Total number of chats: '))
+            stats.wait = int(input('Average chat wait time (in seconds): '))
+            stats.csat = int(input('Chat CSAT score: '))
+        except ValueError:
+            print('\n** Oops! Make sure to enter numbers only. **')
+        else:
+            # If overwrite is in the args, overwrite existing data.
+            if 'overwrite' in action:
+                data.stats.update_one({"date": user_date.date}, {
+                    "$set": stats.__dict__})
+                print('\n** The stats have been successfully updated! **\n')
+                return
+            # Else save the data as a new entry.
+            elif 'new' in action:
+                data.stats.insert_one(stats.__dict__)
+                print(
+                    '\n** The new stats have been successfully added to the database! **\n')
+                return
 
 
 def update_stats():
