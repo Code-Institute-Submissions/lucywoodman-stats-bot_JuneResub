@@ -1,4 +1,4 @@
-# Support Stats Bot
+# Statbotic
 
 A command line application to log stats for a customer support team, such as number of tickets solved, live chats handled and CSAT score.
 
@@ -6,11 +6,11 @@ The app includes a login. The data is stored in MongoDB.
 
 [Live webpage](https://support-stats-bot.herokuapp.com/) (using a mock terminal)
 
-![Screenshot](docs/screenshot.png)
+![Mockup](docs/mockup.png)
 
 ## Table of contents
 
-- [Support Stats Bot](#support-stats-bot)
+- [Statbotic](#statbotic)
   - [Table of contents](#table-of-contents)
   - [Project Goals](#project-goals)
   - [User experience](#user-experience)
