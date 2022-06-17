@@ -28,6 +28,7 @@ Statbotic is a command-line Python application for storing, viewing and exportin
     - [Exit](#exit)
     - [Main menu](#main-menu)
     - [Add or update statistics](#add-or-update-statistics)
+    - [View statistics](#view-statistics)
   - [Technologies used](#technologies-used)
     - [Languages](#languages)
     - [Frameworks and tools](#frameworks-and-tools)
@@ -151,12 +152,25 @@ Once a user is logged into the app, they're presented with the main menu where t
 
 ### Add or update statistics
 
-On choosing option 1 from the main menu, the user heads into the add/update stats workflow. The user is asked for a date, which is then checked in the database. If the date already exists, the user is asked if they'd like to overwrite the data. If it does not exist, they're taken to a "form" to collect the stats for that date.
+On choosing option 1 from the main menu, the user heads into the add/update stats workflow. The user is asked for a date, which is then checked in the database. If the date already exists, the user is asked if they'd like to overwrite the data. 
+
+If it does not exist, they're taken to a "form" to collect the stats for that date. On completion of the form, the database is updated and the user is asked if they'd like to enter more stats. If the user chooses yes (y), the workflow is restarted. If they choose no (n), the user is returned to the main menu.
 
 ![Add or update stats](docs/features/add-update-stats.png)
 ![Enter new stats](docs/features/enter-new-stats.png)
 
+### View statistics
 
+When the user selects 2 from the main menu, this triggers the workflow for viewing historical statistics (i.e. those that have already been saved in the database). The user is asked for a date again, but this time it represents the beginning of a date range.
+
+The user is then asked for the number of days to be included in the range. To see the statistics just for that date, they can enter 0. A table of statistics is then displayed. The table shows totals for the input data, some average calculations for each, and lastly a number of public comments to solved ticket ratio.
+
+It's quick to view the performance of a team using these statistics. The CSAT is the customer satisfaction rating, which is always good to look at over a range of time. The number of comments to solved ticket ratio is important for showing how efficient the team is with their explanations: the more accuracy in their responses, the more likely a ticket will be solved quickly (with less comments). 
+
+In a perfect customer support world, the CSAT score would be 100%, and the comments vs solves ratio would be 1. A good goal would be 95% CSAT and 2 comments per solved ticket.
+
+![View stats workflow](docs/features/view-stats.png)
+![View stats table](docs/features/view-stats-table.png)
 
 
 
