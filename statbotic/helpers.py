@@ -14,6 +14,7 @@ def user_continue(question):
     * @return(bool) -- true for y, false for n.
     """
     while True:
+        print('')
         # Ask the question.
         user_input = input(question)
         try:
