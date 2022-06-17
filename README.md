@@ -30,6 +30,7 @@ Statbotic is a command-line Python application for storing, viewing and exportin
     - [Add or update statistics](#add-or-update-statistics)
     - [View statistics](#view-statistics)
     - [Export stats](#export-stats)
+    - [Exceptions](#exceptions)
   - [Technologies used](#technologies-used)
     - [Languages](#languages)
     - [Frameworks and tools](#frameworks-and-tools)
@@ -181,6 +182,18 @@ When running this app locally, the JSON files save to the exports/ directory in 
 
 ![Export stats](docs/features/export.png)
 ![Exported stats as JSON](docs/features/exports-directory.png)
+
+### Exceptions
+
+Throughout the app, there are descriptive error messages that are displayed to the user should anything not go as planned. There are a few different inputs, such as strings, integers, and strings that need to be in a particular format (dates). Each has their own code that will raise an exception should the input be incorrect and redirect the user accordingly. See the example below.
+
+There are also exceptions in place should anything go wrong with the database connection, or if data cannot be found.
+
+![Example exception](docs/features/example-exception.png)
+
+*Go back to the [top](#table-of-contents)*
+
+---
 
 ## Technologies used
 
