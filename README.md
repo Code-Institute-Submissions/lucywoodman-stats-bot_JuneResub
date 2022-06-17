@@ -208,19 +208,14 @@ The website was deployed using GitHub to Heroku by following these steps:
 8. Enter your repository name and click on it.
 9. Choose the branch you want to buid your app from, and click "Deploy branch".
 
-You can for fork the repository by following these steps:
-
-1. Go to the GitHub repository
-2. Click on Fork button in upper right hand corner
-
 You can clone the repository by following these steps:
 
-1. Go to the GitHub repository
-2. Locate the Code button above the list of files and click it
-3. Select if you prefere to clone using HTTPS, SSH, or Github CLI and click the copy button to copy the URL to your clipboard
-4. Open Git Bash
-5. Change the current working directory to the one where you want the cloned directory
-6. Type git clone and paste the URL from the clipboard ($ git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY)
+1. Go to the GitHub repository.
+2. Locate the Code button above the list of files and click it.
+3. Select if you prefere to clone using HTTPS, SSH, or Github CLI and click the copy button to copy the URL to your clipboard.
+4. Open terminal locally.
+5. Change the current working directory to the one where you want the cloned directory.
+6. Type git clone and paste the URL from the clipboard ($ git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY).
 7. Press Enter to create your local clone.
 
 ## Python Libraries
@@ -247,3 +242,5 @@ You can clone the repository by following these steps:
 - Blog post with hashlib: https://medium.com/@moinahmedbgbn/a-basic-login-system-with-python-746a64dc88d6
 - Tabulate library for tables https://pypi.org/project/tabulate/
 - Docs for setting up MongoDB with Heroku https://www.mongodb.com/developer/how-to/use-atlas-on-heroku/
+- Blog post on errors and exceptions https://www.programiz.com/python-programming/exceptions
+- Handy StackOverflow post to catch exceptions and see more info https://stackoverflow.com/questions/9823936/python-how-do-i-know-what-type-of-exception-occurred
