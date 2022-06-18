@@ -5,7 +5,6 @@
   - [CSS validation](#css-validation)
   - [PEP8 validation](#pep8-validation)
   - [Testing user stories](#testing-user-stories)
-    - [As a manager/supervisor, I can...](#as-a-managersupervisor-i-can)
   - [Notable Bugs](#notable-bugs)
 
 
@@ -75,52 +74,101 @@ The [W3C Jigsaw CSS Validation Service](https://jigsaw.w3.org/css-validator/vali
 
 ## Testing user stories
 
-### As a manager/supervisor, I can...
+[User Story 1](README.md?plain=1#L83)
 
-US1: **...input stats to be saved for future reference.**
+The user should be able to input statistics and see that they are saved to the database.
 
-| **Feature** | **Acceptance criteria** | **Test** | **Result** |
-|:--|:--|:--|:--:|
-| [F7](README.md#7-add-or-update-statistics) | The user should be able to input statistics and see that they are saved to the database. | - Navigate to the menu option<br>- Input stats data<br>- See confirmation message<br>- View stats to ensure it was saved |:white_check_mark:|
+Features: [F3](README.md#3-login), [F7](README.md#7-add-or-update-statistics)
 
-US2: **...view historical stats for a particular date/date range.**
-US3: **...see averages when viewing saved stats.**
+| **Pass** | **Actions** |
+|:--:|--|
+| :white_check_mark: | Log into the app |
+| :white_check_mark: | Navigate to the add/update stats menu option |
+| :white_check_mark: | Input stats as required |
+| :white_check_mark: | See confirmation message |
+| :white_check_mark: | Test viewing the stats to ensure they're saved |
 
-| **Feature** | **Acceptance criteria** | **Test** | **Result** |
-|:--|:--|:--|:--:|
-| [F8](README.md#8-view-statistics) | The user should be able to choose a date/date range to view historical data from the database, along with averages. | - Navigate to the menu option<br>- Enter a date range<br>- See displayed stats<br>- See averages |:white_check_mark:|
+[User Story 2](README.md?plain=1#L84) & [User Story 3](README.md?plain=1#L85)
 
-US4: **...export the data so I can use my charting software.**
+The user should be able to choose a date/date range to view historical data from the database, along with averages.
 
-| **Feature** | **Acceptance criteria** | **Test** | **Result** |
-|:--|:--|:--|:--:|
-| [F9](README.md#9-export-stats) | The user should be able to save and export data to a JSON file[^1]. | - Navigate to the menu option<br>- Enter a date range<br>- See confirmation message and file path |:white_check_mark:|
+Features: [F3](README.md#3-login), [F8](README.md#8-view-statistics)
+
+| **Pass** | **Actions** |
+|:--:|--|
+| :white_check_mark: | Log into the app |
+| :white_check_mark: | Navigate to the view stats menu option |
+| :white_check_mark: | Enter a date range |
+| :white_check_mark: | See displayed stats for supplied date range |
+| :white_check_mark: | See averages for supplied date range |
+
+[User Story 4](README.md?plain=1#L86)
+
+The user should be able to save and export data to a JSON file[^1].
+
+Features: [F3](README.md#3-login), [F9](README.md#9-export-stats)
+
+| **Pass** | **Actions** |
+|:--:|--|
+| :white_check_mark: | Log into the app |
+| :white_check_mark: | Navigate to the export stats menu option |
+| :white_check_mark: | Enter a date range |
+| :white_check_mark: | See confirmation message and file path |
+| :white_check_mark: | (If local) Go to file path and see saved JSON file |
 
 [^1]: The file appears not to exist on Heroku due to the [ephemeral file system](https://help.heroku.com/K1PPS2WM/why-are-my-file-uploads-missing-deleted-from-the-application). This works locally.
 
-US5: **...login to provide some security.**
+[User Story 5](README.md?plain=1#L87)
 
-| **Feature** | **Acceptance criteria** | **Test** | **Result** |
-|:--|:--|:--|:--:|
-| [F2](README.md#2-login-menu)<br>[F3](README.md#3-login)<br>[F4](README.md#4-register) | The user should be able to create login credentials and then login to see the main app. | - Choose register from login menu<br>- Create a new user<br>- Choose login from login menu<br>- Login and see main menu |:white_check_mark:|
+The user should be able to create login credentials and then login to see the main app.
 
-US6: **...see a friendly application to help command-line be less scary.**
+Features: [F2](README.md#2-login-menu), [F3](README.md#3-login), [F4](README.md#4-register)
 
-| **Feature** | **Acceptance criteria** | **Test** | **Result** |
-|:--|:--|:--|:--:|
-| [F1](README.md#1-welcome-banner)<br>[F6](README.md#6-main-menu) | The user should feel less anxious with the help of natural language and ascii art. | - Use the app<br>- Observe spacing and ascii art<br>- Read app output |:white_check_mark:|
+| **Pass** | **Actions** |
+|:--:|--|
+| :white_check_mark: | Navigate to the register menu option |
+| :white_check_mark: | Enter a username |
+| :white_check_mark: | Enter a password |
+| :white_check_mark: | Return to the login menu |
+| :white_check_mark: | Navigate to the login menu option |
+| :white_check_mark: | Enter same username and password |
+| :white_check_mark: | See main app menu |
 
-US7: **...navigate the application easily.**
+[User Story 6](README.md?plain=1#L88)
 
-| **Feature** | **Acceptance criteria** | **Test** | **Result** |
-|:--|:--|:--|:--:|
-| [F2](README.md#2-login-menu)<br>[F6](README.md#6-main-menu)<br>[F5](README.md#5-exit) | The user should be able to move around the app easily. | - Use the app<br>- Try all the menu options |:white_check_mark:|
+The user should feel less anxious with the help of natural language and ascii art.
 
-US8: **...see feedback on my actions.**
+Features: [F1](README.md#1-welcome-banner), [F6](README.md#6-main-menu)
 
-| **Feature** | **Acceptance criteria** | **Test** | **Result** |
-|:--|:--|:--|:--:|
-| [F10](README.md#10-exceptions) | The user should see feedback if an incorrect input is used or data is/is not found, etc. | - Use the app<br>- Test every feature while deliberately trying to break it<br>- See relevant error messages and loops |:white_check_mark:|
+| **Pass** | **Actions** |
+|:--:|--|
+| :white_check_mark: | Open the app to see ascii (coloured) logo and robot |
+| :white_check_mark: | Read welcome from app |
+| :white_check_mark: | Read comments from app throughout the workflows |
+| :white_check_mark: | See the personalised welcome on the main menu |
+
+[User Story 7](README.md?plain=1#L89)
+
+The user should be able to move around the app easily.
+
+Features: [F2](README.md#2-login-menu), [F6](README.md#6-main-menu), [F5](README.md#5-exit)
+
+| **Pass** | **Actions** |
+|:--:|--|
+| :white_check_mark: | Open the app |
+| :white_check_mark: | Try all of the menu options |
+| :white_check_mark: | Read all app messaging to check it makes sense |
+
+[User Story 8](README.md?plain=1#L90)
+
+The user should see feedback if an incorrect input is used or data is/is not found, etc.
+
+Features: [F10](README.md#10-exceptions)
+
+| **Pass** | **Actions** |
+|:--:|--|
+| :white_check_mark: | Test every feature, deliberately trying to break the app |
+| :white_check_mark: | See relevant error messages and sensible app response |
 
 ## Notable Bugs
 
