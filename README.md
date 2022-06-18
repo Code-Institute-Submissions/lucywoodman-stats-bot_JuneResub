@@ -21,16 +21,16 @@ Statbotic is a command-line Python application for storing, viewing and exportin
   - [Structure](#structure)
   - [Skeleton + Surface](#skeleton--surface)
 - [Features](#features)
-  - [Welcome banner](#welcome-banner)
-  - [Login menu](#login-menu)
-  - [Login](#login)
-  - [Register](#register)
-  - [Exit](#exit)
-  - [Main menu](#main-menu)
-  - [Add or update statistics](#add-or-update-statistics)
-  - [View statistics](#view-statistics)
-  - [Export stats](#export-stats)
-  - [Exceptions](#exceptions)
+  - [1. Welcome banner](#1-welcome-banner)
+  - [2. Login menu](#2-login-menu)
+  - [3. Login](#3-login)
+  - [4. Register](#4-register)
+  - [5. Exit](#5-exit)
+  - [6. Main menu](#6-main-menu)
+  - [7. Add or update statistics](#7-add-or-update-statistics)
+  - [8. View statistics](#8-view-statistics)
+  - [9. Export stats](#9-export-stats)
+  - [10. Exceptions](#10-exceptions)
 - [Testing](#testing)
 - [Future enhancements](#future-enhancements)
 - [Deployment](#deployment)
@@ -109,17 +109,17 @@ However, I will note the use of the cheeky robot (see the Features section). Bei
 
 # Features
 
-## Welcome banner
+## 1. Welcome banner
 
 When arriving on the webpage and the mock terminal first loads, users are welcomed with a coloured logo, a cheeky robot and a welcome message. This provides a friendly introduction to the app, hopefully helping command line to be a slightly less scary place for those that have never used it, and injects some personality into an otherwise text-based application.
 
-## Login menu
+## 2. Login menu
 
 Beneath the welcome banner is the login menu. Users are given the options login, register or exit, followed by a prompt. Users are required to enter a number to choose a menu option.
 
 ![Welcome and login menu](docs/features/welcome-login-menu.png)
 
-## Login
+## 3. Login
 
 On selecting option 1 from the login menu, users enter the login workflow. The app asks for a username and password. The user has 3 tries to get these credentials correct. 
 
@@ -129,7 +129,7 @@ If the correct credentials are provided, the user is taken to the application's 
 
 ![Login](docs/features/login.png)
 
-## Register
+## 4. Register
 
 On selecting option 2 from the login menu, users enter the registration workflow to create a new login. The app asks for a username, and before continuing, will check if this username already exists in the database. If it does, the app will let the user know and prompt them for another username.
 
@@ -137,17 +137,17 @@ If the username they've chosen does not already exist in the database, the user 
 
 ![Register](docs/features/register.png)
 
-## Exit
+## 5. Exit
 
 If the user chooses option 0 from the login menu (or the main menu), the app exits. If this were running in an actual terminal, it would exit the app. But in the mock terminal, it exits, but doesn't appear to do anything, as there's nothing else for it to load.
 
-## Main menu
+## 6. Main menu
 
 Once a user is logged into the app, they're presented with the main menu where the main activity happens. They again have the option to exit by choosing 0. Or they can choose to add/update stats, view stats, or export stats. There's also a little personalised welcome message showing the user's username. Here's what happens when you choose to exit:
 
 ![Main menu and exit](docs/features/main-menu-exit.png)
 
-## Add or update statistics
+## 7. Add or update statistics
 
 On choosing option 1 from the main menu, the user heads into the add/update stats workflow. The user is asked for a date, which is then checked in the database. If the date already exists, the user is asked if they'd like to overwrite the data. 
 
@@ -156,7 +156,7 @@ If it does not exist, they're taken to a "form" to collect the stats for that da
 ![Add or update stats](docs/features/add-update-stats.png)
 ![Enter new stats](docs/features/enter-new-stats.png)
 
-## View statistics
+## 8. View statistics
 
 When the user selects 2 from the main menu, this triggers the workflow for viewing historical statistics (i.e. those that have already been saved in the database). The user is asked for a date again, but this time it represents the beginning of a date range.
 
@@ -169,7 +169,7 @@ In a perfect customer support world, the CSAT score would be 100%, and the comme
 ![View stats workflow](docs/features/view-stats.png)
 ![View stats table](docs/features/view-stats-table.png)
 
-## Export stats
+## 9. Export stats
 
 On selecting 3 from the main menu, the user is taken to the export workflow. This starts in the same way as the viewing workflow by asking for a date for the start of the range. This is then followed by an input for the number of extra days. The database is then checked to make sure the data exists. If it does, it's converted and exported to JSON behind the scenes, and the path to the file is provided to the user.
 
@@ -178,7 +178,7 @@ When running this app locally, the JSON files save to the exports/ directory in 
 ![Export stats](docs/features/export.png)
 ![Exported stats as JSON](docs/features/exports-directory.png)
 
-## Exceptions
+## 10. Exceptions
 
 Throughout the app, there are descriptive error messages that are displayed to the user should anything not go as planned. There are a few different inputs, such as strings, integers, and strings that need to be in a particular format (dates). Each has their own code that will raise an exception should the input be incorrect and redirect the user accordingly. See the example below.
 
