@@ -15,7 +15,15 @@ The project was tested continuosly throughout development by running the app mul
 
 ## HTML validation
 
+The [W3C Markup Validation Service](https://validator.w3.org/) was used to validate the HTML of the website. Most of the HTML was provided for me as part of the Code Institute template for this project, with a few tweaks made to update the styling.
+
+![HTML validation](docs/testing/html.png)
+
 ## CSS validation
+
+The [W3C Jigsaw CSS Validation Service](https://jigsaw.w3.org/css-validator/validator) was used to validate the CSS of the website. The CSS passes with 0 errors. There are 2 warnings due to the provided code in the project template.
+
+![CSS validation](docs/testing/css.png)
 
 ## Testing user stories
 
