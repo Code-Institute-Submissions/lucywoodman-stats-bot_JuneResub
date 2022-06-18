@@ -15,7 +15,7 @@ def main():
         # Print welcome message.
         print(welcome('Statbotic'))
         print(stats_bot())
-        print('''Hello friend, I am Statbotic! I help with your 
+        print('''Hello friend, I am Statbotic! I help with your
         Support team\'s statistics.''')
         print('~' * 47)
         # Print the login menu.
