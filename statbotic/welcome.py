@@ -1,5 +1,4 @@
 from clint.textui import colored
-from colorama import Fore, Back, Style
 from pyfiglet import Figlet
 
 
