@@ -117,9 +117,13 @@ However, I will note the use of the cheeky robot (see the Features section). Bei
 
 When arriving on the webpage and the mock terminal first loads, users are welcomed with a coloured logo, a cheeky robot and a welcome message. This provides a friendly introduction to the app, hopefully helping command line to be a slightly less scary place for those that have never used it, and injects some personality into an otherwise text-based application.
 
+User stories: [6](README.md?plain=1#L88)
+
 ## 2. Login menu
 
 Beneath the welcome banner is the login menu. Users are given the options login, register or exit, followed by a prompt. Users are required to enter a number to choose a menu option.
+
+User stories: [5](README.md?plain=1#L87), [7](README.md?plain=1#L89)
 
 ![Welcome and login menu](docs/features/welcome-login-menu.png)
 
@@ -131,6 +135,8 @@ If the username is not found in the database, the app will let the user know and
 
 If the correct credentials are provided, the user is taken to the application's main menu.
 
+User stories: [5](README.md?plain=1#L87)
+
 ![Login](docs/features/login.png)
 
 ## 4. Register
@@ -139,15 +145,21 @@ On selecting option 2 from the login menu, users enter the registration workflow
 
 If the username they've chosen does not already exist in the database, the user is asked for a password, which is hashed and stored in the database. After this, they're returned to the login menu to login.
 
+User stories: [5](README.md?plain=1#L87)
+
 ![Register](docs/features/register.png)
 
 ## 5. Exit
 
 If the user chooses option 0 from the login menu (or the main menu), the app exits. If this were running in an actual terminal, it would exit the app. But in the mock terminal, it exits, but doesn't appear to do anything, as there's nothing else for it to load.
 
+User stories: [7](README.md?plain=1#L89)
+
 ## 6. Main menu
 
-Once a user is logged into the app, they're presented with the main menu where the main activity happens. They again have the option to exit by choosing 0. Or they can choose to add/update stats, view stats, or export stats. There's also a little personalised welcome message showing the user's username. Here's what happens when you choose to exit:
+Once a user is logged into the app, they're presented with the main menu where the main activity happens. They again have the option to exit by choosing 0. Or they can choose to add/update stats, view stats, or export stats. There's also a little personalised welcome message showing the user's username. The screenshot shows what happens when you choose to exit.
+
+User stories: [6](README.md?plain=1#L88), [7](README.md?plain=1#L89)
 
 ![Main menu and exit](docs/features/main-menu-exit.png)
 
@@ -156,6 +168,8 @@ Once a user is logged into the app, they're presented with the main menu where t
 On choosing option 1 from the main menu, the user heads into the add/update stats workflow. The user is asked for a date, which is then checked in the database. If the date already exists, the user is asked if they'd like to overwrite the data. 
 
 If it does not exist, they're taken to a "form" to collect the stats for that date. On completion of the form, the database is updated and the user is asked if they'd like to enter more stats. If the user chooses yes (y), the workflow is restarted. If they choose no (n), the user is returned to the main menu.
+
+User stories: [1](README.md?plain=1#L83)
 
 ![Add or update stats](docs/features/add-update-stats.png)
 ![Enter new stats](docs/features/enter-new-stats.png)
@@ -170,6 +184,8 @@ It's quick to view the performance of a team using these statistics. The CSAT is
 
 In a perfect customer support world, the CSAT score would be 100%, and the comments vs solves ratio would be 1. A good goal would be 95% CSAT and 2 comments per solved ticket.
 
+User stories: [2](README.md?plain=1#L84)
+
 ![View stats workflow](docs/features/view-stats.png)
 ![View stats table](docs/features/view-stats-table.png)
 
@@ -179,6 +195,8 @@ On selecting 3 from the main menu, the user is taken to the export workflow. Thi
 
 When running this app locally, the JSON files save to the exports/ directory in the root of the folder (as shown below). Sadly, this doesn't work the same on Heroku. If you copy and paste the provided path into the address bar in the browser, Heroku returns a 404. To get this to work properly on Heroku is outside the scope of this project.
 
+User stories: [4](README.md?plain=1#L86)
+
 ![Export stats](docs/features/export.png)
 ![Exported stats as JSON](docs/features/exports-directory.png)
 
@@ -187,6 +205,8 @@ When running this app locally, the JSON files save to the exports/ directory in 
 Throughout the app, there are descriptive error messages that are displayed to the user should anything not go as planned. There are a few different inputs, such as strings, integers, and strings that need to be in a particular format (dates). Each has their own code that will raise an exception should the input be incorrect and redirect the user accordingly. See the example below.
 
 There are also exceptions in place should anything go wrong with the database connection, or if data cannot be found.
+
+User stories: [8](README.md?plain=1#L90)
 
 ![Example exception](docs/features/example-exception.png)
 
