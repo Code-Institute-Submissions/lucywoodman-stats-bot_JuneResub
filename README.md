@@ -34,6 +34,10 @@ Statbotic is a command-line Python application for storing, viewing and exportin
 - [Testing](#testing)
 - [Future enhancements](#future-enhancements)
 - [Deployment](#deployment)
+  - [Set up MongoDB](#set-up-mongodb)
+  - [Connect to MongoDB](#connect-to-mongodb)
+  - [Deploy to Heroku using GitHub](#deploy-to-heroku-using-github)
+  - [Clone the GitHub repo](#clone-the-github-repo)
 - [Technologies used](#technologies-used)
   - [Languages](#languages)
   - [Libraries](#libraries)
@@ -212,7 +216,59 @@ Flexible data - allow users to create their own MongoDB collections so they can 
 
 # Deployment
 
-The website was deployed using GitHub to Heroku by following these steps:
+## Set up MongoDB
+
+1. Head to https://www.mongodb.com/ and click on the "Try free" button in the top-right.
+2. Register your details to create an account, then answer the questions on the welcome page and click "Submit".
+3. Choose the "Shared" cluster (free). The settings can be left as they are, or tweak them to personal preferences. Click "Create cluster".
+4. For the "Security Quickstart", choose a database username and password and click "Create user".
+5. Click "Add my current IP address" further down, then click "Finish and Close". Then click on "Go to Databases".
+6. Wait for the database to finish creating, then click on "Database Access" in the left menu. Click "Edit" on the database user you created earlier.
+7. Leave everything as it is, except for "Database User Privileges". Change the "Built-in Role" to "Atlas admin". Click "Update user".
+8. Wait for the changes to complete and the database status to return to active (highlighted with a green dot next to the cluster name).
+
+## Connect to MongoDB
+
+1. Make sure you have Python PyMongo driver installed.
+2. From the "Databases" tab, click on "Connect". Choose "Connect your application". Then choose "Python" and "3.4 or later". Copy the connection string.
+3. Create a file called mongodbtest.py in the python application. Add the following code, replacing `<connectionstring>` with the one you just copied (make sure the database username and password in the string match the user you created earlier).
+
+```
+from pymongo import MongoClient
+from pprint import pprint
+
+client = MongoClient(<connectionstring>)
+db = client.admin
+serverStatusResult=db.command("serverStatus")
+pprint(serverStatusResult)
+```
+
+4. Run mondodbtest.py. You should see an output that ends with something similar to the following:
+
+```
+{
+    .
+    .
+    .
+ 'storageEngine': {'backupCursorOpen': False,
+                   'dropPendingIdents': 0,
+                   'name': 'wiredTiger',
+                   'oldestRequiredTimestampForCrashRecovery': Timestamp(1641221339, 8),
+                   'persistent': True,
+                   'readOnly': False,
+                   'supportsCommittedReads': True,
+                   'supportsPendingDrops': True,
+                   'supportsSnapshotReadConcern': True,
+                   'supportsTwoPhaseIndexBuild': True},
+ 'uptime': 16572.0,
+ 'uptimeEstimate': 16572,
+ 'uptimeMillis': 16572166,
+ 'version': '4.4.10'}
+```
+
+5. From here, refer to MongoDB's documentation on [Atlas](https://docs.atlas.mongodb.com/) and [PyMongo](https://docs.mongodb.com/drivers/pymongo/).
+
+## Deploy to Heroku using GitHub
 
 1. Create an account at [heroku.com](https://.heroku.com/).
 2. Create a new app, add app name and your region.
@@ -224,7 +280,7 @@ The website was deployed using GitHub to Heroku by following these steps:
 8. Enter your repository name and click on it.
 9. Choose the branch you want to buid your app from, and click "Deploy branch".
 
-You can clone the repository by following these steps:
+## Clone the GitHub repo
 
 1. Go to the GitHub repository.
 2. Locate the Code button above the list of files and click it.
