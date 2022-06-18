@@ -247,10 +247,13 @@ You can clone the repository by following these steps:
 
 ## Libraries
 
-- pymongo
-- tabulate
-- certifi
-- pyfiglet
+| **Library** | **Used for** |
+|--|--|
+| [certifi](https://pypi.org/project/certifi/) | Connecting securely to MongoDB Atlas |
+| [clint](https://pypi.org/project/clint/) | The colour in the "logo" |
+| [pyfiglet](https://github.com/pwaller/pyfiglet) | Creating ascii art text |
+| [pymongo](https://pypi.org/project/pymongo/) | MongoDB specific interactions |
+| [tabulate](https://pypi.org/project/tabulate/) | Pretty printing tables of data |
 
 ## Tools
 
