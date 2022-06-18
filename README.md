@@ -20,33 +20,28 @@ Statbotic is a command-line Python application for storing, viewing and exportin
     - [User stories](#user-stories)
   - [Structure](#structure)
   - [Skeleton + Surface](#skeleton--surface)
-  - [Features](#features)
-    - [Welcome banner](#welcome-banner)
-    - [Login menu](#login-menu)
-    - [Login](#login)
-    - [Register](#register)
-    - [Exit](#exit)
-    - [Main menu](#main-menu)
-    - [Add or update statistics](#add-or-update-statistics)
-    - [View statistics](#view-statistics)
-    - [Export stats](#export-stats)
-    - [Exceptions](#exceptions)
-  - [Technologies used](#technologies-used)
-    - [Languages](#languages)
-    - [Frameworks and tools](#frameworks-and-tools)
-  - [Validation](#validation)
-    - [PEP8 validation](#pep8-validation)
-    - [Testing user stories](#testing-user-stories)
-  - [Bugs](#bugs)
-  - [Deployment](#deployment)
-  - [Python Libraries](#python-libraries)
-    - [pymongo](#pymongo)
-    - [tabulate](#tabulate)
-    - [certifi](#certifi)
-    - [pyfiglet](#pyfiglet)
-  - [Credits](#credits)
-    - [Code](#code)
-    - [Reference material](#reference-material)
+- [Features](#features)
+  - [Welcome banner](#welcome-banner)
+  - [Login menu](#login-menu)
+  - [Login](#login)
+  - [Register](#register)
+  - [Exit](#exit)
+  - [Main menu](#main-menu)
+  - [Add or update statistics](#add-or-update-statistics)
+  - [View statistics](#view-statistics)
+  - [Export stats](#export-stats)
+  - [Exceptions](#exceptions)
+- [Testing](#testing)
+- [Future enhancements](#future-enhancements)
+- [Deployment](#deployment)
+- [Technologies used](#technologies-used)
+  - [Languages](#languages)
+  - [Libraries](#libraries)
+  - [Tools](#tools)
+- [Credits](#credits)
+  - [Code](#code)
+  - [Reference material](#reference-material)
+- [Acknowledgements](#acknowledgements)
 
 # UX
 
@@ -112,19 +107,19 @@ However, I will note the use of the cheeky robot (see the Features section). Bei
 
 ---
 
-## Features
+# Features
 
-### Welcome banner
+## Welcome banner
 
 When arriving on the webpage and the mock terminal first loads, users are welcomed with a coloured logo, a cheeky robot and a welcome message. This provides a friendly introduction to the app, hopefully helping command line to be a slightly less scary place for those that have never used it, and injects some personality into an otherwise text-based application.
 
-### Login menu
+## Login menu
 
 Beneath the welcome banner is the login menu. Users are given the options login, register or exit, followed by a prompt. Users are required to enter a number to choose a menu option.
 
 ![Welcome and login menu](docs/features/welcome-login-menu.png)
 
-### Login
+## Login
 
 On selecting option 1 from the login menu, users enter the login workflow. The app asks for a username and password. The user has 3 tries to get these credentials correct. 
 
@@ -134,7 +129,7 @@ If the correct credentials are provided, the user is taken to the application's 
 
 ![Login](docs/features/login.png)
 
-### Register
+## Register
 
 On selecting option 2 from the login menu, users enter the registration workflow to create a new login. The app asks for a username, and before continuing, will check if this username already exists in the database. If it does, the app will let the user know and prompt them for another username.
 
@@ -142,17 +137,17 @@ If the username they've chosen does not already exist in the database, the user 
 
 ![Register](docs/features/register.png)
 
-### Exit
+## Exit
 
 If the user chooses option 0 from the login menu (or the main menu), the app exits. If this were running in an actual terminal, it would exit the app. But in the mock terminal, it exits, but doesn't appear to do anything, as there's nothing else for it to load.
 
-### Main menu
+## Main menu
 
 Once a user is logged into the app, they're presented with the main menu where the main activity happens. They again have the option to exit by choosing 0. Or they can choose to add/update stats, view stats, or export stats. There's also a little personalised welcome message showing the user's username. Here's what happens when you choose to exit:
 
 ![Main menu and exit](docs/features/main-menu-exit.png)
 
-### Add or update statistics
+## Add or update statistics
 
 On choosing option 1 from the main menu, the user heads into the add/update stats workflow. The user is asked for a date, which is then checked in the database. If the date already exists, the user is asked if they'd like to overwrite the data. 
 
@@ -161,7 +156,7 @@ If it does not exist, they're taken to a "form" to collect the stats for that da
 ![Add or update stats](docs/features/add-update-stats.png)
 ![Enter new stats](docs/features/enter-new-stats.png)
 
-### View statistics
+## View statistics
 
 When the user selects 2 from the main menu, this triggers the workflow for viewing historical statistics (i.e. those that have already been saved in the database). The user is asked for a date again, but this time it represents the beginning of a date range.
 
@@ -174,7 +169,7 @@ In a perfect customer support world, the CSAT score would be 100%, and the comme
 ![View stats workflow](docs/features/view-stats.png)
 ![View stats table](docs/features/view-stats-table.png)
 
-### Export stats
+## Export stats
 
 On selecting 3 from the main menu, the user is taken to the export workflow. This starts in the same way as the viewing workflow by asking for a date for the start of the range. This is then followed by an input for the number of extra days. The database is then checked to make sure the data exists. If it does, it's converted and exported to JSON behind the scenes, and the path to the file is provided to the user.
 
@@ -183,7 +178,7 @@ When running this app locally, the JSON files save to the exports/ directory in 
 ![Export stats](docs/features/export.png)
 ![Exported stats as JSON](docs/features/exports-directory.png)
 
-### Exceptions
+## Exceptions
 
 Throughout the app, there are descriptive error messages that are displayed to the user should anything not go as planned. There are a few different inputs, such as strings, integers, and strings that need to be in a particular format (dates). Each has their own code that will raise an exception should the input be incorrect and redirect the user accordingly. See the example below.
 
@@ -195,60 +190,37 @@ There are also exceptions in place should anything go wrong with the database co
 
 ---
 
-## Technologies used
+# Testing
 
-### Languages
+Please see the [Testing page](TESTING.md) for information on manual testing and validation.
 
-- Python
-- A little HTML/CSS
+*Go back to the [top](#table-of-contents)*
 
-### Frameworks and tools
+---
 
-<details><summary>Research and planning</summary>
-<ol>
-   <li>VSCode (markdown)</li>
-   <li>Code Institute lessons/notes</li>
-</ol>
-</details>
+# Future enhancements
 
-<details><summary>Development</summary>
-<ol>
-   <li>Git and GitHub</li>
-   <li>VSCode</li>
-   <li>Python libraries: pymongo, tabulate, certifi, pyfiglet</li>
-</ol>
-</details>
+Security - Add an email requirement to registrations, and limit access to only those who already have an email address saved in the database. Or limit access to only those with a particular domain in their email.
 
-## Validation
+JSON export - Save the JSON files to cloud storage, to allow them to be downloaded or emailed.
 
-### PEP8 validation
+Flexible data - allow users to create their own MongoDB collections so they can choose which statistics data they'd like to save.
 
-The [PEP8 Online](http://pep8online.com/) site was used to validate the Python of the app.
+*Go back to the [top](#table-of-contents)*
 
-### Testing user stories
+---
 
-Sorry, I ran out of time to get this done before the submission time.
-
-## Bugs
-
-- BUG: FIXED: $round in the aggregator doesn't seem to work. Used Python instead.
-- BUG: FIXED: Entering a number that isn't an option kicks you out of the program, when it should stay on the menu.
-- BUG: FIXED: logging in after registering was returning False and kicking out of the program. Added login boolean.
-- BUG: FIXED: Enter random string when asking for a date prompts the program to return "Please insert a number:". Added while loop.
-- BUG: Typing something other than y/n at y/n questions will kick back to the menu.
-- BUG: Registering will also log you in.
-
-## Deployment
+# Deployment
 
 The website was deployed using GitHub to Heroku by following these steps:
 
-1. Create an account at [heroku.com](https://.heroku.com/)
-2. Create a new app, add app name and your region
-3. Click on create app
-4. Go to "Settings"
-5. Under Config Vars, add your sensitive data (the MongoDB URL for example)
+1. Create an account at [heroku.com](https://.heroku.com/).
+2. Create a new app, add app name and your region.
+3. Click on create app.
+4. Go to "Settings".
+5. Under Config Vars, add your sensitive data (the MongoDB URL for example).
 6. For this project, set buildpacks to <Python> and <NodeJS> in that order.
-7. Go to "Deploy" and at "Deployment method", click on "Connect to Github"
+7. Go to "Deploy" and at "Deployment method", click on "Connect to Github".
 8. Enter your repository name and click on it.
 9. Choose the branch you want to buid your app from, and click "Deploy branch".
 
@@ -262,24 +234,42 @@ You can clone the repository by following these steps:
 6. Type git clone and paste the URL from the clipboard ($ git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY).
 7. Press Enter to create your local clone.
 
-## Python Libraries
+*Go back to the [top](#table-of-contents)*
 
-### pymongo
+---
 
-### tabulate
+# Technologies used
 
-### certifi
+## Languages
 
-### pyfiglet
+- Python
+- A little HTML/CSS
 
-## Credits
+## Libraries
 
-### Code
+- pymongo
+- tabulate
+- certifi
+- pyfiglet
+
+## Tools
+
+- Git/GitHub
+- Heroku
+- MongoDB
+
+*Go back to the [top](#table-of-contents)*
+
+---
+
+# Credits
+
+## Code
 
 - Reference for the menu structure: https://chunkofcode.net/how-to-implement-a-dynamic-command-line-menu-in-python/
 - Reference for data classes: https://realpython.com/python-descriptors/
 
-### Reference material
+## Reference material
 
 - MongoDB docs: https://www.mongodb.com/blog/post/getting-started-with-python-and-mongodb
 - Blog post on security to help with logins: https://martinheinz.dev/blog/59
@@ -288,3 +278,16 @@ You can clone the repository by following these steps:
 - Docs for setting up MongoDB with Heroku https://www.mongodb.com/developer/how-to/use-atlas-on-heroku/
 - Blog post on errors and exceptions https://www.programiz.com/python-programming/exceptions
 - Handy StackOverflow post to catch exceptions and see more info https://stackoverflow.com/questions/9823936/python-how-do-i-know-what-type-of-exception-occurred
+
+*Go back to the [top](#table-of-contents)*
+
+---
+
+# Acknowledgements
+
+I would like to take the opportunity to thank:
+
+- My family, friends and colleagues for their advice, support and help with testing.
+- My mentor for their feedback, advice and support.
+
+*Go back to the [top](#table-of-contents)*
