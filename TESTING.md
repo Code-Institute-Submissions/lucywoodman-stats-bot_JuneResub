@@ -1,17 +1,15 @@
 # Statbotic Testing
 
 - [Statbotic Testing](#statbotic-testing)
-  - [PEP8 validation](#pep8-validation)
   - [HTML validation](#html-validation)
   - [CSS validation](#css-validation)
+  - [PEP8 validation](#pep8-validation)
   - [Testing user stories](#testing-user-stories)
     - [As a manager/supervisor, I can...](#as-a-managersupervisor-i-can)
   - [Bugs](#bugs)
 
 
 The project was tested continuosly throughout development by running the app multiple times between code changes. This was to test the output from the bot, exceptions being raised correctly and the spacing/clearing of the output. I used extra code to produce more verbose exceptions to help me to catch every error, which was then removed once the workflow had been thoroughly tested. Further [user story testing](#testing-user-stories) was also completed.
-
-## PEP8 validation
 
 ## HTML validation
 
@@ -24,6 +22,44 @@ The [W3C Markup Validation Service](https://validator.w3.org/) was used to valid
 The [W3C Jigsaw CSS Validation Service](https://jigsaw.w3.org/css-validator/validator) was used to validate the CSS of the website. The CSS passes with 0 errors. There are 2 warnings due to the provided code in the project template.
 
 ![CSS validation](docs/testing/css.png)
+
+## PEP8 validation
+
+[PEP8 Online](http://pep8online.com) was used to validate the Python code on the site. No errors were flagged in any of the Python files.
+
+<details><summary>run.py</summary>
+<img src="docs/testing/run.png">
+</details>
+<details><summary>app.py</summary>
+<img src="docs/testing/app.png">
+</details>
+<details><summary>authorise.py</summary>
+<img src="docs/testing/authorise.png">
+</details>
+<details><summary>database.py</summary>
+<img src="docs/testing/database.png">
+</details>
+<details><summary>date.py</summary>
+<img src="docs/testing/date.png">
+</details>
+<details><summary>helpers_stats.py</summary>
+<img src="docs/testing/helpers_stats.png">
+</details>
+<details><summary>helpers.py</summary>
+<img src="docs/testing/helpers.png">
+</details>
+<details><summary>stats.py</summary>
+<img src="docs/testing/stats.png">
+</details>
+<details><summary>title.py</summary>
+<img src="docs/testing/title.png">
+</details>
+<details><summary>user.py</summary>
+<img src="docs/testing/user.png">
+</details>
+<details><summary>welcome.py</summary>
+<img src="docs/testing/welcome.png">
+</details>
 
 ## Testing user stories
 
