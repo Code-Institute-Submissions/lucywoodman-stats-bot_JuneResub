@@ -6,7 +6,7 @@
   - [PEP8 validation](#pep8-validation)
   - [Testing user stories](#testing-user-stories)
     - [As a manager/supervisor, I can...](#as-a-managersupervisor-i-can)
-  - [Bugs](#bugs)
+  - [Notable Bugs](#notable-bugs)
 
 
 The project was tested continuosly throughout development by running the app multiple times between code changes. This was to test the output from the bot, exceptions being raised correctly and the spacing/clearing of the output. I used extra code to produce more verbose exceptions to help me to catch every error, which was then removed once the workflow had been thoroughly tested. Further [user story testing](#testing-user-stories) was also completed.
@@ -17,11 +17,19 @@ The [W3C Markup Validation Service](https://validator.w3.org/) was used to valid
 
 ![HTML validation](docs/testing/html.png)
 
+*Go back to the [top](#table-of-contents)*
+
+---
+
 ## CSS validation
 
 The [W3C Jigsaw CSS Validation Service](https://jigsaw.w3.org/css-validator/validator) was used to validate the CSS of the website. The CSS passes with 0 errors. There are 2 warnings due to the provided code in the project template.
 
 ![CSS validation](docs/testing/css.png)
+
+*Go back to the [top](#table-of-contents)*
+
+---
 
 ## PEP8 validation
 
@@ -60,6 +68,10 @@ The [W3C Jigsaw CSS Validation Service](https://jigsaw.w3.org/css-validator/vali
 <details><summary>welcome.py</summary>
 <img src="docs/testing/welcome.png">
 </details>
+
+*Go back to the [top](#table-of-contents)*
+
+---
 
 ## Testing user stories
 
@@ -110,14 +122,24 @@ US8: **...see feedback on my actions.**
 |:--|:--|:--|:--:|
 | [F10](README.md#10-exceptions) | The user should see feedback if an incorrect input is used or data is/is not found, etc. | - Use the app<br>- Test every feature while deliberately trying to break it<br>- See relevant error messages and loops |:white_check_mark:|
 
+## Notable Bugs
 
+My first version (Jan 2022) of this project ran into a number of issues with the menu system in particular. These are the bugs related to that. These were all rendered irrelevant by replacing the menus with much simpler code in my second version (Jun 2022).
 
+- Entering a number that isn't an option kicks you out of the program, when it should stay on the menu.
+- Logging in after registering was returning False and kicking out of the program.
+- Enter random string when asking for a date prompts the program to return "Please insert a number:".
+- Typing something other than y/n at y/n questions will kick back to the menu.
+- Registering will also log you in.
 
-## Bugs
+The menu system in the first version relied on too many booleans, making for a confusing structure and bugs that were tricky to catch and fix. The second version separates the code into more files, breaking up the workflows, simplifying the menu system, and making a much more robust app.
 
-- BUG: FIXED: $round in the aggregator doesn't seem to work. Used Python instead.
-- BUG: FIXED: Entering a number that isn't an option kicks you out of the program, when it should stay on the menu.
-- BUG: FIXED: logging in after registering was returning False and kicking out of the program. Added login boolean.
-- BUG: FIXED: Enter random string when asking for a date prompts the program to return "Please insert a number:". Added while loop.
-- BUG: Typing something other than y/n at y/n questions will kick back to the menu.
-- BUG: Registering will also log you in.
+These are the notable bugs from V1 and V2:
+
+| **Resolved** | **Bug** | **Fix** |
+|:--:|--|--|
+| :white_check_mark: | $round in the MongoDB aggregator doesn't work | Remove it and use Python instead (V1) |
+| :white_check_mark: | Unbound errors when trying to run app | Rename variables to avoid conflict - [commit](https://github.com/lucywoodman/stats-bot/commit/b2807f7a01e54cbdedef7f9801dd5c38e42002f2)|
+| :white_check_mark: | Date input validation not working | Add try/except with exception message - [commit](https://github.com/lucywoodman/stats-bot/commit/13bf0abc307484c0a196730809ea697f69017ea2)|
+| :white_check_mark: | Incorrect message seen before screen cleared when returning to menus | Add an else to menu loops - [commit](https://github.com/lucywoodman/stats-bot/commit/13c5fac263bc61ae012b5a291df541eef9067b0f)|
+| :white_check_mark: | Catchall exception raised when a non-integer is entered for stats | Add a ValueError exception with better messaging - [commit](https://github.com/lucywoodman/stats-bot/commit/451d06ef8ed3e975a78d6274c484771a0ad38407)|
