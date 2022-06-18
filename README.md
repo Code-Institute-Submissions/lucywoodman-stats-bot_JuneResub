@@ -61,7 +61,9 @@ Enter Statbotic! A simple, lightweight command-line application. Statistics, suc
 
 ### Target audience
 
-Anyone working on a customer or technical support team, where important statistics include solving tickets and handling live chats. Most likely in a managerial, supervisor or team lead role.
+Myself! I have worked in a technical support team for nearly 5 years. We have always kept track of important statistics to help us to monitor our own, our team's and the overall department's performance. We set targets and compare the real statistics to the targets, then drill into the data if there is a lot of difference, or if any trends start to appear.
+
+We currently have data in two different places: ZenDesk and Intercom. One does a not so great job at providing data access and charts, the other does an excellent job. But they are of course in different places and handle the data very differently. To be able to save both sets of data into a single database, and then export this to a JSON file to be used for charts, is extremely useful to see trends and patterns using the data as a whole.
 
 ### The project goals
 
@@ -224,7 +226,11 @@ Please see the [Testing page](TESTING.md) for information on manual testing and 
 
 # Future enhancements
 
-Security - Add an email requirement to registrations, and limit access to only those who already have an email address saved in the database. Or limit access to only those with a particular domain in their email.
+Check date ranges - Currently, if there is data missing for days in a date range, the app shows the stats totals and averages for the data that it does have, without the user being aware of the missing data. In other words, it works under the assumption that every day has accurate data entered. It would be good to have the app check if there was data available for every day in a range and inform the user.
+
+Security: Passwords - the passwords are hashed before being stored in the database, meaning that they're secure should anyone get hold of the data. But they're not hashed in the app itself and can be seen when typing them in. 
+
+Security: Restrict users - Add an email requirement to registrations, and limit access to only those who already have an email address saved in the database. Or limit access to only those with a particular domain in their email.
 
 JSON export - Save the JSON files to cloud storage, to allow them to be downloaded or emailed.
 
