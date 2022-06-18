@@ -170,6 +170,10 @@ Features: [F10](README.md#10-exceptions)
 | :white_check_mark: | Test every feature, deliberately trying to break the app |
 | :white_check_mark: | See relevant error messages and sensible app response |
 
+*Go back to the [top](#table-of-contents)*
+
+---
+
 ## Notable Bugs
 
 My first version (Jan 2022) of this project ran into a number of issues with the menu system in particular. These are the bugs related to that. These were all rendered irrelevant by replacing the menus with much simpler code in my second version (Jun 2022).
@@ -191,3 +195,7 @@ These are the notable bugs from V1 and V2:
 | :white_check_mark: | Date input validation not working | Add try/except with exception message - [commit](https://github.com/lucywoodman/stats-bot/commit/13bf0abc307484c0a196730809ea697f69017ea2)|
 | :white_check_mark: | Incorrect message seen before screen cleared when returning to menus | Add an else to menu loops - [commit](https://github.com/lucywoodman/stats-bot/commit/13c5fac263bc61ae012b5a291df541eef9067b0f)|
 | :white_check_mark: | Catchall exception raised when a non-integer is entered for stats | Add a ValueError exception with better messaging - [commit](https://github.com/lucywoodman/stats-bot/commit/451d06ef8ed3e975a78d6274c484771a0ad38407)|
+
+*Go back to the [top](#table-of-contents)*
+
+---
