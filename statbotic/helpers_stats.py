@@ -1,8 +1,16 @@
 import os
 import time
 from statbotic.title import Title
-from statbotic.database import data, test_database, aggregate_data, fetch_data_range
-from statbotic.helpers import user_continue, create_lists, print_stats, create_json
+from statbotic.database import (
+    aggregate_data,
+    data,
+    fetch_data_range,
+    test_database)
+from statbotic.helpers import (
+    create_json,
+    create_lists,
+    print_stats,
+    user_continue)
 from statbotic.date import Date
 from statbotic.stats import Stats
 
@@ -43,7 +51,8 @@ def new_stats(user_date, *action):
             elif 'new' in action:
                 data.stats.insert_one(stats.__dict__)
                 print(
-                    '\n** The new stats have been successfully added to the database! **\n')
+                    '\n** The new stats have been '
+                    'successfully added to the database! **\n')
                 return
 
 
@@ -70,12 +79,14 @@ def update_stats():
                 # Check if data already exists for the date.
                 if user_date.validate(user_date.date, user_date.date):
                     print(
-                        f'\n** {Date.pretty_date(user_date.date)} already exists in the database. **\n')
+                        f'\n** {Date.pretty_date(user_date.date)} '
+                        'already exists in the database. **\n')
                     # If it does exist, ask if its to be overwritten.
                     if user_continue('Would you like to overwrite it (y/n)? '):
                         os.system('clear')
                         print(
-                            f'\nOkay, let\'s overwrite the stats for {Date.pretty_date(user_date.date)}...')
+                            '\nOkay, let\'s overwrite the stats for '
+                            f'{Date.pretty_date(user_date.date)}...')
                         # Overwrite data
                         new_stats(user_date, 'overwrite')
                 else:
@@ -88,7 +99,9 @@ def update_stats():
 
                 # Ask the user if they'd like to input more stats.
                 # If no, break out of the while loop.
-                if not user_continue('Do you want to give me more stats to look after (y/n)? '):
+                if not user_continue(
+                        'Do you want to give me more stats '
+                        'to look after (y/n)? '):
                     print('\nLet\'s return to the menu...')
                     return
 
@@ -147,7 +160,8 @@ def get_stats(*args):
             except ValueError:
                 # Exception for an incorrect input.
                 print(
-                    '\n** Oops! Make sure to enter a number for the extra days. **')
+                    '\n** Oops! Make sure to enter a number '
+                    'for the extra days. **')
 
 
 def view_stats(user_date):
@@ -161,7 +175,8 @@ def view_stats(user_date):
     # Create two lists from the data dict key and values.
     data_lists = create_lists(fetched_data)
     # Create a header.
-    header = f'Stats for {Date.pretty_date(user_date.date)} to {Date.pretty_date(user_date.rng_end)}'
+    header = f'Stats for {Date.pretty_date(user_date.date)} ' +\
+        f'to {Date.pretty_date(user_date.rng_end)}'
     # Display stats.
     print_stats(header, data_lists)
 

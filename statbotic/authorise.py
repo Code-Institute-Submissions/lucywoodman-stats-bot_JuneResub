@@ -27,7 +27,8 @@ def login():
                 {"_User__username": current_user.username})
             if user_count == 0:
                 raise LookupError(
-                    f'\n** Username: "{current_user.username}" cannot be found in the database. **\n')
+                    f'\n** Username: "{current_user.username}" '
+                    'cannot be found in the database. **\n')
 
             # Ask for a password
             current_user.password = input('Password : ')
@@ -37,11 +38,13 @@ def login():
                     {"_User__username": current_user.username})
                 # Check if supplied password matches the password in the
                 # database
-                if db_user["_hashed_password"] != current_user._hashed_password:
+                if db_user["_hashed_password"] != \
+                        current_user._hashed_password:
                     raise ValueError(f'\n** The password is incorrect. **\n')
 
                 print(
-                    f'\nYou have successfully logged in as "{current_user.username}".')
+                    '\nYou have successfully logged in as '
+                    f'"{current_user.username}".')
                 print('Taking you to the main menu...')
                 time.sleep(2)
                 # Go to main app
@@ -89,13 +92,15 @@ def register():
                 if user_count:
                     os.system('clear')
                     raise ValueError(
-                        f'\n** The username "{new_user.username}" is already registered. **\n')
+                        f'\n** The username "{new_user.username}" '
+                        'is already registered. **\n')
 
                 # Ask for a password and save the user to the database
                 new_user.password = input('Enter a password : ')
                 data.users.insert_one(new_user.__dict__)
                 print(
-                    f'\nGreat! "{new_user.username}" has been registered. You can now login.')
+                    f'\nGreat! "{new_user.username}" has been registered.'
+                    'You can now login.')
                 print('\nTaking you back to the login menu...')
                 time.sleep(3)
                 # Return to the login menu (run.py)
